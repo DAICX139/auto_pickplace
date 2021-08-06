@@ -1,0 +1,319 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetAndEvent</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "F:NetAndEvent.PlcDriver.AdsDriverClient.hNotify_cmds" -->
+        <!-- Badly formed XML comment ignored for member "F:NetAndEvent.PlcDriver.AdsDriverClient.cmd_hVars" -->
+        <!-- Badly formed XML comment ignored for member "F:NetAndEvent.PlcDriver.AdsDriverClient.cmd_hRecvVars" -->
+        <!-- Badly formed XML comment ignored for member "F:NetAndEvent.PlcDriver.AdsDriverClient.hNotify_ctrls" -->
+        <!-- Badly formed XML comment ignored for member "F:NetAndEvent.PlcDriver.AdsDriverClient.ctrl_hVars" -->
+        <member name="F:NetAndEvent.PlcDriver.AdsDriverClient.hNotify_vars">
+            <summary>
+            供外部添加label 配置集合
+            </summary>
+        </member>
+        <member name="F:NetAndEvent.PlcDriver.AdsDriverClient.handles">
+            <summary>
+            变量句柄集合，用于垃圾回收，所有变量必须通过CreatHvar
+            </summary>
+        </member>
+        <member name="F:NetAndEvent.PlcDriver.AdsDriverClient.handlesNotify">
+            <summary>
+            监听句柄集合，用于垃圾回收，所有监听通过addHandleNotify创建
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.GetSingleAxisCtrl(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="i">从1开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.onConnected">
+            <summary>
+            当检测到链接成功时，添加PLC的sended值改变事件，即ALC的接收事件
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.writeHcmd">
+            <summary>
+            监听cmd句柄
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.writeHctrl">
+            <summary>
+            监听DeviceCtrl句柄
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.SendMessage(AlcUtility.MessageData)">
+            <summary>
+            plc发送消息数据MessageData.Param as ParamsModule
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.SendMessage(AlcUtility.ParamsModule,System.Int32,System.String)">
+            <summary>
+            并发消息调用此函数
+            </summary>
+            <param name="data"></param>
+            <param name="channel">并发通道</param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.UpdateMonitorList(AlcUtility.ParamsValue[])">
+            <summary>
+            将旧的监控列表删除，更新新的监控列表
+            </summary>
+            <param name="paramValues"></param>
+            <returns>0表示添加正确</returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.GetRecvData(AlcUtility.ParamsModule,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="paramData"></param>
+            <param name="channel">plc异步信号下标，从1开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadBool(System.Int32)">
+            <summary>
+            根据plc句柄，读取布尔值
+            </summary>
+            <param name="hvar"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadInt32(System.String)">
+            <summary>
+            根据plc变量名，读取int32
+            </summary>
+            <param name="plcvarname"></param>
+            <returns></returns>      
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadInt32(System.Int32)">
+            <summary>
+            根据plc句柄，读取int32
+            </summary>
+            <param name="hvar"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadObject(System.String,System.Type)">
+            <summary>
+            根据plc端的变量名和数据类型，读取数据【不包含数组】
+            </summary>
+            <param name="varName"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadObject(System.String,System.String)">
+            <summary>
+            根据plc端的变量名和数据类型，读取数据【不包含数组】
+            </summary>
+            <param name="varName"></param>
+            <param name="sType">type类型为string</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadObject(System.Int32,System.Type,System.Int32)">
+            <summary>
+            根据plc端句柄和数据类型，读取数据【包含普通数据类型和一维数组，二维数组转换为一维数组读取】
+            </summary>
+            <param name="hvar"></param>
+            <param name="type"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadObject(System.Int32,System.String)">
+            <summary>
+            根据plc端句柄和数据类型(string)，读取数据,仅支持基本数据类型，不支持数组
+            </summary>
+            <param name="hvar"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadAnyArray(System.String,System.Type,System.Int32)">
+            <summary>
+            根据plc端变量名和数据类型，读取数组【二维数组可转化为一维数组读取】
+            </summary>
+            <param name="varName">plc变量名</param>
+            <param name="type">数组类型</param>
+            <param name="size">数组大小，如果是二维数组可以用一维数组读取(size=行*列)</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadAnyArray(System.String,System.Type,System.Int32,System.Int32)">
+            <summary>
+            读取plc数组
+            </summary>
+            <param name="varName">plc数组实例变量名</param>
+            <param name="type">数组类型</param>
+            <param name="startIndex">plc数组下边界</param>
+            <param name="endIndex">plc数组上边界</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadArrayElement(System.String,System.Type,System.Int32)">
+            <summary>
+            读取一维数组某一元素值
+            </summary>
+            <param name="varName"></param>
+            <param name="type">数组类型</param>
+            <param name="index">下位机下标</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadParamModule(AlcUtility.ParamsModule,System.Int32)">
+            <summary>
+            当读取异步信号时，只读取当前异步索引对应参数结构体的数值
+            </summary>
+            <param name="data"></param>
+            <param name="index">上位机索引，下标从0开始</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.ReadParamModule(AlcUtility.ParamsModule)">
+            <summary>
+            从PLC端读取ParamsModule数值
+            </summary>
+            <param name="data"></param>
+            <returns>读取key失败的个数</returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteObject(System.String,System.Object)">
+            <summary>
+            向plc变量名为varName的变量写值data,普通类型注意字节对齐。
+            </summary>
+            <param name="varName">PLC底层变量名，类型包含：基本类型（特别地包含二维数组）和结构体(必须定义时做好托管管理)</param>
+            <param name="data">要写入的数据，类型必须和varName定义的类型字节对齐</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteObject(System.String,System.Object,System.String@)">
+             <summary>
+             向plc变量名为varName的变量写值data,普通类型注意字节对齐。
+             </summary>
+             <param name="varName">PLC底层变量名，类型包含：基本类型（特别地包含二维数组）和结构体(必须定义时做好托管管理)</param>
+             <param name="data">要写入的数据，类型必须和varName定义的类型字节对齐</param>
+            <param name="message">ret=0 message=""，ret!=0 message=错误信息</param>
+             <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteObject(System.Int32,System.Object)">
+            <summary>
+            向plc端数据句柄hvar，写值value
+            </summary>
+            <param name="hvar"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteParamsModule(AlcUtility.ParamsModule)">
+            <summary>
+            向plc端写值（ParamsModule）
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteBool(System.String,System.Boolean)">
+            <summary>
+            向plc数据名varname，写值value
+            </summary>
+            <param name="varname"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.AdsDriverClient.WriteAnyArrayElement(System.String,System.Object,System.Int32)">
+            <summary>
+            写入数组某一位元素
+            </summary>
+            <param name="varname">plc端数组对象</param>
+            <param name="index">数组索引,从0开始</param>
+            <param name="values">写入值</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.PlcDriverClientManager.InsertPlcDriver(AlcUtility.EM_ProtocolType,System.String,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            ServerMgr调用，根据xml配置加载
+            </summary>
+            <param name="type"></param>
+            <param name="moduleId"></param>
+            <param name="ip"></param>
+            <param name="port"></param>
+            <param name="cfgPath"></param>
+        </member>
+        <member name="M:NetAndEvent.PlcDriver.PlcDriverClientManager.InsertPlcDriver(System.String,AlcUtility.IPlcDriver)">
+            <summary>
+            继承IPlcDriver的实例构造时调用此函数
+            </summary>
+            <param name="moduleType"></param>
+            <param name="plcDriver"></param>
+        </member>
+        <member name="F:NetAndEvent.SocketServer.BinaryServer._sessions">
+            <summary>
+            moduleId-session
+            </summary>
+        </member>
+        <member name="F:NetAndEvent.SocketServer.BinaryServer._clients">
+            <summary>
+            session-(moduleType, moduleId)
+            </summary>
+        </member>
+        <member name="P:NetAndEvent.SocketServer.BinaryServer.ClientList">
+            <summary>
+            remotepoint, moduletype, moduleid
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.SocketServer.StringServer.OnModuleRegistered">
+            <summary>
+            模块注册上来时触发，参数：ModuleId, ModuleType
+            </summary>
+        </member>
+        <member name="P:NetAndEvent.SocketServer.StringServer.ClientList">
+            <summary>
+            remotepoint, moduletype, moduleid
+            </summary>
+        </member>
+        <member name="T:NetAndEvent.Utility.IServer">
+            <summary>
+            与平台对接的服务接口
+            </summary>
+        </member>
+        <member name="P:NetAndEvent.Utility.IServer.Name">
+            <summary>
+            服务名
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.UpdateClientList">
+            <summary>
+            客户端列表更新，新客户端连接上来或模块注册上来都会触发
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.OnEndpoiontConnected">
+            <summary>
+            连接上端点(client/server)时触发，参数：端点连接信息
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.OnModuleRegistered">
+            <summary>
+            模块注册上来时触发，参数：ModuleId, ModuleType
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.OnDataReceived">
+            <summary>
+            收到消息时触发，参数：消息数据
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.OnEndpoiontDisconnected">
+            <summary>
+            端点(client/server)断开连接时触发，参数：端点断连信息，模块id(未注册为null)
+            </summary>
+        </member>
+        <member name="E:NetAndEvent.Utility.IServer.MoreDebugInfo">
+            <summary>
+            需要记录更多调试信息时触发，参数：调试信息
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.Utility.IServer.StartServer">
+            <summary>
+            启动服务
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetAndEvent.Utility.IServer.StopServer">
+            <summary>
+            停止服务
+            </summary>
+        </member>
+        <member name="M:NetAndEvent.Utility.IServer.SendMessage(System.String,AlcUtility.MessageData)">
+            <summary>
+            发送数据
+            </summary>
+        </member>
+    </members>
+</doc>

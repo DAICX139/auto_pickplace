@@ -1,0 +1,338 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="Handler" ModulelId="Handler">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Id="1" Name="SA1_LoadTrayCalib" Description="Load Tray标定" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="2" Name="SA2_UloadTrayCalib" Description="ULoad Tray标定" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="3" Name="SA3_TrayTake" Description="取料吸嘴从Tray中取料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>R_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.R_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>nDryRun</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.nDryRun</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadTrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.LoadTrayID</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="4" Name="SA4_TrayTake" Description="取料吸嘴往Socket中放料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>R_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.R_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="5" Name="SA5_TrayTake" Description="放料吸嘴从Socket中取料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="6" Name="SA6_TrayTake" Description="放料吸嘴往Tray中放料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>R_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.R_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>nDryRun</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.nDryRun</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UlaodTrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.UloadTrayID</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="7" Name="SA20_TrayTakePut" Description="Tray取放料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>R_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.R_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>nDryRun</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.nDryRun</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadTrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.LoadTrayID</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UlaodTrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.UloadTrayID</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="8" Name="SA21_TrayTakePut" Description="Socket取放料" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>X_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.X_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Y_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Y_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Z_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.Z_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">10</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>R_AxisMoveVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_SemiAuto.R_AxisMoveVel</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>nDryRun</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.nDryRun</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>CycleDelay</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_SemiAuto.CycleDelay</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string">1000</Value>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

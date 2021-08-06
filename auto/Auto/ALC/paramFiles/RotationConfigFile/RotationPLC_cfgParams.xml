@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="Tester" ModulelId="tester">
+  <ArrayOfParamsModule xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ParamsModule Id="1" Name="LoadX_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>XInintPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>开盖轴X初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>XWaitePos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">4.6</Value>
+          <Remark>开盖轴X等待位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>XWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">5.6</Value>
+          <Remark>开盖轴X关盖位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="2" Name="LoadX_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>XInintVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">90</Value>
+          <Remark>X轴初始位置速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>XWaiteVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">90</Value>
+          <Remark>X轴等待位置速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>XWrokVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.X_RecipeVel[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">90</Value>
+          <Remark>X轴关盖位置速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="3" Name="LoadY_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>YInintPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Y轴初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket1YWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.548</Value>
+          <Remark>Socket1 Y轴工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket2YWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">18.3</Value>
+          <Remark>Socket2 Y轴工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket3YWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.9003</Value>
+          <Remark>Socket3 Y轴工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket4YWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">18.3285</Value>
+          <Remark>Socket4 Y轴工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket5YWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.7</Value>
+          <Remark>Socket5 Y轴工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket1YRollbackPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.448</Value>
+          <Remark>Socket1 Y轴回退位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket2YRollbackPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">18.1</Value>
+          <Remark>Socket2 Y轴回退位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket3YRollbackPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.8003</Value>
+          <Remark>Socket3 Y轴回退位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket4YRollbackPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">18.2</Value>
+          <Remark>Socket4 Y轴回退位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket5YRollbackPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">17.6</Value>
+          <Remark>Socket5 Y轴回退位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="4" Name="LoadY_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>YInintVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">40</Value>
+          <Remark>Y轴初始位置速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>YWrokVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">30</Value>
+          <Remark>Y轴工作位置速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>YRollbackVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Y_RecipeVel[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">30</Value>
+          <Remark>Y轴回退位置速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="5" Name="LoadZ_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>ZInintPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>Z初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket1ZWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">70.2273</Value>
+          <Remark>Socket1 Z工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket2ZWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">69.848</Value>
+          <Remark>Socket2 Z工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket3ZWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">70.0227</Value>
+          <Remark>Socket3 Z工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket4ZWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">69.8895</Value>
+          <Remark>Socket4 Z工作位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Socket5ZWrokPos</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">67.8399</Value>
+          <Remark>Socket5 Z工作位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="6" Name="LoadZ_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>ZInintVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">30</Value>
+          <Remark>Z初始位置速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>ZWrokVel</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Z_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">30</Value>
+          <Remark>Z工作位置速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="7" Name="LoadR_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>RotatePos1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.R_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>R轴旋转角度1</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>RotatePos2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.R_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>R轴旋转角度2</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="8" Name="LoadR_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>RotateVel1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.R_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">10</Value>
+          <Remark>R轴旋转速度1</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>RotateVel2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.R_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">45</Value>
+          <Remark>R轴旋转速度2</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

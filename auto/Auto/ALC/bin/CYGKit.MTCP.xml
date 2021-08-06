@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CYGKit.MTCP</name>
+    </assembly>
+    <members>
+        <member name="T:CYGKit.MTCP.CSVDataGenerater`1">
+            <summary>
+            CSV生成器
+            </summary>
+        </member>
+        <member name="P:CYGKit.MTCP.CSVDataGenerater`1.HeadName">
+            <summary>
+            列名，默认为"Value"
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.CSVDataGenerater`1.GenCsvData(`0)">
+            <summary>
+            生成CSV结构数据
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.CSVDataGenerater`1.GenCsv(`0)">
+            <summary>
+            生成CSV
+            </summary>
+        </member>
+        <member name="T:CYGKit.MTCP.CsvHeadNameOfMemberAttribute">
+            <summary>
+            指定成员的值对应CSV中哪一列的值
+            </summary>
+        </member>
+        <member name="P:CYGKit.MTCP.CsvHeadNameOfMemberAttribute.HeadName">
+            <summary>
+            列名
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.CsvHeadNameOfMemberAttribute.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="headName">列名</param>
+        </member>
+        <member name="T:CYGKit.MTCP.CsvFixedValueAttribute">
+            <summary>
+            指定CSV中其他列的值
+            </summary>
+        </member>
+        <member name="P:CYGKit.MTCP.CsvFixedValueAttribute.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.CsvFixedValueAttribute.#ctor(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:CYGKit.MTCP.StructSendData">
+            <summary>
+            发送数据结构
+            </summary>
+        </member>
+        <member name="P:CYGKit.MTCP.StructSendData.Heads">
+            <summary>
+            头
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.StructSendData.ToString">
+            <summary>
+            输出CSV格式数据
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.StructSendData.SetValeuByHeadName(System.String,System.String)">
+            <summary>
+            通过列名设值
+            </summary>
+        </member>
+        <member name="T:CYGKit.MTCP.MtcpOperation">
+            <summary>
+            MTCP操作类
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.MtcpOperation.SendAndRecv(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Boolean,System.String@,System.Int32@,System.String@)">
+            <summary>
+            发送数据到MTCP
+            </summary>
+            <param name="data">要发送的数据</param>
+            <param name="direction">方向，0：Request，1：Report</param>
+            <param name="ip">MTCP服务IP地址</param>
+            <param name="port">MTCP服务端口</param>
+            <param name="timeout">超时时间，单位ms</param>
+            <param name="ingorRspError">MTCP回复错误码不为0时是否忽略</param>
+            <param name="recvd">接收到的回复数据</param>
+            <param name="errCode">错误码</param>
+            <param name="errString">错误信息</param>
+            <returns>执行结果</returns>
+        </member>
+        <member name="M:CYGKit.MTCP.MtcpOperation.GenCSV(System.Collections.Generic.List{CYGKit.MTCP.StructSendData})">
+            <summary>
+            生成CSV
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.MtcpOperation.GenCSV``1(``0)">
+            <summary>
+            生成CSV
+            </summary>
+        </member>
+        <member name="M:CYGKit.MTCP.MtcpOperation.Csv2DataTable(System.String)">
+            <summary>
+            将CSV文件的数据读取到DataTable中
+            </summary>
+            <param name="recvCsvStr">从MTCP接收到的csv string</param>
+            <returns>返回读取了CSV数据的DataTable</returns>
+        </member>
+    </members>
+</doc>

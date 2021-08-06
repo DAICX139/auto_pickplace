@@ -1,0 +1,1924 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Language>
+  <List current="zh-CN" default="en-US">
+    <en-US>English</en-US>
+    <zh-CN>简体</zh-CN>
+    <zh-CHT>繁體</zh-CHT>
+    <vi-VN>Việt nam</vi-VN>
+  </List>
+  <Items>
+    <Item>
+      <en-US>Abort Failed</en-US>
+      <zh-CN>中断失败</zh-CN>
+      <zh-CHT>中断失败</zh-CHT>
+      <vi-VN>Hủy bỏ Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>AbortAll</en-US>
+      <zh-CN>中断所有</zh-CN>
+      <zh-CHT>中断所有</zh-CHT>
+      <vi-VN>Hủy bỏTất cả</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Aborting...</en-US>
+      <zh-CN>正在中止中...</zh-CN>
+      <zh-CHT>正在中止中...</zh-CHT>
+      <vi-VN>Đang hủy bỏ...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Abort</en-US>
+      <zh-CN>中止</zh-CN>
+      <zh-CHT>中止</zh-CHT>
+      <vi-VN>Ngưng.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>About</en-US>
+      <zh-CHT>關於</zh-CHT>
+      <zh-CN>关于</zh-CN>
+    </Item>
+    <Item>
+      <en-US>AboutALC</en-US>
+      <zh-CHT>關於ALC</zh-CHT>
+      <zh-CN>关于ALC</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Single Step Debug</en-US>
+      <zh-CHT>單步調試</zh-CHT>
+      <zh-CN>单步调试</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Add</en-US>
+      <zh-CN>添加</zh-CN>
+      <zh-CHT>添加</zh-CHT>
+      <vi-VN>thêm vào</vi-VN>
+    </Item>
+    <Item>
+      <en-US>AddOrUpdate</en-US>
+      <zh-CN>添加或更新</zh-CN>
+      <zh-CHT>添加或更新</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>The underlying data is inconsistent with the upper computer data. Do you want to cover the upper computer data?</en-US>
+      <zh-CHT>底層數據與上位機數據不一致，是否覆蓋上位機數據？</zh-CHT>
+      <zh-CN>底层数据与上位机数据不一致，是否覆盖上位机数据？</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Recipe file saved successfully!</en-US>
+      <zh-CHT>配方檔案保存成功！</zh-CHT>
+      <zh-CN>配方文件保存成功！</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Data download successfully!</en-US>
+      <zh-CHT>數據下載成功！</zh-CHT>
+      <zh-CN>数据下载成功！</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Data download failed!</en-US>
+      <zh-CHT>數據下載失敗！</zh-CHT>
+      <zh-CN>数据下载失败！</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Data upload failed!</en-US>
+      <zh-CHT>數據上載失敗！</zh-CHT>
+      <zh-CN>数据上载失败！</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Save path selection</en-US>
+      <zh-CHT>保存路徑選擇</zh-CHT>
+      <zh-CN>保存路径选择</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Select all</en-US>
+      <zh-CHT>全選</zh-CHT>
+      <zh-CN>全选</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Create recipe file successfully!</en-US>
+      <zh-CHT>配方檔案創建成功！</zh-CHT>
+      <zh-CN>配方文件创建成功！</zh-CN>
+    </Item>
+    <Item>
+      <en-US>LoadL is empty, please change a tray!</en-US>
+      <zh-CHT>上料盤1是空的，請更換Tray盤</zh-CHT>
+      <zh-CN>上料盘1是空的，请更换Tray盘</zh-CN>
+    </Item>
+    <Item>
+      <en-US>LoadR is empty, please change a tray!</en-US>
+      <zh-CHT>上料盤2是空的，請更換Tray盤</zh-CHT>
+      <zh-CN>上料盘2是空的，请更换Tray盘</zh-CN>
+    </Item>
+    <Item>
+      <en-US>NG is full, please change a tray!</en-US>
+      <zh-CHT>NG盤已滿，請更換Tray盤</zh-CHT>
+      <zh-CN>NG盘已满，请更换Tray盘</zh-CN>
+    </Item>
+    <Item>
+      <en-US>UnloadL is full, please change a tray!</en-US>
+      <zh-CHT>Pass盤1已滿，請更換Tray盤</zh-CHT>
+      <zh-CN>Pass盤1已滿，请更换Tray盘</zh-CN>
+    </Item>
+    <Item>
+      <en-US>UnloadR is full, please change a tray!</en-US>
+      <zh-CHT>Pass盤2已滿，請更換Tray盤</zh-CHT>
+      <zh-CN>Pass盤2已滿，请更换Tray盘</zh-CN>
+    </Item>
+    <Item>
+      <en-US>ALC</en-US>
+      <zh-CN>组装线控制系统</zh-CN>
+      <zh-CHT>組裝線控制系統</zh-CHT>
+      <vi-VN>Hệ thống điều khiển dây chuyền lắp ráp</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ALL</en-US>
+      <zh-CN>所有</zh-CN>
+      <zh-CHT>所有</zh-CHT>
+      <vi-VN>Tất cả</vi-VN>
+    </Item>
+    <Item>
+      <en-US>AMP</en-US>
+      <zh-CN>自动化管理平台</zh-CN>
+      <zh-CHT>自動化管理平台</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Are you sure to complete system?</en-US>
+      <zh-CN>确定执行完成?</zh-CN>
+      <zh-CHT>確定執行完成?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn hoàn tất hệ thống không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Are you sure to pause system?</en-US>
+      <zh-CN>确定执行暂停?</zh-CN>
+      <zh-CHT>確定執行暫停?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn tạm dừng hệ thống không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Are You Sure to Quit ALC Program?</en-US>
+      <zh-CN>确定退出ALC系统?</zh-CN>
+      <zh-CHT>確定退出ALC系統?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn thoát khỏi chương trình ALC không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Are you sure to resume system?</en-US>
+      <zh-CN>确定执行继续?</zh-CN>
+      <zh-CHT>確定執行繼續?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn tiếp tục hệ thống không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Are you sure to start system?</en-US>
+      <zh-CN>确定开始执行?</zh-CN>
+      <zh-CHT>確定開始執行?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn khởi động hệ thống không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Are you sure to stop system?</en-US>
+      <zh-CN>确定执行停止?</zh-CN>
+      <zh-CHT>確定執行停止?</zh-CHT>
+      <vi-VN>Bạn có chắc chắn dừng hệ thống không?</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Assembly Line Controller  V1.0.2.10 [platform:2.0.4.5]</en-US>
+      <zh-CN>组装线控制系统 V1.0.2.10 [平台:2.0.4.5]</zh-CN>
+      <zh-CHT>組裝線控制系統 V1.0.2.10 [平台:2.0.4.5]</zh-CHT>
+      <vi-VN>Hệ thống điều khiển dây chuyền lắp ráp V1.0.2.10 [Nền tảng:2.0.4.5]</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Authority</en-US>
+      <zh-CN>权限</zh-CN>
+      <zh-CHT>權限</zh-CHT>
+      <vi-VN>Thẩm quyền</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Average[s]</en-US>
+      <zh-CN>平均[s]</zh-CN>
+      <zh-CHT>平均[s]</zh-CHT>
+      <vi-VN>Trung bình[s]</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Axis</en-US>
+      <zh-CN>轴</zh-CN>
+      <zh-CHT>軸</zh-CHT>
+      <vi-VN>trục</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Bin</en-US>
+      <zh-CN>Bin 值</zh-CN>
+      <zh-CHT>Bin值</zh-CHT>
+      <vi-VN>Giá trị thùng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Bin:</en-US>
+      <zh-CN>Bin 值:</zh-CN>
+      <zh-CHT>Bin值:</zh-CHT>
+      <vi-VN>Giá trị thùng:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Bin Region</en-US>
+      <zh-CN>Bin 区域</zh-CN>
+      <zh-CHT>Bin 區域</zh-CHT>
+      <vi-VN>Vùng thùng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Cancel</en-US>
+      <zh-CN>取消</zh-CN>
+      <zh-CHT>取消</zh-CHT>
+      <vi-VN>Hủy bỏ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Change password</en-US>
+      <zh-CN>修改密码</zh-CN>
+      <zh-CHT>修改密碼</zh-CHT>
+      <vi-VN>Thay đổi mật khẩu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Clear</en-US>
+      <zh-CN>清除</zh-CN>
+      <zh-CHT>清除</zh-CHT>
+      <vi-VN>Rõ ràng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Clear alarm</en-US>
+      <zh-CN>清错</zh-CN>
+      <zh-CHT>清錯</zh-CHT>
+      <vi-VN>Xóa sai lầm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Clear Failed</en-US>
+      <zh-CN>清除失败</zh-CN>
+      <zh-CHT>清除失敗</zh-CHT>
+      <vi-VN>Xóa Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ClearAllBreaks</en-US>
+      <zh-CHT>清除所有斷點</zh-CHT>
+      <zh-CN>清除所有断点</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Clearing...</en-US>
+      <zh-CN>清除中...</zh-CN>
+      <zh-CHT>清除中...</zh-CHT>
+      <vi-VN>Xoá...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Clients</en-US>
+      <zh-CN>客戶端</zh-CN>
+      <zh-CHT>客戶端</zh-CHT>
+      <vi-VN>Khách hàng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Color:</en-US>
+      <zh-CN>颜色:</zh-CN>
+      <zh-CHT>顏色:</zh-CHT>
+      <vi-VN>màu:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Column</en-US>
+      <zh-CN>列</zh-CN>
+      <zh-CHT>列</zh-CHT>
+      <vi-VN>Cột</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Complete</en-US>
+      <zh-CN>完成</zh-CN>
+      <zh-CHT>完成</zh-CHT>
+      <vi-VN>Hoàn thành</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Complete Failed</en-US>
+      <zh-CN>完成失败</zh-CN>
+      <zh-CHT>完成失敗</zh-CHT>
+      <vi-VN>Hoàn tất Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Configuration</en-US>
+      <zh-CN>配置</zh-CN>
+      <zh-CHT>配置</zh-CHT>
+      <vi-VN>Cấu hình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Confirm</en-US>
+      <zh-CN>确定</zh-CN>
+      <zh-CHT>確定</zh-CHT>
+      <vi-VN>xác định</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Get Position</en-US>
+      <zh-CN>获取位置</zh-CN>
+      <zh-CHT>獲取位置</zh-CHT>
+      <vi-VN>Địa điểm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Continue</en-US>
+      <zh-CN>继续</zh-CN>
+      <zh-CHT>繼續</zh-CHT>
+      <vi-VN>Tiếp tục</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Control</en-US>
+      <zh-CN>控制</zh-CN>
+      <zh-CHT>控制</zh-CHT>
+      <vi-VN>Điều</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Copy</en-US>
+      <zh-CN>复制</zh-CN>
+      <zh-CHT>複製</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Count</en-US>
+      <zh-CN>个数</zh-CN>
+      <zh-CHT>個數</zh-CHT>
+      <vi-VN>Số.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>CsvFile:</en-US>
+      <zh-CHT>Csv路徑:</zh-CHT>
+      <zh-CN>Csv路径:</zh-CN>
+    </Item>
+    <Item>
+      <en-US>CtrlType</en-US>
+      <zh-CN>控件类型</zh-CN>
+      <zh-CHT>控件類型</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ClearDUT</en-US>
+      <zh-CN>清料</zh-CN>
+      <zh-CHT>清料</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ChangeTray</en-US>
+      <zh-CN>换Tray盘</zh-CN>
+      <zh-CHT>換Tray盤</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>PEL</en-US>
+      <zh-CN>正限位</zh-CN>
+      <zh-CHT>正限位</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>NEL</en-US>
+      <zh-CN>负限位</zh-CN>
+      <zh-CHT>負限位</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Current[s]</en-US>
+      <zh-CN>当前[s]</zh-CN>
+      <zh-CHT>当前[s]</zh-CHT>
+      <vi-VN>Hiện tại[s]</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Cylinder</en-US>
+      <zh-CN>气缸</zh-CN>
+      <zh-CHT>氣缸</zh-CHT>
+      <vi-VN>Trụ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>data</en-US>
+      <zh-CHT>數據</zh-CHT>
+      <zh-CN>数据</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Data</en-US>
+      <zh-CN>数值</zh-CN>
+      <zh-CHT>數值</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Display</en-US>
+      <zh-CN>Tray 盘展示</zh-CN>
+      <zh-CHT>Tray 盤展示</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>DataType</en-US>
+      <zh-CN>数据类型</zh-CN>
+      <zh-CHT>數據類型</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Information</en-US>
+      <zh-CN>消息</zh-CN>
+      <zh-CHT>消息</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>DebugPanel</en-US>
+      <zh-CHT>調試面板</zh-CHT>
+      <zh-CN>调试面板</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Delete</en-US>
+      <zh-CN>删除</zh-CN>
+      <zh-CHT>刪除</zh-CHT>
+      <vi-VN>Xóa</vi-VN>
+    </Item>
+    <Item>
+      <en-US>description</en-US>
+      <zh-CHT>描述</zh-CHT>
+      <zh-CN>描述</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Description</en-US>
+      <zh-CN>项目描述</zh-CN>
+      <zh-CHT>項目描述</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>DI</en-US>
+      <zh-CN>数字量输入</zh-CN>
+      <zh-CHT>數位量輸入</zh-CHT>
+      <vi-VN>Nhập số</vi-VN>
+    </Item>
+    <Item>
+      <en-US>DIO</en-US>
+      <zh-CN>数字量输入输出</zh-CN>
+      <zh-CHT>數位量輸入輸出</zh-CHT>
+      <vi-VN>Nhập và xuất dạng kỹ thuật</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Socket disable list</en-US>
+      <zh-CN>Socket 屏蔽列表</zh-CN>
+      <zh-CHT>Socket 屏蔽清單</zh-CHT>
+      <vi-VN>Tắt danh sách</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Disable Vision</en-US>
+      <zh-CN>屏蔽视觉</zh-CN>
+      <zh-CHT>屏蔽视觉</zh-CHT>
+      <vi-VN>vô hiệu hóa thị lực</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Disable Vision Configuration</en-US>
+      <zh-CN>屏蔽视觉配置</zh-CN>
+      <zh-CHT>屏蔽視覺配置</zh-CHT>
+      <vi-VN>vô hiệu hóa cấu hình thị giác</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Disconnected</en-US>
+      <zh-CN>断开连接</zh-CN>
+      <zh-CHT>斷開連接</zh-CHT>
+      <vi-VN>Ngắt kết nối</vi-VN>
+    </Item>
+    <Item>
+      <en-US>DO</en-US>
+      <zh-CN>数字量輸出</zh-CN>
+      <zh-CHT>數位量輸出</zh-CHT>
+      <vi-VN>Kết xuất số</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Write To PLC</en-US>
+      <zh-CN>立即生效</zh-CN>
+      <zh-CHT>立即生效</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>DownLoadToPLC</en-US>
+      <zh-CN>下载入PLC</zh-CN>
+      <zh-CHT>下載入PLC</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Dut Number:</en-US>
+      <zh-CN>Dut 个数:</zh-CN>
+      <zh-CHT>Dut個數:</zh-CHT>
+      <vi-VN>Số DUT.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Load Tray Select</en-US>
+      <zh-CN>上料Tray盘选择</zh-CN>
+      <zh-CHT>上料Tray盤選擇</zh-CHT>
+      <vi-VN>Chọn khay thức ăn</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Edit</en-US>
+      <zh-CHT>編輯</zh-CHT>
+      <zh-CN>编辑</zh-CN>
+    </Item>
+    <Item>
+      <en-US>End Lot</en-US>
+      <zh-CN>结束Lot</zh-CN>
+      <zh-CHT>結束Lot</zh-CHT>
+      <vi-VN>Số cuối</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Endpoint</en-US>
+      <zh-CN>客户端点</zh-CN>
+      <zh-CHT>客戶端點</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ERROR</en-US>
+      <zh-CN>错误</zh-CN>
+      <zh-CHT>錯誤</zh-CHT>
+      <vi-VN>Lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Error Id</en-US>
+      <zh-CN>错误编码</zh-CN>
+      <zh-CHT>错误编码</zh-CHT>
+      <vi-VN>Id Lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Error list</en-US>
+      <zh-CN>错误列表</zh-CN>
+      <zh-CHT>錯誤清單</zh-CHT>
+      <vi-VN>Danh sách lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>error list or lastest message</en-US>
+      <zh-CN>错误列表或最新消息</zh-CN>
+      <zh-CHT>錯誤清單或最新消息</zh-CHT>
+      <vi-VN>Danh sách lỗi hay tin nhắn mới nhất</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Error Message</en-US>
+      <zh-CN>错误信息</zh-CN>
+      <zh-CHT>错误信息</zh-CHT>
+      <vi-VN>Thông báo Lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ErrorContinue</en-US>
+      <zh-CN>错误继续</zh-CN>
+      <zh-CHT>錯誤繼續</zh-CHT>
+      <vi-VN>Tiếp tục Lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Erroring...</en-US>
+      <zh-CN>错误...</zh-CN>
+      <zh-CHT>錯誤...</zh-CHT>
+      <vi-VN>Đang lỗi...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>event</en-US>
+      <zh-CHT>觸發</zh-CHT>
+      <zh-CN>触发</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Execute</en-US>
+      <zh-CN>执行</zh-CN>
+      <zh-CHT>執行</zh-CHT>
+      <vi-VN>thực</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Extend</en-US>
+      <zh-CHT>擴展</zh-CHT>
+      <zh-CN>扩展</zh-CN>
+    </Item>
+    <Item>
+      <en-US>TM Reset</en-US>
+      <zh-CHT>TM 復位</zh-CHT>
+      <zh-CN>TM 复位</zh-CN>
+    </Item>
+    <Item>
+      <en-US>FailContinue</en-US>
+      <zh-CN>失败继续</zh-CN>
+      <zh-CHT>失敗繼續</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>failretry</en-US>
+      <zh-CHT>失敗重試</zh-CHT>
+      <zh-CN>失败重试</zh-CN>
+    </Item>
+    <Item>
+      <en-US>File</en-US>
+      <zh-CHT>文件</zh-CHT>
+      <zh-CN>文件</zh-CN>
+    </Item>
+    <Item>
+      <en-US>FrmSeqItem</en-US>
+      <zh-CN>序列项目调试</zh-CN>
+      <zh-CHT>序列項目調試</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>function</en-US>
+      <zh-CHT>方法</zh-CHT>
+      <zh-CN>方法</zh-CN>
+    </Item>
+    <Item>
+      <en-US>General</en-US>
+      <zh-CN>常规设置</zh-CN>
+      <zh-CHT>常規設定</zh-CHT>
+      <vi-VN>Thiết lập chung</vi-VN>
+    </Item>
+    <Item>
+      <en-US>GetFromDataCenter</en-US>
+      <zh-CN>数据中心数值</zh-CN>
+      <zh-CHT>數據中心數值</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>highlimit</en-US>
+      <zh-CHT>上限</zh-CHT>
+      <zh-CN>上限</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Home</en-US>
+      <zh-CN>主页</zh-CN>
+      <zh-CHT>主頁</zh-CHT>
+      <vi-VN>Trang chủ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>id</en-US>
+      <zh-CHT>識別碼</zh-CHT>
+      <zh-CN>识别码</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Idle</en-US>
+      <zh-CN>空闲</zh-CN>
+      <zh-CHT>空闲</zh-CHT>
+      <vi-VN>Idle</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if block other 2D test station</en-US>
+      <zh-CN>是否卡关前序2D测试工站</zh-CN>
+      <zh-CHT>是否卡关前序2D测试工站</zh-CHT>
+      <vi-VN>nếu chặn các trạm kiểm tra 2D khác</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if continue to test 3D when 2D tested failed</en-US>
+      <zh-CN>2D失败是否继续测试3D</zh-CN>
+      <zh-CHT>2D失敗是否繼續測試3D</zh-CHT>
+      <vi-VN>nếu tiếp tục kiểm tra 3D khi kiểm tra 2D không thành công</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if open yield control lock</en-US>
+      <zh-CN>是否打开良率控制锁</zh-CN>
+      <zh-CHT>是否打開良率控制鎖</zh-CHT>
+      <vi-VN>nếu mở khóa điều khiển năng suất</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if query exppid from database</en-US>
+      <zh-CN>是否查询数据库exppid</zh-CN>
+      <zh-CHT>是否查詢數據庫exppid</zh-CHT>
+      <vi-VN>nếu truy vấn exppid từ cơ sở dữ liệu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if query history testing data of this station</en-US>
+      <zh-CN>是否查询本工站历史测量数据</zh-CN>
+      <zh-CHT>是否查詢本工站歷史測量數據</zh-CHT>
+      <vi-VN>nếu dữ liệu kiểm tra lịch sử truy vấn của trạm này</vi-VN>
+    </Item>
+    <Item>
+      <en-US>if set block 2D in operator mode</en-US>
+      <zh-CN>是否设置操作员模式默认卡关2D</zh-CN>
+      <zh-CHT>是否設置操作員模式默認卡關2D</zh-CHT>
+      <vi-VN>nếu đặt khối 2D ở chế độ toán tử</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Ignore</en-US>
+      <zh-CN>忽略</zh-CN>
+      <zh-CHT>忽略</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Import</en-US>
+      <zh-CN>导入</zh-CN>
+      <zh-CHT>導入</zh-CHT>
+      <vi-VN>Nhập</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Index</en-US>
+      <zh-CN>序号</zh-CN>
+      <zh-CHT>序號</zh-CHT>
+      <vi-VN>Số seri</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IndexId</en-US>
+      <zh-CN>编号</zh-CN>
+      <zh-CHT>編號</zh-CHT>
+      <vi-VN>Số</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IndexName</en-US>
+      <zh-CN>模块名</zh-CN>
+      <zh-CHT>模塊名</zh-CHT>
+      <vi-VN>Tên môđun</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Info</en-US>
+      <zh-CN>信息</zh-CN>
+      <zh-CHT>信息</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Init</en-US>
+      <zh-CN>初始化</zh-CN>
+      <zh-CHT>初始化</zh-CHT>
+      <vi-VN>Khởi tạo</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Inputs:</en-US>
+      <zh-CN>输入参数:</zh-CN>
+      <zh-CHT>輸入參數:</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Insert</en-US>
+      <zh-CN>插入</zh-CN>
+      <zh-CHT>插入</zh-CHT>
+      <vi-VN>Chèn</vi-VN>
+    </Item>
+    <Item>
+      <en-US>is online</en-US>
+      <zh-CN>是否在线</zh-CN>
+      <zh-CHT>是否在線</zh-CHT>
+      <vi-VN>cho dù trực tuyến</vi-VN>
+    </Item>
+    <Item>
+      <en-US>AbsGo</en-US>
+      <zh-CN>绝对走</zh-CN>
+      <zh-CHT>絕對走</zh-CHT>
+      <vi-VN>Được.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>RelGo</en-US>
+      <zh-CN>相对走</zh-CN>
+      <zh-CHT>相對走</zh-CHT>
+      <vi-VN>Đi tương đối</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Jog+</en-US>
+      <zh-CN>点动+</zh-CN>
+      <zh-CHT>點動+</zh-CHT>
+      <vi-VN>Inch.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Jog-</en-US>
+      <zh-CN>点动-</zh-CN>
+      <zh-CHT>點動-</zh-CHT>
+      <vi-VN>Inch-</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Enabled</en-US>
+      <zh-CN>已使能</zh-CN>
+      <zh-CHT>已使能</zh-CHT>
+      <vi-VN>Bật</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Homed</en-US>
+      <zh-CN>原点</zh-CN>
+      <zh-CHT>原點</zh-CHT>
+      <vi-VN>Nguồn:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Error</en-US>
+      <zh-CN>报错</zh-CN>
+      <zh-CHT>報錯</zh-CHT>
+      <vi-VN>Lỗi báo cáo</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsDone</en-US>
+      <zh-CN>运动结束</zh-CN>
+      <zh-CHT>運動結束</zh-CHT>
+      <vi-VN>Kết thúc rồi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Moving</en-US>
+      <zh-CN>移动中</zh-CN>
+      <zh-CHT>移動中</zh-CHT>
+      <vi-VN>Đang di chuyển.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Not Moving</en-US>
+      <zh-CN>没有移动</zh-CN>
+      <zh-CHT>没有移動</zh-CHT>
+      <vi-VN>Không di chuyển</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsBlock</en-US>
+      <zh-CN>是否阻塞</zh-CN>
+      <zh-CHT>是否阻塞</zh-CHT>
+      <vi-VN>Nó bị chặn rồi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Enable</en-US>
+      <zh-CN>轴使能</zh-CN>
+      <zh-CHT>軸使能</zh-CHT>
+      <vi-VN>Trục bật</vi-VN>
+    </Item>
+    <Item>
+      <en-US>HardwareErrorId</en-US>
+      <zh-CN>硬件错误码</zh-CN>
+      <zh-CHT>硬體錯誤碼</zh-CHT>
+      <vi-VN>Mã lỗi ổ cứng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ErrorId</en-US>
+      <zh-CN>错误码</zh-CN>
+      <zh-CHT>錯誤碼</zh-CHT>
+      <vi-VN>Mã lỗi</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ActPos</en-US>
+      <zh-CN>实际位置</zh-CN>
+      <zh-CHT>實際位置</zh-CHT>
+      <vi-VN>Địa điểm thật</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ActVel</en-US>
+      <zh-CN>实际速度</zh-CN>
+      <zh-CHT>實際速度</zh-CHT>
+      <vi-VN>Tốc độ thật</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Velocity[mm/s]</en-US>
+      <zh-CN>速度[毫米/秒]</zh-CN>
+      <zh-CHT>速度[毫米/秒]</zh-CHT>
+      <vi-VN>Tốc độ(mm/S)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Pos/Dis[mm]</en-US>
+      <zh-CN>位置/距离[毫米]</zh-CN>
+      <zh-CHT>位置/距離[毫米]</zh-CHT>
+      <vi-VN>Vị trí (mm) Khoảng cách</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Input</en-US>
+      <zh-CN>输入栏</zh-CN>
+      <zh-CHT>輸入欄</zh-CHT>
+      <vi-VN>Trang nhập</vi-VN>
+    </Item>
+    <Item>
+      <en-US>JogGo Vel[mm/s]</en-US>
+      <zh-CN>点动速度[毫米/秒]</zh-CN>
+      <zh-CHT>點動速度[毫米/秒]</zh-CHT>
+      <vi-VN>Tốc độ Inching(mm/S)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Home Vel[mm/s]</en-US>
+      <zh-CN>回原速度[毫米/秒]</zh-CN>
+      <zh-CHT>回原速度[毫米/秒]</zh-CHT>
+      <vi-VN>Tốc độ phục hồi(mm/S)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>HomeGo</en-US>
+      <zh-CN>回原点</zh-CN>
+      <zh-CHT>回原點</zh-CHT>
+      <vi-VN>Quay về Nguồn gốc</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsBase</en-US>
+      <zh-CN>基础位</zh-CN>
+      <zh-CHT>基礎位</zh-CHT>
+      <vi-VN>Tổ chức</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsWork</en-US>
+      <zh-CN>工作位</zh-CN>
+      <zh-CHT>工作位</zh-CHT>
+      <vi-VN>Vị trí làm việc</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsError</en-US>
+      <zh-CN>报错</zh-CN>
+      <zh-CHT>報錯</zh-CHT>
+      <vi-VN>Lỗi báo cáo</vi-VN>
+    </Item>
+    <Item>
+      <en-US>TimeOut[ms]</en-US>
+      <zh-CN>超时时间[毫秒]</zh-CN>
+      <zh-CHT>超時時間[毫秒]</zh-CHT>
+      <vi-VN>Thời gian(xơ cứng)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>BaseTime[ms]</en-US>
+      <zh-CN>基础位时间[毫秒]</zh-CN>
+      <zh-CHT>基礎位時間[毫秒]</zh-CHT>
+      <vi-VN>Khoảng thời gian căn cứ(xơ cứng)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>CounterBase</en-US>
+      <zh-CN>基础位次数</zh-CN>
+      <zh-CHT>基礎位次數</zh-CHT>
+      <vi-VN>Số khoẻn cơ bản</vi-VN>
+    </Item>
+    <Item>
+      <en-US>WorkTime[ms]</en-US>
+      <zh-CN>工作位时间[毫秒]</zh-CN>
+      <zh-CHT>工作位时间[毫秒]</zh-CHT>
+      <vi-VN>Khoảng thời gian hoạt động(xơ cứng)</vi-VN>
+    </Item>
+    <Item>
+      <en-US>CounterWork</en-US>
+      <zh-CN>工作位次数</zh-CN>
+      <zh-CHT>工作位次數</zh-CHT>
+      <vi-VN>Số vị trí lao động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>CounterError</en-US>
+      <zh-CN>错误次数</zh-CN>
+      <zh-CHT>錯誤次數</zh-CHT>
+      <vi-VN>Số vị trí lao động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Work</en-US>
+      <zh-CN>工作位置</zh-CN>
+      <zh-CHT>工作位置</zh-CHT>
+      <vi-VN>Vị trí làm việc</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Base</en-US>
+      <zh-CN>基础位置</zh-CN>
+      <zh-CHT>基礎位置</zh-CHT>
+      <vi-VN>Tổ chức</vi-VN>
+    </Item>
+    <Item>
+      <en-US>None</en-US>
+      <zh-CN>关闭输出</zh-CN>
+      <zh-CHT>關閉輸出</zh-CHT>
+      <vi-VN>Tắt kết xuất</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Pass</en-US>
+      <zh-CN>通过</zh-CN>
+      <zh-CHT>通過</zh-CHT>
+      <vi-VN>xa</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Fail</en-US>
+      <zh-CN>失败</zh-CN>
+      <zh-CHT>失敗</zh-CHT>
+      <vi-VN>hỏng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UnTest</en-US>
+      <zh-CN>未测试</zh-CN>
+      <zh-CHT>未測試</zh-CHT>
+      <vi-VN>Chưa thử.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Yield</en-US>
+      <zh-CN>良</zh-CN>
+      <zh-CHT>良</zh-CHT>
+      <vi-VN>tốt</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Yield:</en-US>
+      <zh-CN>良率:</zh-CN>
+      <zh-CHT>良率:</zh-CHT>
+      <vi-VN>Thua:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Fail:</en-US>
+      <zh-CN>失败率:</zh-CN>
+      <zh-CHT>失敗率:</zh-CHT>
+      <vi-VN>Tỷ lệ thất bại:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>IsCmdXml</en-US>
+      <zh-CN>命令格式XML</zh-CN>
+      <zh-CHT>命令格式XML</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Item</en-US>
+      <zh-CN>项目</zh-CN>
+      <zh-CHT>項目</zh-CHT>
+      <vi-VN>Comment</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Key</en-US>
+      <zh-CN>关键字</zh-CN>
+      <zh-CHT>關鍵字</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>LineEdit</en-US>
+      <zh-CN>行操作</zh-CN>
+      <zh-CHT>行操作</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Load</en-US>
+      <zh-CHT>加載</zh-CHT>
+      <zh-CN>加载</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Load Tray</en-US>
+      <zh-CN>上料Tray盘</zh-CN>
+      <zh-CHT>上料Tray盤</zh-CHT>
+      <vi-VN>khay nạp</vi-VN>
+    </Item>
+    <Item>
+      <en-US>LoadFrom</en-US>
+      <zh-CHT>加載自</zh-CHT>
+      <zh-CN>加载自</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Log</en-US>
+      <zh-CN>日志</zh-CN>
+      <zh-CHT>日誌</zh-CHT>
+      <vi-VN>Đăng nhập</vi-VN>
+    </Item>
+    <Item>
+      <en-US>LogLevel：</en-US>
+      <zh-CN>日志等级：</zh-CN>
+      <zh-CHT>日誌等級：</zh-CHT>
+      <vi-VN>Cấp ghi lưu：</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Loop</en-US>
+      <zh-CHT>循環測試</zh-CHT>
+      <zh-CN>循环测试</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Lot Information</en-US>
+      <zh-CN>Lot 信息</zh-CN>
+      <zh-CHT>Lot 資訊</zh-CHT>
+      <vi-VN>Thông tin lô</vi-VN>
+    </Item>
+    <Item>
+      <en-US>lowlimit</en-US>
+      <zh-CHT>下限</zh-CHT>
+      <zh-CN>下限</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Mode setting</en-US>
+      <zh-CN>模式设置</zh-CN>
+      <zh-CHT>模式設定</zh-CHT>
+      <vi-VN>Thiết lập chế độ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Tray</en-US>
+      <zh-CN>Tray盘</zh-CN>
+      <zh-CHT>Tray盤</zh-CHT>
+      <vi-VN>Khay</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Tray:</en-US>
+      <zh-CN>Tray盘:</zh-CN>
+      <zh-CHT>Tray盤:</zh-CHT>
+      <vi-VN>Khay:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Mode：</en-US>
+      <zh-CN>模式：</zh-CN>
+      <zh-CHT>模式：</zh-CHT>
+      <vi-VN>mẫu:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Module</en-US>
+      <zh-CN>模块</zh-CN>
+      <zh-CHT>模塊</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ModuleId</en-US>
+      <zh-CN>模块识别码</zh-CN>
+      <zh-CHT>模塊識別碼</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ModuleName</en-US>
+      <zh-CN>模块名称</zh-CN>
+      <zh-CHT>模塊名稱</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>ModuleType</en-US>
+      <zh-CN>模块类别</zh-CN>
+      <zh-CHT>模塊類別</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Query</en-US>
+      <zh-CN>查询</zh-CN>
+      <zh-CHT>査詢</zh-CHT>
+      <vi-VN>truy</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Upload</en-US>
+      <zh-CN>上载</zh-CN>
+      <zh-CHT>上載</zh-CHT>
+      <vi-VN>tải</vi-VN>
+    </Item>
+    <Item>
+      <en-US>LotId</en-US>
+      <zh-CN>Lot编号</zh-CN>
+      <zh-CHT>Lot編號</zh-CHT>
+      <vi-VN>Số lô</vi-VN>
+    </Item>
+    <Item>
+      <en-US>StationName</en-US>
+      <zh-CN>工站名称</zh-CN>
+      <zh-CHT>工站名稱</zh-CHT>
+      <vi-VN>Tên trạm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Monitor</en-US>
+      <zh-CHT>監視</zh-CHT>
+      <zh-CN>监视</zh-CN>
+    </Item>
+    <Item>
+      <en-US>New Lot</en-US>
+      <zh-CN>新建Lot</zh-CN>
+      <zh-CHT>新建Lot</zh-CHT>
+      <vi-VN>Số mới</vi-VN>
+    </Item>
+    <Item>
+      <en-US>No</en-US>
+      <zh-CN>不是</zh-CN>
+      <zh-CHT>不是</zh-CHT>
+      <vi-VN>Không</vi-VN>
+    </Item>
+    <Item>
+      <en-US>ok</en-US>
+      <zh-CN>确认</zh-CN>
+      <zh-CHT>確認</zh-CHT>
+      <vi-VN>ok</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Ok</en-US>
+      <zh-CN>确认</zh-CN>
+      <zh-CHT>確認</zh-CHT>
+      <vi-VN>Ok</vi-VN>
+    </Item>
+    <Item>
+      <en-US>OK</en-US>
+      <zh-CN>确认</zh-CN>
+      <zh-CHT>確認</zh-CHT>
+      <vi-VN>OK</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Normal</en-US>
+      <zh-CN>生产模式</zh-CN>
+      <zh-CHT>生產模式</zh-CHT>
+      <vi-VN>Chế độ sản xuất</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Select SN</en-US>
+      <zh-CN>挑选SN</zh-CN>
+      <zh-CHT>挑選SN</zh-CHT>
+      <vi-VN>Chọn SN</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Select Bin</en-US>
+      <zh-CN>挑选Bin</zh-CN>
+      <zh-CHT>挑選Bin</zh-CHT>
+      <vi-VN>Nhặt thùng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Manual</en-US>
+      <zh-CN>手动模式</zh-CN>
+      <zh-CHT>手動模式</zh-CHT>
+      <vi-VN>Chế độ thủ công</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Mark</en-US>
+      <zh-CN>标定模式</zh-CN>
+      <zh-CHT>標定模式</zh-CHT>
+      <vi-VN>Chế độ cân chỉnh</vi-VN>
+    </Item>
+    <Item>
+      <en-US>TakeOff</en-US>
+      <zh-CN>三伤验证</zh-CN>
+      <zh-CHT>三傷驗證</zh-CHT>
+      <vi-VN>Kiểm tra tổn thương</vi-VN>
+    </Item>
+    <Item>
+      <en-US>SameTray</en-US>
+      <zh-CN>同Tray测试</zh-CN>
+      <zh-CHT>同Tray測試</zh-CHT>
+      <vi-VN>Cũng như thử tàu hỏa</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Slip</en-US>
+      <zh-CN>滑移测试</zh-CN>
+      <zh-CHT>滑移測試</zh-CHT>
+      <vi-VN>Thử trượt</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Calibration mode</en-US>
+      <zh-CN>标定模式</zh-CN>
+      <zh-CHT>標定模式</zh-CHT>
+      <vi-VN>Chế độ cân chỉnh</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Complete process calibration</en-US>
+      <zh-CN>完整流程标定</zh-CN>
+      <zh-CHT>完整流程標定</zh-CHT>
+      <vi-VN>Hoàn chỉnh tiến trình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Specify tray calibration</en-US>
+      <zh-CN>指定Tray盘标定</zh-CN>
+      <zh-CHT>指定Tray盤標定</zh-CHT>
+      <vi-VN>Chỉ định cân của khay</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Vision select</en-US>
+      <zh-CN>标定相机选择</zh-CN>
+      <zh-CHT>標定相機選擇</zh-CHT>
+      <vi-VN>Chọn máy ảnh cân</vi-VN>
+    </Item>
+    <Item>
+      <en-US>LoadVision</en-US>
+      <zh-CN>上料相机</zh-CN>
+      <zh-CHT>上料相機</zh-CHT>
+      <vi-VN>Máy ảnh</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UnLoadVision</en-US>
+      <zh-CN>下料相机</zh-CN>
+      <zh-CHT>下料相機</zh-CHT>
+      <vi-VN>Camera cắt ngang</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Tray select</en-US>
+      <zh-CN>Tray盘选择</zh-CN>
+      <zh-CHT>Tray盤選擇</zh-CHT>
+      <vi-VN>Chọn khay</vi-VN>
+    </Item>
+    <Item>
+      <en-US>DifferentTray</en-US>
+      <zh-CN>不同Tray测试</zh-CN>
+      <zh-CHT>不同Tray測試</zh-CHT>
+      <vi-VN>Thử khay khác nhau</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Enable Scan SN</en-US>
+      <zh-CN>启用扫码</zh-CN>
+      <zh-CHT>啟用掃碼</zh-CHT>
+      <vi-VN>Bật mã quét</vi-VN>
+    </Item>
+    <Item>
+      <en-US>All bin ok</en-US>
+      <zh-CN>不分Bin测试</zh-CN>
+      <zh-CHT>不分Bin測試</zh-CHT>
+      <vi-VN>Kiểm tra thùng rác</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Enable MTCP</en-US>
+      <zh-CN>启用MTCP</zh-CN>
+      <zh-CHT>啟用MTCP</zh-CHT>
+      <vi-VN>Bật MTV</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Turn off the buzzer</en-US>
+      <zh-CN>关闭报警提示音</zh-CN>
+      <zh-CHT>關閉報警提示音</zh-CHT>
+      <vi-VN>Tắt báo động đi.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Enable TM</en-US>
+      <zh-CN>启用TM</zh-CN>
+      <zh-CHT>啟用TM</zh-CHT>
+      <vi-VN>Bật trang TM</vi-VN>
+    </Item>
+    <Item>
+      <en-US>DUT identifies whether to stop after fail</en-US>
+      <zh-CN>DUT识别失败时是否停机</zh-CN>
+      <zh-CHT>DUT識別失敗時是否停機</zh-CHT>
+      <vi-VN>Ngừng DUT khi chưa xác định được.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>DryRun</en-US>
+      <zh-CN>空跑模式</zh-CN>
+      <zh-CHT>空跑模式</zh-CHT>
+      <vi-VN>Chế độ điều hành không</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Only Scan</en-US>
+      <zh-CN>仅扫码</zh-CN>
+      <zh-CHT>僅掃碼</zh-CHT>
+      <vi-VN>Chỉ mã quét</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Import SN list:</en-US>
+      <zh-CN>导入产品SN列表：</zh-CN>
+      <zh-CHT>導入產品SN清單：</zh-CHT>
+      <vi-VN>导入产品SN列表：</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Select DUT SN:</en-US>
+      <zh-CN>挑选DUT SN：</zh-CN>
+      <zh-CHT>挑選DUT SN：</zh-CHT>
+      <vi-VN>Danh sách nháp</vi-VN>
+    </Item>
+    <Item>
+      <en-US>All DUT SN:</en-US>
+      <zh-CN>所有DUT SN：</zh-CN>
+      <zh-CHT>所有DUT SN：</zh-CHT>
+      <vi-VN>Tất cả DUT SN:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Online/Offline Configuraition</en-US>
+      <zh-CN>在线/离线配置</zh-CN>
+      <zh-CHT>在線/離線配置</zh-CHT>
+      <vi-VN>Trực tuyến/Diễn đàn Cấu hình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Open</en-US>
+      <zh-CN>打开</zh-CN>
+      <zh-CHT>打開</zh-CHT>
+      <vi-VN>Mở</vi-VN>
+    </Item>
+    <Item>
+      <en-US>OPERATION</en-US>
+      <zh-CN>操作</zh-CN>
+      <zh-CHT>操作</zh-CHT>
+      <vi-VN>Hoạt động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Outputs:</en-US>
+      <zh-CN>输出参数:</zh-CN>
+      <zh-CHT>輸出參數:</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>OverStop</en-US>
+      <zh-CN>全部完成后停止</zh-CN>
+      <zh-CHT>全部完成後停止</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Parameter</en-US>
+      <zh-CN>参数</zh-CN>
+      <zh-CHT>參數</zh-CHT>
+      <vi-VN>tham số</vi-VN>
+    </Item>
+    <Item>
+      <en-US>params</en-US>
+      <zh-CHT>輸入</zh-CHT>
+      <zh-CN>输入</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Pass Rate</en-US>
+      <zh-CN>通过率</zh-CN>
+      <zh-CHT>通過率</zh-CHT>
+      <vi-VN>Tỷ lệ vượt qua</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Passed</en-US>
+      <zh-CN>已通过</zh-CN>
+      <zh-CHT>已通過</zh-CHT>
+      <vi-VN>Thông qua</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Paste</en-US>
+      <zh-CN>粘贴</zh-CN>
+      <zh-CHT>粘貼</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Pause</en-US>
+      <zh-CN>暂停</zh-CN>
+      <zh-CHT>暫停</zh-CHT>
+      <vi-VN>đình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Pause Failed</en-US>
+      <zh-CN>暂停失败</zh-CN>
+      <zh-CHT>暫停失敗</zh-CHT>
+      <vi-VN>Tạm dừng Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Paused</en-US>
+      <zh-CN>已暂停</zh-CN>
+      <zh-CHT>已暫停</zh-CHT>
+      <vi-VN>Tạm dừng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Percent</en-US>
+      <zh-CN>百分比</zh-CN>
+      <zh-CHT>百分比</zh-CHT>
+      <vi-VN>phần</vi-VN>
+    </Item>
+    <Item>
+      <en-US>PlcVarName</en-US>
+      <zh-CN>变量名称</zh-CN>
+      <zh-CHT>變量名稱</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Test Row:</en-US>
+      <zh-CN>测试起始行:</zh-CN>
+      <zh-CHT>測試起始行:</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Test Col:</en-US>
+      <zh-CN>测试起始列:</zh-CN>
+      <zh-CHT>測試起始列:</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>previous 2D test station's ID</en-US>
+      <zh-CN>前序2D测试工站ID</zh-CN>
+      <zh-CHT>前序2D測試工站ID</zh-CHT>
+      <vi-VN>ID của trạm kiểm tra 2D trước đó</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Procedure</en-US>
+      <zh-CHT>流程</zh-CHT>
+      <zh-CN>流程</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Ready</en-US>
+      <zh-CN>准备完成</zh-CN>
+      <zh-CHT>準備完成</zh-CHT>
+      <vi-VN>Sẵn sàng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Recipe</en-US>
+      <zh-CN>配方</zh-CN>
+      <zh-CHT>配方</zh-CHT>
+      <vi-VN>công</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Recipe Config</en-US>
+      <zh-CN>配方配置</zh-CN>
+      <zh-CHT>配方配寘</zh-CHT>
+      <vi-VN>Cấu hình Formula</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Recipe:</en-US>
+      <zh-CN>配方:</zh-CN>
+      <zh-CHT>配方:</zh-CHT>
+      <vi-VN>công:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Reconnect</en-US>
+      <zh-CN>重连</zh-CN>
+      <zh-CHT>重連</zh-CHT>
+      <vi-VN>tái kết</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Region:</en-US>
+      <zh-CN>区域:</zh-CN>
+      <zh-CHT>區域:</zh-CHT>
+      <vi-VN>vùng:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Remark</en-US>
+      <zh-CN>备注</zh-CN>
+      <zh-CHT>備註</zh-CHT>
+      <vi-VN>nhận</vi-VN>
+    </Item>
+    <Item>
+      <en-US>reset</en-US>
+      <zh-CN>重置</zh-CN>
+      <zh-CHT>重置</zh-CHT>
+      <vi-VN>Đặt</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Reset</en-US>
+      <zh-CN>复位</zh-CN>
+      <zh-CHT>復位</zh-CHT>
+      <vi-VN>Reset</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Set</en-US>
+      <zh-CN>设置</zh-CN>
+      <zh-CHT>設定</zh-CHT>
+      <vi-VN>thiết lập</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Mode Set</en-US>
+      <zh-CN>模式设置</zh-CN>
+      <zh-CHT>模式設定</zh-CHT>
+      <vi-VN>Thiết lập chế độ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Clear error</en-US>
+      <zh-CN>清错</zh-CN>
+      <zh-CHT>清錯</zh-CHT>
+      <vi-VN>Xóa sai lầm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>State monitoring</en-US>
+      <zh-CN>状态监控</zh-CN>
+      <zh-CHT>狀態監控</zh-CHT>
+      <vi-VN>Giám sát bang</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Error message</en-US>
+      <zh-CN>错误信息</zh-CN>
+      <zh-CHT>錯誤資訊</zh-CHT>
+      <vi-VN>lỗi thông điệp</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Time</en-US>
+      <zh-CN>时间</zh-CN>
+      <zh-CHT>時間</zh-CHT>
+      <vi-VN>giờ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Run Log</en-US>
+      <zh-CN>运行日志</zh-CN>
+      <zh-CHT>運行日誌</zh-CHT>
+      <vi-VN>Bản ghi hoạt động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Reset Failed</en-US>
+      <zh-CN>复位失败</zh-CN>
+      <zh-CHT>復位失敗</zh-CHT>
+      <vi-VN>Đặt lại Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Resetting...</en-US>
+      <zh-CN>复位...</zh-CN>
+      <zh-CHT>復位...</zh-CHT>
+      <vi-VN>Đang đặt lại...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>results</en-US>
+      <zh-CHT>輸出</zh-CHT>
+      <zh-CN>输出</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Resume Failed</en-US>
+      <zh-CN>继续失败</zh-CN>
+      <zh-CHT>繼續失敗</zh-CHT>
+      <vi-VN>Sơ yếu lý lịch Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Resuming</en-US>
+      <zh-CN>继续...</zh-CN>
+      <zh-CHT>繼續...</zh-CHT>
+      <vi-VN>Tiếp tục...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Retry</en-US>
+      <zh-CN>重试</zh-CN>
+      <zh-CHT>重試</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Retrying...</en-US>
+      <zh-CN>重试中...</zh-CN>
+      <zh-CHT>重試中...</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Row</en-US>
+      <zh-CN>行</zh-CN>
+      <zh-CHT>行</zh-CHT>
+      <vi-VN>Được rồi.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Run</en-US>
+      <zh-CN>运行</zh-CN>
+      <zh-CHT>运行</zh-CHT>
+      <vi-VN>Hàm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Run Mode</en-US>
+      <zh-CN>运行模式</zh-CN>
+      <zh-CHT>運行模式</zh-CHT>
+      <vi-VN>Chế độ hoạt động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Running</en-US>
+      <zh-CN>运行中</zh-CN>
+      <zh-CHT>運行中</zh-CHT>
+      <vi-VN>Chạy...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Save</en-US>
+      <zh-CN>保存</zh-CN>
+      <zh-CHT>保存</zh-CHT>
+      <vi-VN>Lưu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>SaveAs</en-US>
+      <zh-CHT>另存為</zh-CHT>
+      <zh-CN>另存为</zh-CN>
+    </Item>
+    <Item>
+      <en-US>SaveXmlToPC</en-US>
+      <zh-CN>保存Xml到本地</zh-CN>
+      <zh-CHT>保存Xml到本地</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>SemiAuto</en-US>
+      <zh-CN>半自动</zh-CN>
+      <zh-CHT>半自動</zh-CHT>
+      <vi-VN>bán tự động</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Sequence</en-US>
+      <zh-CHT>主邏輯</zh-CHT>
+      <zh-CN>主逻辑</zh-CN>
+    </Item>
+    <Item>
+      <en-US>SN List</en-US>
+      <zh-CN>产品SN列表</zh-CN>
+      <zh-CHT>產品SN清單</zh-CHT>
+      <vi-VN>Danh sách gói hàng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Socket list</en-US>
+      <zh-CN>Socket 列表</zh-CN>
+      <zh-CHT>Socket清單</zh-CHT>
+      <vi-VN>Số ổ cắm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Socket Set</en-US>
+      <zh-CN>Socket 设置</zh-CN>
+      <zh-CHT>Socket 設定</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>Socket Test</en-US>
+      <zh-CN>Socket 测试</zh-CN>
+      <zh-CHT>Socket 測試</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>DoeSocketUniformityTest</en-US>
+      <zh-CN>Socket 一致性测试</zh-CN>
+      <zh-CHT>Socket 一致性測試</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>Test Socket:</en-US>
+      <zh-CN>测试Socket:</zh-CN>
+      <zh-CHT>測試Socket</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>Continue Test</en-US>
+      <zh-CN>继续测试</zh-CN>
+      <zh-CHT>繼續測試</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>Test Station:</en-US>
+      <zh-CN>测试工站:</zh-CN>
+      <zh-CHT>测试工站</zh-CHT>
+      <vi-VN></vi-VN>
+    </Item>
+    <Item>
+      <en-US>SocketId</en-US>
+      <zh-CN>Socket 编号:</zh-CN>
+      <zh-CHT>Socket 編號:</zh-CHT>
+      <vi-VN>Số ổ cắm.</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Start</en-US>
+      <zh-CN>开始</zh-CN>
+      <zh-CHT>開始</zh-CHT>
+      <vi-VN>Bắt đầu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Start Failed</en-US>
+      <zh-CN>开始失败</zh-CN>
+      <zh-CHT>開始失敗</zh-CHT>
+      <vi-VN>Khởi động Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>StartAll</en-US>
+      <zh-CN>开始所有</zh-CN>
+      <zh-CHT>開始所有</zh-CHT>
+      <vi-VN>Bắt đầuTất cả</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Starting...</en-US>
+      <zh-CN>开始...</zh-CN>
+      <zh-CHT>開始...</zh-CHT>
+      <vi-VN>Bắt đầu...</vi-VN>
+    </Item>
+    <Item>
+      <en-US>State</en-US>
+      <zh-CN>状态</zh-CN>
+      <zh-CHT>狀態</zh-CHT>
+      <vi-VN>Bang</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Station</en-US>
+      <zh-CN>工站</zh-CN>
+      <zh-CHT>工站</zh-CHT>
+      <vi-VN>Trạm làm việc</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Statistics</en-US>
+      <zh-CN>统计</zh-CN>
+      <zh-CHT>統計</zh-CHT>
+      <vi-VN>Thống kê</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Status</en-US>
+      <zh-CN>状态栏</zh-CN>
+      <zh-CHT>狀態列</zh-CHT>
+      <vi-VN>Thanh trạng thái</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Stop</en-US>
+      <zh-CN>停止</zh-CN>
+      <zh-CHT>停止</zh-CHT>
+      <vi-VN>Dừng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Stop Failed</en-US>
+      <zh-CN>停止失败</zh-CN>
+      <zh-CHT>停止失敗</zh-CHT>
+      <vi-VN>Dừng Thất bại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Sync time</en-US>
+      <zh-CN>同步时间</zh-CN>
+      <zh-CHT>同步時間</zh-CHT>
+      <vi-VN>Thời gian đồng bộ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>System Status</en-US>
+      <zh-CN>系统状态</zh-CN>
+      <zh-CHT>系統狀態</zh-CHT>
+      <vi-VN>Trạng thái Hệ thống</vi-VN>
+    </Item>
+    <Item>
+      <en-US>SysTime</en-US>
+      <zh-CN>系统时间</zh-CN>
+      <zh-CHT>系統時間</zh-CHT>
+      <vi-VN>Thời gian hệ thống</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Test</en-US>
+      <zh-CHT>測試</zh-CHT>
+      <zh-CN>测试</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Test Times:</en-US>
+      <zh-CN>测试次数:</zh-CN>
+      <zh-CHT>測試次數:</zh-CHT>
+      <vi-VN>Tháo gỡ gỡ mã gốc:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Test2</en-US>
+      <zh-CHT>測試2</zh-CHT>
+      <zh-CN>测试2</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Tested</en-US>
+      <zh-CN>已测试</zh-CN>
+      <zh-CHT>已測試</zh-CHT>
+      <vi-VN>Thử nghiệm</vi-VN>
+    </Item>
+    <Item>
+      <en-US>thread</en-US>
+      <zh-CHT>線程碼</zh-CHT>
+      <zh-CN>线程码</zh-CN>
+    </Item>
+    <Item>
+      <en-US>time(ms)</en-US>
+      <zh-CHT>用時(ms)</zh-CHT>
+      <zh-CN>用时(ms)</zh-CN>
+    </Item>
+    <Item>
+      <en-US>timeout</en-US>
+      <zh-CHT>超時</zh-CHT>
+      <zh-CN>超时</zh-CN>
+    </Item>
+    <Item>
+      <en-US>ActVel[mm/s]</en-US>
+      <zh-CHT>實时速度:</zh-CHT>
+      <zh-CN>实时速度:</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Axis pos list</en-US>
+      <zh-CHT>軸位置清單</zh-CHT>
+      <zh-CN>轴位置列表</zh-CN>
+    </Item>
+    <Item>
+      <en-US>ActPos[mm]</en-US>
+      <zh-CHT>實时位置:</zh-CHT>
+      <zh-CN>实时位置:</zh-CN>
+    </Item>
+    <Item>
+      <en-US>ObjPos[mm]</en-US>
+      <zh-CHT>目標位置:</zh-CHT>
+      <zh-CN>目标位置:</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Vel[mm/s]</en-US>
+      <zh-CHT>移動速度:</zh-CHT>
+      <zh-CN>移动速度:</zh-CN>
+    </Item>
+    <Item>
+      <en-US>GoTo</en-US>
+      <zh-CHT>移動</zh-CHT>
+      <zh-CN>移动</zh-CN>
+    </Item>
+    <Item>
+      <en-US>todo</en-US>
+      <zh-CHT>條件跳轉</zh-CHT>
+      <zh-CN>条件跳转</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Tools</en-US>
+      <zh-CHT>工具</zh-CHT>
+      <zh-CN>工具</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Total</en-US>
+      <zh-CN>总计</zh-CN>
+      <zh-CHT>總計</zh-CHT>
+      <vi-VN>Tổng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Tray Data</en-US>
+      <zh-CN>Tray盘数据</zh-CN>
+      <zh-CHT>Tray盤數據</zh-CHT>
+      <vi-VN>Dữ liệu khay</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Tray ID:</en-US>
+      <zh-CN>Tray盘编号:</zh-CN>
+      <zh-CHT>Tray盤編號:</zh-CHT>
+      <vi-VN>Số khay:</vi-VN>
+    </Item>
+    <Item>
+      <en-US>TURNTABLE</en-US>
+      <zh-CN>转盘</zh-CN>
+      <zh-CHT>转盘</zh-CHT>
+      <vi-VN>TURNTABLE</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Type</en-US>
+      <zh-CN>类型</zh-CN>
+      <zh-CHT>類型</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Unknown</en-US>
+      <zh-CN>未知状态</zh-CN>
+      <zh-CHT>未知狀態</zh-CHT>
+      <vi-VN>Trạng thái lạ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UnLoad Tray</en-US>
+      <zh-CN>下料Tray盘</zh-CN>
+      <zh-CHT>下料Tray盤</zh-CHT>
+      <vi-VN>Khay cắt</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UPH</en-US>
+      <zh-CN>每小时产出</zh-CN>
+      <zh-CHT>每小時產出</zh-CHT>
+      <vi-VN>Xuất mỗi giờ</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UploadFromPLC</en-US>
+      <zh-CN>加载自PLC</zh-CN>
+      <zh-CHT>加載自PLC</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Username</en-US>
+      <zh-CN>用户名</zh-CN>
+      <zh-CHT>用戶名</zh-CHT>
+      <vi-VN>Tên người dùng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Value</en-US>
+      <zh-CN>变量值</zh-CN>
+      <zh-CHT>變量值</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>View</en-US>
+      <zh-CHT>視窗</zh-CHT>
+      <zh-CN>视窗</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Vision</en-US>
+      <zh-CN>视觉</zh-CN>
+      <zh-CHT>视觉</zh-CHT>
+      <vi-VN>Tầm nhìn</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Override：</en-US>
+      <zh-CN>速度比例：</zh-CN>
+      <zh-CHT>速度比例：</zh-CHT>
+      <vi-VN>Đa số hệ thống：</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Chart update interval(min.):</en-US>
+      <zh-CN>Chart更新间隔(分钟):</zh-CN>
+      <zh-CHT>Chart更新間隔(分鐘):</zh-CHT>
+      <vi-VN>Khoảng cập nhật Biểu đồ(phút):</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Chart display span(hours):</en-US>
+      <zh-CN>Chart显示跨度(小时):</zh-CN>
+      <zh-CHT>Chart顯示跨度(小時):</zh-CHT>
+      <vi-VN>Khoảng thời gian biểu đồ(giờ):</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UPH calculation time span(min.):</en-US>
+      <zh-CN>UPH计算时间跨度(分钟):</zh-CN>
+      <zh-CHT>UPH計算時間跨度(分鐘):</zh-CHT>
+      <vi-VN>Thời gian tính UPH (phút):</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Export chart</en-US>
+      <zh-CN>导出图表</zh-CN>
+      <zh-CHT>匯出圖表</zh-CHT>
+      <vi-VN>Biểu đồ xuất khẩu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Refresh configuration</en-US>
+      <zh-CN>刷新配置</zh-CN>
+      <zh-CHT>重繪配寘</zh-CHT>
+      <vi-VN>Thay đổi cấu hình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Save configuration</en-US>
+      <zh-CN>保存配置</zh-CN>
+      <zh-CHT>保存配寘</zh-CHT>
+      <vi-VN>Lưu cấu hình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>UPH Chart</en-US>
+      <zh-CN>UPH 图表</zh-CN>
+      <zh-CHT>UPH 圖表</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>CurrentLotId</en-US>
+      <zh-CN>当前Lot编号</zh-CN>
+      <zh-CHT>當前Lot編號</zh-CHT>
+      <vi-VN>Số lượng hiện tại</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Write to PLC1</en-US>
+      <zh-CN>写入PLC</zh-CN>
+      <zh-CHT>寫入PLC</zh-CHT>
+      <vi-VN>Ghi vào PLC</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Yes</en-US>
+      <zh-CN>是的</zh-CN>
+      <zh-CHT>是的</zh-CHT>
+    </Item>
+  </Items>
+</Language>

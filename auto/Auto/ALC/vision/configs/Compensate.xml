@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-16"?>
+<SystemPrara_New xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <UseNewCalib>true</UseNewCalib>
+  <Nozzle1_Slot_CompensateX>0</Nozzle1_Slot_CompensateX>
+  <Nozzle1_Slot_CompensateY>0</Nozzle1_Slot_CompensateY>
+  <Nozzle1_Slot_CompensateR>0</Nozzle1_Slot_CompensateR>
+  <Nozzle2_Slot_CompensateX>0</Nozzle2_Slot_CompensateX>
+  <Nozzle2_Slot_CompensateY>0</Nozzle2_Slot_CompensateY>
+  <Nozzle2_Slot_CompensateR>0</Nozzle2_Slot_CompensateR>
+  <Nozzle1_TrayDUT_CompensateX>-0.08</Nozzle1_TrayDUT_CompensateX>
+  <Nozzle1_TrayDUT_CompensateY>0</Nozzle1_TrayDUT_CompensateY>
+  <Nozzle1_TrayDUT_CompensateR>0</Nozzle1_TrayDUT_CompensateR>
+  <Nozzle2_TrayDUT_CompensateX>0</Nozzle2_TrayDUT_CompensateX>
+  <Nozzle2_TrayDUT_CompensateY>0</Nozzle2_TrayDUT_CompensateY>
+  <Nozzle2_TrayDUT_CompensateR>0</Nozzle2_TrayDUT_CompensateR>
+  <Nozzle1_Socket_Get_DUT_CompensateX>0</Nozzle1_Socket_Get_DUT_CompensateX>
+  <Nozzle1_Socket_Get_DUT_CompensateY>0</Nozzle1_Socket_Get_DUT_CompensateY>
+  <Nozzle1_Socket_Get_DUT_CompensateR>0</Nozzle1_Socket_Get_DUT_CompensateR>
+  <Nozzle1_Socket_Put_DUT_CompensateX>0.507</Nozzle1_Socket_Put_DUT_CompensateX>
+  <Nozzle1_Socket_Put_DUT_CompensateY>0.151</Nozzle1_Socket_Put_DUT_CompensateY>
+  <Nozzle1_Socket_Put_DUT_CompensateR>0</Nozzle1_Socket_Put_DUT_CompensateR>
+  <Nozzle2_Socket_Get_DUT_CompensateX>0</Nozzle2_Socket_Get_DUT_CompensateX>
+  <Nozzle2_Socket_Get_DUT_CompensateY>0.2</Nozzle2_Socket_Get_DUT_CompensateY>
+  <Nozzle2_Socket_Get_DUT_CompensateR>0</Nozzle2_Socket_Get_DUT_CompensateR>
+  <Nozzle2_Socket_Put_DUT_CompensateX>0</Nozzle2_Socket_Put_DUT_CompensateX>
+  <Nozzle2_Socket_Put_DUT_CompensateY>0</Nozzle2_Socket_Put_DUT_CompensateY>
+  <Nozzle2_Socket_Put_DUT_CompensateR>0</Nozzle2_Socket_Put_DUT_CompensateR>
+</SystemPrara_New>

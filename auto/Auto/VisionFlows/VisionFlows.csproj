@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VisionFlows</RootNamespace>
+    <AssemblyName>VisionFlows</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\ALC\plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\ALC\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AlcUtility">
+      <HintPath>..\ALC\bin\AlcUtility.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="halcondotnet, Version=19.11.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="NetAndEvent">
+      <HintPath>..\ALC\bin\NetAndEvent.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Poc2Auto, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\plugins\Poc2Auto.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VisionCamera.Basler">
+      <HintPath>..\ALC\bin\VisionCamera.Basler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VisionControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\VisionControls.dll</HintPath>
+    </Reference>
+    <Reference Include="VisionDemo">
+      <HintPath>..\ALC\bin\VisionDemo.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VisionModules">
+      <HintPath>..\ALC\bin\VisionModules.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VisionUtility">
+      <HintPath>..\ALC\bin\VisionUtility.dll</HintPath>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\ALC\bin\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcqPosi.cs" />
+    <Compile Include="Algorithm.cs" />
+    <Compile Include="Form_offset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_offset.Designer.cs">
+      <DependentUpon>Form_offset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImagePara.cs" />
+    <Compile Include="ImageProcessBase.cs" />
+    <Compile Include="MultipleModes_New\AutoNormal_New.cs" />
+    <Compile Include="MultipleModes_New\AutoSelect_New.cs" />
+    <Compile Include="MultipleModes_New\DeoSlip_New.cs" />
+    <Compile Include="MultipleModes_New\DoeSameTray_New.cs" />
+    <Compile Include="NewCalib\FormNewCalib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCalib\FormNewCalib.Designer.cs">
+      <DependentUpon>FormNewCalib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParameterSetting\FrmAutoSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParameterSetting\FrmAutoSelect.Designer.cs">
+      <DependentUpon>FrmAutoSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewCalib\StaticCameraCalib.cs" />
+    <Compile Include="PLC\Plc.cs" />
+    <Compile Include="ImageProcess_Poc2.cs" />
+    <Compile Include="ParameterSetting\FrmAutoNormal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParameterSetting\FrmAutoNormal.Designer.cs">
+      <DependentUpon>FrmAutoNormal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PLC\FrmPlc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PLC\FrmPlc.Designer.cs">
+      <DependentUpon>FrmPlc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVisionUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVisionUI.Designer.cs">
+      <DependentUpon>FrmVisionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\SystemPara.cs" />
+    <Compile Include="Helper\Utility.cs" />
+    <Compile Include="Flow.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helper\SystemPrara_New.cs" />
+    <Compile Include="FormSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSet.Designer.cs">
+      <DependentUpon>FormSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VisionCalculate\VisionLocation.cs" />
+    <Compile Include="Helper\VisionPlugin.cs" />
+    <Compile Include="Helper\XmlHelper.cs" />
+    <EmbeddedResource Include="Form_offset.resx">
+      <DependentUpon>Form_offset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCalib\FormNewCalib.resx">
+      <DependentUpon>FormNewCalib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParameterSetting\FrmAutoNormal.resx">
+      <DependentUpon>FrmAutoNormal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParameterSetting\FrmAutoSelect.resx">
+      <DependentUpon>FrmAutoSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PLC\FrmPlc.resx">
+      <DependentUpon>FrmPlc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVisionUI.resx">
+      <DependentUpon>FrmVisionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="FormSet.resx">
+      <DependentUpon>FormSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\npointPath.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\node0.ico" />
+    <None Include="Resources\node1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rotatePath.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

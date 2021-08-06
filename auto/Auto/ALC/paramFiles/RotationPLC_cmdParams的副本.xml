@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="RotationPLC" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="30" Description="SocketOpened">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="31" Description="SocketClosed">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="32" Description="RotateDone">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="33" Description="PutDone">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="34" Description="Rotate">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

@@ -1,0 +1,2813 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CYGKit.Factory</name>
+    </assembly>
+    <members>
+        <member name="T:CYGKit.Factory.ConditionEditor.UC_Rules">
+            <summary>
+            Rules控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_Rules.FilePath">
+            <summary>
+            规则文件路径
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_Rules.Root">
+            <summary>
+            root数据
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.#ctor">
+            <summary>
+            Rules控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.UpdateUI(CYGKit.Factory.ConditionEditor.Root)">
+            <summary>
+            刷新UI
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.LoadFile(System.String)">
+            <summary>
+            加载规则文件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.SaveRules">
+            <summary>
+            保存规则
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.UC_Rules.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rules.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.Root">
+            <summary>
+            根节点
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Root.Rules">
+            <summary>
+            规则集合
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.Rule">
+            <summary>
+            规则，一个条件组对应一个结果
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Rule.Order">
+            <summary>
+            条件排序
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Rule.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Rule.ConditionGroup">
+            <summary>
+            条件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Rule.Result">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.ConditionGroup">
+            <summary>
+            条件组，包含多个条件和条件组
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.ConditionGroup.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.ConditionGroup.Type">
+            <summary>
+            条件组合类型
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.ConditionGroup.Conditions">
+            <summary>
+            条件集合
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.ConditionGroup.ConditionGroups">
+            <summary>
+            条件组集合
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.Condition">
+            <summary>
+            条件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Condition.Reverse">
+            <summary>
+            是否取反
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Condition.Name">
+            <summary>
+            条件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.Condition.Params">
+            <summary>
+            参数值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.ConditionType">
+            <summary>
+            条件组合类型
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionType.And">
+            <summary>
+            所有条件成立为真，否则为假
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionType.Or">
+            <summary>
+            只要有一个条件成立则为真
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.ConditionName">
+            <summary>
+            条件名
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.None">
+            <summary>
+            无条件
+            ***恒为真***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.ContainsAll">
+            <summary>
+            包含所有
+            ***参数不定，包含参数中所有的值为真***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.ContainsOne">
+            <summary>
+            包含一个
+            ***参数不定，只要包含参数中某一个值则为真***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.GreaterThan">
+            <summary>
+            大于
+            ***参数为(p1,p2)，用源数据中第p1个值和p2比较，大于为真，否则为假***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.LessThan">
+            <summary>
+            小于
+            ***参数为(p1,p2)，用源数据中第p1个值和p2比较，小于为真，否则为假***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.Equal">
+            <summary>
+            等于
+            ***参数为(p1,p2)，用源数据中第p1个值和p2比较，等于为真，否则为假***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.GreaterOrEqual">
+            <summary>
+            大于或等于
+            ***参数为(p1,p2)，用源数据中第p1个值和p2比较，大于或等于为真，否则为假***
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ConditionName.LessOrEqual">
+            <summary>
+            小于或等于
+            ***参数为(p1,p2)，用源数据中第p1个值和p2比较，小于或等于为真，否则为假***
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.ResultType">
+            <summary>
+            结果类型
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ResultType.None">
+            <summary>
+            无
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ResultType.Max">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ResultType.Min">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.ResultType.Average">
+            <summary>
+            平均值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.ConditionHelper">
+            <summary>
+            condition帮助类
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.ConditionHelper.LoadRules(System.String)">
+            <summary>
+            加载文件到Root
+            </summary>
+            <exception cref="T:System.Exception">文件不存在</exception>
+            <exception cref="T:System.Exception">文件格式不正确</exception>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.ConditionHelper.SaveRules(CYGKit.Factory.ConditionEditor.Root,System.String)">
+            <summary>
+            保存Root到文件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.ConditionHelper.Calculate(System.Int32[],CYGKit.Factory.ConditionEditor.Root,System.Int32@)">
+            <summary>
+            根据规则计算出结果
+            </summary>
+            <param name="data">数据</param>
+            <param name="root">规则</param>
+            <param name="value">结果值</param>
+            <returns>计算是否成功</returns>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.UC_Condition">
+            <summary>
+            条件控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Condition.#ctor">
+            <summary>
+            条件控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Condition.ProcessCmdKey(System.Windows.Forms.Message@,System.Windows.Forms.Keys)">
+            <summary>
+            处理命令键
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_Condition.Condition">
+            <summary>
+            条件数据
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.UC_Condition.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Condition.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Condition.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.UC_ConditionGroup">
+            <summary>
+            条件组控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.ConditionGroup">
+            <summary>
+            条件组数据
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.ShowTitle">
+            <summary>
+            是否显示头
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.CanDelete">
+            <summary>
+            是否可以删除
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.#ctor">
+            <summary>
+            条件组控件
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_ConditionGroup.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ConditionEditor.UC_Rule">
+            <summary>
+            Rule控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ConditionEditor.UC_Rule.Rule">
+            <summary>
+            rule数据
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rule.#ctor">
+            <summary>
+            Rule控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rule.UpdateUI(CYGKit.Factory.ConditionEditor.Rule)">
+            <summary>
+            刷新UI
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ConditionEditor.UC_Rule.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rule.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ConditionEditor.UC_Rule.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Lot.Form_NewLot`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TLot"></typeparam>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.Form_NewLot`1.#ctor(`0)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.Lot.Form_NewLot`1.Accept">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Lot.Form_NewLot`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.Form_NewLot`1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.Form_NewLot`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Lot.LotItemAttribute">
+            <summary>
+            lot项特性
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Lot.LotItemAttribute.DisplayName">
+            <summary>
+            展示名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Lot.LotItemAttribute.Editable">
+            <summary>
+            是否可编辑
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Lot.LotItemAttribute.CustomFunc">
+            <summary>
+            自定义方法
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.LotItemAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            lot项特性
+            </summary>
+            <param name="displayName">展示名</param>
+            <param name="editable">是否可编辑</param>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.LotItemAttribute.#ctor(System.String,System.Type,System.String)">
+            <summary>
+            lot项特性
+            </summary>
+            <param name="displayName">展示名</param>
+            <param name="classType">自定义方法所在的类</param>
+            <param name="funcName">自定义方法名，必须是静态函数</param>
+        </member>
+        <member name="T:CYGKit.Factory.Lot.LotManager`2">
+            <summary>
+            数据库Lot表管理
+            </summary>
+            <typeparam name="TContext">数据库上下文</typeparam>
+            <typeparam name="TLot">Lot表</typeparam>
+        </member>
+        <member name="E:CYGKit.Factory.Lot.LotManager`2.LotChanged">
+            <summary>
+            lot改变时触发
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.LotManager`2.GetLot">
+            <summary>
+            获取Lot信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.LotManager`2.NewLot(`1,System.Boolean)">
+            <summary>
+            新建lot
+            </summary>
+            <param name="lot">lot数据</param>
+            <param name="force">是否强制新建，true：清空旧lot信息，新建lot；false：若已存在lot信息触发异常</param>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.LotManager`2.EndLot">
+            <summary>
+            结束lot
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Lot.UC_Lot`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="TContext"></typeparam>
+            <typeparam name="TLot"></typeparam>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.UC_Lot`2.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Lot.UC_Lot`2.Row">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Lot.UC_Lot`2.Column">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.Lot.UC_Lot`2.Startlot">
+            <summary>
+            StartLot点击事件
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.Lot.UC_Lot`2.Endlot">
+            <summary>
+            EndLot点击事件
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Lot.UC_Lot`2.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.UC_Lot`2.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Lot.UC_Lot`2.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_LotBinDataGrid.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinDataGrid.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinDataGrid.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB._currentLotId">
+            <summary>
+            当前LotId
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB._dataSource">
+            <summary>
+            lotId,binStats
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.update">
+            <summary>
+            刷新数据源
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.updateLotIds">
+            <summary>
+            刷新cmbLotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.updateHist">
+            <summary>
+            根据当前cmbLotId 刷新Hist 的binStat
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_LotBinStatDB.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:CYGKit.Factory.ManualStatistics.UC_StationLotBinDataGrid._dataSource" -->
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_StationLotBinDataGrid.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinDataGrid.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinDataGrid.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB._dataSource" -->
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB._currentLotId">
+            <summary>
+            当前LotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.update">
+            <summary>
+            刷新数据源
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.updateLotIds">
+            <summary>
+            刷新cmbLotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.updateHist">
+            <summary>
+            根据当前cmbLotId 刷新Hist 的binStat
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationLotBinStatDB.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ManualStatistics.SiteStatUnit">
+            <summary>
+            统计每个位置的数据
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.ManualStatistics.SiteStatUnit.UpdateTotalStat">
+            <summary>
+            触发外部SiteStatUnit集合的统计数据事件关联
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ManualStatistics.StationBase">
+            <summary>
+            统计工站结构体
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.Name">
+            <summary>
+            工站名字
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.IP">
+            <summary>
+            工站连接的IP
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.SN">
+            <summary>
+            工站当前测试产品的sn
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.TestReslut">
+            <summary>
+            工站的测试结果
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.Enable">
+            <summary>
+            工站屏蔽状态
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.ManualStatistics.StationBase.EnableChanged">
+            <summary>
+            工站屏蔽状态改变事件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.Status">
+            <summary>
+            工站运行状态
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.StatusColor">
+            <summary>
+            工站状态对应的颜色
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.StartWorkTime">
+            <summary>
+            开始工作时间(s)
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.WorkTime">
+            <summary>
+            工作时间(s)
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationBase.ConnectState">
+            <summary>
+            链接状态
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ManualStatistics.StationStat">
+            <summary>
+            统计工站结构体
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationStat.Name">
+            <summary>
+            工站名字
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.StationStat.#ctor(System.String)">
+            <summary>
+            工站统计绑定
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationStat.Input">
+            <summary>
+            产品输入数量
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationStat.Output">
+            <summary>
+            产品输出数量
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationStat.Untested">
+            <summary>
+            未测试产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.ManualStatistics.StationStat.Miss">
+            <summary>
+            丢失的产品数量
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.StationStat.createContext">
+            <summary>
+            用于关联数据库更新函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.StationStat.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.StationStat.UploadFromDb">
+            <summary>
+            初始化数据库调用此函数上载数据库数据到数据源
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.ManualStatistics.SocketStat">
+            <summary>
+            ---未使用---
+            统计一个Socket在不同位置的统计数据
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.ManualStatistics.SocketStat.UpdateDb">
+            <summary>
+            用于关联数据库更新函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.SocketStat.updateStatistics">
+            <summary>
+            SiteStats 的元素增加事件关联SiteStatUnit.UpdateAllStatistics
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_BinStat.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_BinStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_BinStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_BinStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_SiteStatUnit.BindData(CYGKit.Factory.ManualStatistics.SiteStatUnit)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_SiteStatUnit.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_SiteStatUnit.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_SiteStatUnit.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_SocketStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_SocketStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_SocketStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationStat.BindData(CYGKit.Factory.ManualStatistics.StationStat)">
+            <summary>
+            该方法仅适用单线程操作，异步线程操作不适用
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:CYGKit.Factory.ManualStatistics.UC_StationStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.ManualStatistics.UC_StationStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Manual.NewStation.UC_NewStation.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.NewStation.UC_NewStation.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.NewStation.UC_NewStation.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Manual.NewStation.UC_NewStationStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.NewStation.UC_NewStationStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.NewStation.UC_NewStationStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Manual.UC_TraySet.TrayName">
+             <summary>
+            托盘名称枚举，方便判断使用，可根据项目增减
+             </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.#ctor">
+             <summary>
+            构造函数
+             </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TraySet.PlcDriver">
+             <summary>
+            绑定PLC连接接口
+             </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TraySet.LoadTrayRegion">
+             <summary>
+            返回上料盘的所选区域，所选中的为1
+             </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TraySet.NGTrayRegion">
+             <summary>
+            返回下料NG盘的所选区域，所选中的为1
+             </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TraySet.PassTrayRegion">
+             <summary>
+            返回下料Pass盘的所选区域，所选中的为1
+             </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.BindEnum``1">
+             <summary>
+            BinName绑定combox
+             </summary>
+             <typeparam name="T"></typeparam>
+             <param name="type"></param>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.IsLoadTraySelectable(System.Boolean)">
+             <summary>
+            上料盘是否可选
+             </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Manual.UC_TraySet.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Manual.UC_TrayValue">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TrayValue.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.TrayID">
+            <summary>
+            tray盘编号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.TrayRow">
+            <summary>
+            设置Tray盘总的行数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.TrayCol">
+            <summary>
+            设置Tray盘总的列数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.Tray">
+            <summary>
+            Tray本身的实例化
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.TrayRegion">
+            <summary>
+            选定的Tray区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.TrayDutNumber">
+            <summary>
+            选定区域的格子个数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.StartRow">
+            <summary>
+            选定区域开始的行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.StartCol">
+            <summary>
+            选定区域开始的列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.EndRow">
+            <summary>
+            选定区域结束的行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.EndCol">
+            <summary>
+            选定区域结束的列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TrayValue.EnableUpdate">
+            <summary>
+            是否屏蔽刷新Tray上面的Dut信息，默认屏蔽
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TrayValue.BindDataBase``1">
+            <summary>
+            绑定数据库后进行Tray刷新
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Manual.UC_TrayValue.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TrayValue.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TrayValue.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.Manual.UC_ManualTraySet.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Manual.UC_ManualTraySet.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Manual.UC_ManualTraySet.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UCRecipe.UC_List.AuthorityCtrl">
+            <summary>
+            权限控制属性
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UCRecipe.UC_List.KeyValues">
+            <summary>
+            保存数据，Item1：序号，Item2：配方Key值，Item3：配方Value值，Item4：配方描述
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UCRecipe.UC_List.AddData(System.String,System.String,System.String)">
+            <summary>
+            添加数据到DataGridView
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="description"></param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UCRecipe.UC_List.ClearView">
+            <summary>
+            清空数据
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UCRecipe.UC_List.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UCRecipe.UC_List.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UCRecipe.UC_List.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.FilePath">
+            <summary>
+            配方文件路径
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.RecipeSave">
+            <summary>
+            配方保存后触发
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.DefaultRecipe">
+            <summary>
+            启动后默认配方文件
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.Recipe.UC_Recipe._uploadData">
+            <summary>
+            从PLC加载上来的配方
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.Recipe.UC_Recipe._isOverride">
+             <summary>
+            是否覆盖当前配方
+             </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.btnSave_Click(System.Object,System.EventArgs)">
+            <summary>
+            保存修改后的配方（含下发）
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.disPlayRecipe(System.String)">
+            <summary>
+            展示配方到ListView上
+            </summary>
+            <param name="recipeName"></param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.btnDelete_Click(System.Object,System.EventArgs)">
+            <summary>
+            删除配方（源文件删除）
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.WriteToPlc">
+            <summary>
+            向下写值
+            </summary>
+            <returns>全部写入成功返回true, 否则返回false</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.modifyRecipe">
+            <summary>
+            修改配方
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.getFileNameFromFolder(System.String)">
+            <summary>
+            获取指定路径下的所有文件名
+            </summary>
+            <param name="filePath">文件路径名</param>
+            <returns>返回一个文件列表</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.Recipe.UC_Recipe.upLoadRecipe">
+            <summary>
+            从PLC底层上载配方
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SameTrayDataSrc">
+            <summary>
+            SameTrayTest数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SlipDataSrc">
+            <summary>
+            SlipTest数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DifferentTrayDataSrc">
+            <summary>
+            DifferentTrayTest数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.TakeOffDataSrc">
+            <summary>
+            TakeOffTest数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_NormalDataSrc">
+            <summary>
+            自动模式数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_SelectDUTDataSrc">
+            <summary>
+            挑料选料数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DOE_GoldenDutDataSrc">
+            <summary>
+            GoldenDut数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_MarkDataSrc">
+            <summary>
+            Auto_Mark数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SlipFileName">
+            <summary>
+            滑移测试配置文件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SameTrayFileName">
+            <summary>
+            相同tray测试配置文件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DifferentTrayFileName">
+            <summary>
+            不相同tray测试配置文件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.TakeOffFileName">
+            <summary>
+            Socket取放料配置文件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_NormalFileName">
+            <summary>
+            自动模式配置
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_SelectDUTFileName">
+            <summary>
+            挑料选料配置
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DOE_GoldenDutTestFileName">
+            <summary>
+            GoldenDut测试配置文件名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Name_TrayInfo">
+            <summary>
+            Name_TrayInfo
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.nTrayStatus">
+            <summary>
+            nTrayStatus
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.bFull">
+            <summary>
+            bFull 
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.bEmpty">
+            <summary>
+            bEmpty
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.bHave">
+            <summary>
+            bHave
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.bAbnormDut">
+            <summary>
+            bAbnormDut
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.nTrayChannel">
+            <summary>
+            nTrayChannel
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.nTrayLayNum">
+            <summary>
+            nTrayLayNum
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.nRegion_Num">
+            <summary>
+            nRegion_Num 
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.aRegion_Value">
+            <summary>
+            aRegion_Value 
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.stTrayRegion">
+            <summary>
+            stTrayRegion
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.stTrayData">
+            <summary>
+            stTrayData
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SlipFilePath">
+            <summary>
+            滑移测试配置文件路径
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.SameTrayFilePath">
+            <summary>
+            相同tray测试配置文件路径
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DifferentTrayFilePath">
+            <summary>
+            不相同tray测试配置文件路径
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.TakeOffFilePath">
+            <summary>
+            Socket取放料配置文件路径
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_NormalFilePath">
+            <summary>
+            自动模式
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.Auto_SelectFilePath">
+            <summary>
+            挑料选料
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ModeCommonDefine.DOE_GoldenDutTestFilePath">
+            <summary>
+            GoldenDut测试配置文件路径
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.ModeCommonDefine.TrayCol">
+            <summary>
+            Tray的列导入
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.ModeCommonDefine.TrayRow">
+            <summary>
+            Tray的行导入
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.LoadTrayId">
+            <summary>
+            上料段TrayId
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.LoadTrayRegion">
+            <summary>
+            上料端选料区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.LoadTrayDuts">
+            <summary>
+            上料端选料个数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.UnLoadTrayId">
+            <summary>
+            下料段TrayId
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.UnLoadTrayRegion">
+            <summary>
+            下料端选料区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.TraySelectionInfo.UnLoadTrayDuts">
+            <summary>
+            下料端选料个数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.TrayRow">
+            <summary>
+            Tray盘行数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.TrayColumn">
+            <summary>
+            Tray盘列数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.NGTray">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.OK1Tray">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.OK2Tray">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_BinRegionSet.Client">
+            <summary>
+            AdsDriverClient
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UC_BinRegionSet.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_BinRegionSet.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_BinRegionSet.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_GridviewTray.ShowCoordinate">
+            <summary>
+            显示单个单元格对应坐标
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_GridviewTray.TrayRow">
+            <summary>
+            TrayRow
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_GridviewTray.TrayCol">
+            <summary>
+            TrayCol
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_GridviewTray.BindEnum``1">
+             <summary>
+            TrayName绑定combox
+             </summary>
+             <typeparam name="T"></typeparam>
+             <param name="type"></param>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UC_GridviewTray.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_GridviewTray.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_GridviewTray.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.OtherUI.UC_XmlList.ClickEvent">
+            <summary>
+            ClickEvent
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.OtherUI.UC_XmlList.BtnClick">
+            <summary>
+            BtnClick
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_XmlList.KeyValuePairs">
+            <summary>
+            key = key, value = value
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.UC_XmlList.IsValueReadOnly">
+            <summary>
+            value列是否为只读模式
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_XmlList.LoadData(System.String,System.String)">
+            <summary>
+            写入表格
+            </summary>
+            <param name="key">第一列数据</param>
+            <param name="value">第二列数据</param>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UC_XmlList.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_XmlList.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_XmlList.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.OtherUI.ControlHelper">
+            <summary>
+            Class ControlHelper.
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.SetGDIHigh(System.Drawing.Graphics)">
+            <summary>
+            设置GDI高质量模式抗锯齿
+            </summary>
+            <param name="g">The g.</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.CreateRoundedRectanglePath(System.Drawing.Rectangle,System.Int32)">
+            <summary>
+            根据矩形和圆得到一个圆角矩形Path
+            </summary>
+            <param name="rect">The rect.</param>
+            <param name="cornerRadius">The corner radius.</param>
+            <returns>GraphicsPath.</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.CreateRoundedRectanglePath(System.Drawing.RectangleF,System.Int32)">
+            <summary>
+            Creates the rounded rectangle path.
+            </summary>
+            <param name="rect">The rect.</param>
+            <param name="cornerRadius">The corner radius.</param>
+            <returns>GraphicsPath.</returns>
+        </member>
+        <member name="P:CYGKit.Factory.OtherUI.ControlHelper.Colors">
+            <summary>
+            Gets the colors.
+            </summary>
+            <value>The colors.</value>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.DrawString(System.Drawing.Graphics,System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.PointF,System.Drawing.StringFormat,System.Single)">
+            <summary>
+            Draws the string.
+            </summary>
+            <param name="g">The g.</param>
+            <param name="s">The s.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="point">The point.</param>
+            <param name="format">The format.</param>
+            <param name="angle">The angle.</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.GetRhombusFromRectangle(System.Drawing.Rectangle)">
+            <summary>
+            Gets the rhombus from rectangle.
+            </summary>
+            <param name="rect">The rect.</param>
+            <returns>Point[].</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.ComputePaintLocationY(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Computes the paint location y.
+            </summary>
+            <param name="max">The maximum.</param>
+            <param name="min">The minimum.</param>
+            <param name="height">The height.</param>
+            <param name="value">The value.</param>
+            <returns>System.Single.</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.ComputePaintLocationY(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Computes the paint location y.
+            </summary>
+            <param name="max">The maximum.</param>
+            <param name="min">The minimum.</param>
+            <param name="height">The height.</param>
+            <param name="value">The value.</param>
+            <returns>System.Single.</returns>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.PaintCoordinateDivide(System.Drawing.Graphics,System.Drawing.Pen,System.Drawing.Pen,System.Drawing.Font,System.Drawing.Brush,System.Drawing.StringFormat,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Paints the coordinate divide.
+            </summary>
+            <param name="g">The g.</param>
+            <param name="penLine">The pen line.</param>
+            <param name="penDash">The pen dash.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="sf">The sf.</param>
+            <param name="degree">The degree.</param>
+            <param name="max">The maximum.</param>
+            <param name="min">The minimum.</param>
+            <param name="width">The width.</param>
+            <param name="height">The height.</param>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <param name="up">Up.</param>
+            <param name="down">Down.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CYGKit.Factory.OtherUI.ControlHelper.ChangeColor(System.Drawing.Color,System.Single)" -->
+        <member name="M:CYGKit.Factory.OtherUI.ControlHelper.ConvertSize(System.Drawing.SizeF,System.Single)">
+            <summary>
+            计算绕中心任意角度旋转后所占区域的宽高
+            </summary>
+            <param name="size"></param>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.StationBase._worktime">
+            <summary>
+            工作时间(s)
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.StationBase._connectState">
+            <summary>
+            链接状态
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_StationDuts.BindDataBase``1">
+            <summary>
+            绑定数据库BinColor
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UC_StationDuts.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_StationDuts.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_StationDuts.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_Station.BindData(CYGKit.Factory.OtherUI.StationBase)">
+            <summary>
+            该方法仅适用单线程操作，异步线程操作不适用
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="E:CYGKit.Factory.OtherUI.UC_Station.IsEnableChanged">
+            <summary>
+            屏蔽按钮的改变事件
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.OtherUI.UC_Station.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_Station.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.OtherUI.UC_Station.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Properties.Resources.Culture">
+            <summary>
+              重写当前线程的 CurrentUICulture 属性，对
+              使用此强类型资源类的所有资源查找执行重写。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Properties.Resources.logo">
+            <summary>
+              查找 System.Drawing.Bitmap 类型的本地化资源。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.StressCodeKit.StressCodeForm.StressCode">
+            <summary>
+            StressCode
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.StressCodeForm.#ctor">
+            <summary>
+            Stress code编辑弹框
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.StressCodeKit.StressCodeForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.StressCodeForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.StressCodeForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.StressCodeKit.StressCodeMgr">
+            <summary>
+            Stress code manager
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.StressCodeKit.StressCodeMgr.StressCode">
+            <summary>
+            Stress code
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.StressCodeMgr.ShowStressCodeEditor(System.Windows.Forms.FormStartPosition)">
+            <summary>
+            弹框编辑Stress code
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.StressCodeKit.UC_StressCode.StressCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.StressCodeKit.UC_StressCode.OnConfirmed">
+            <summary>
+            Stress code确认修改后触发
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.StressCodeKit.UC_StressCode.Path">
+            <summary>
+            StressCode csv file path
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.StressCodeKit.UC_StressCode.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.UC_StressCode.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.StressCodeKit.UC_StressCode.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.LotBinStat">
+            <summary>
+            统计每个LotId 对应的BinStat
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.LotBinStat.LotId">
+            <summary>
+            客户输入的LotId
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.LotBinStat.StrBinStats">
+            <summary>
+            BinStats 序列化存储到数据库对应字段StrBinStats
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.LotBinStat.ToDicBinStats(System.Data.Entity.DbSet{CYGKit.Factory.DataBase.LotBinStat})">
+            <summary>
+            从数据库获取历史数据集合
+            </summary>
+            <param name="lotBinStats"></param>
+            <param name="dicBinStats"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CYGKit.Factory.DataBase.LotBinStat.GetTotalBinStat(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{CYGKit.Factory.DataBase.BinStat}})" -->
+        <member name="T:CYGKit.Factory.DataBase.StationBinStat">
+            <summary>
+            统计每个工站bin统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationBinStat.StationName">
+            <summary>
+            工站名字
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationBinStat.LotId">
+            <summary>
+            客户输入的LotId
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationBinStat.StrBinStats">
+            <summary>
+            BinStats 序列化存储到数据库对应字段StrBinStats
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CYGKit.Factory.DataBase.StationBinStat.ToDicBinStats(System.Linq.IQueryable{CYGKit.Factory.DataBase.StationBinStat})" -->
+        <!-- Badly formed XML comment ignored for member "M:CYGKit.Factory.DataBase.StationBinStat.GetTotalDataSrc(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{CYGKit.Factory.DataBase.BinStat}}})" -->
+        <!-- Badly formed XML comment ignored for member "M:CYGKit.Factory.DataBase.StationBinStat.GetCurrentDataSrc(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{CYGKit.Factory.DataBase.BinStat}}},System.String)" -->
+        <member name="T:CYGKit.Factory.DataBase.BinStat">
+            <summary>
+            Bin统计使用
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.BinStat.UpdateTotalPercent(System.Collections.Generic.List{CYGKit.Factory.DataBase.BinStat})">
+            <summary>
+            根据binStats更新BinStat.Total和BinStat.Percent
+            </summary>
+            <param name="binStats">从数据库获取的bin集合</param>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.DbStatBase">
+            <summary>
+            供Nozzle,Socket统计使用
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbStatBase.UpdateDataSrcFromDb(CYGKit.Factory.Statistics.SocketStat)">
+            <summary>
+            初始化调用，上载数据库数据到实例对象
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbStatBase.UpdateDbFromDataSrc(CYGKit.Factory.Statistics.SocketStat)">
+            <summary>
+            存储数据时调用，将实例数据写入数据库
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbStatBase.UpdateDataSrcFromDb_1(CYGKit.Factory.ManualStatistics.SocketStat)">
+            <summary>
+            ManualPNP 初始化调用，上载数据库数据到实例对象
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbStatBase.UpdateDbFromDataSrc_1(CYGKit.Factory.ManualStatistics.SocketStat)">
+            <summary>
+            ManualPNP 存储数据时调用，将实例数据写入数据库
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.DbStationStat">
+            <summary>
+            工站统计使用
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.StationName">
+            <summary>
+            工站名字
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.PassCount">
+            <summary>
+            测试通过产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.FailCount">
+            <summary>
+            测试失败产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.UntestCount">
+            <summary>
+            未测试产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.MissCount">
+            <summary>
+            丢失的产品数量
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.DbStationStat.Enable">
+            <summary>
+            工站屏蔽情况
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.StationStatNew">
+            <summary>
+            新的工站统计使用
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.SN">
+            <summary>
+            工站当前正在测试的sn
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.StationName">
+            <summary>
+            工站名字
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.PassCount">
+            <summary>
+            测试通过产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.FailCount">
+            <summary>
+            测试失败产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.UntestCount">
+            <summary>
+            未测试产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.MissCount">
+            <summary>
+            丢失的产品数量
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.TotalCount">
+            <summary>
+            一共测试过的产品数量
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.StationStatNew.Enable">
+            <summary>
+            工站屏蔽情况
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.StationStatNew.UpdateDataSrcFromDb(CYGKit.Factory.ManualStatistics.StationStat)">
+            <summary>
+            ManualPNP 初始化调用，上载数据库数据到实例对象
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.StationStatNew.UpdateDbFromDataSrc(CYGKit.Factory.ManualStatistics.StationStat)">
+            <summary>
+            ManualPNP 存储数据时调用，将实例数据写入数据库
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.DbBind">
+            <summary>
+            用于SocketSn与DutSn绑定
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.BinRegion">
+            <summary>
+            分bin区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.ID">
+            <summary>
+            区域ID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.TrayID">
+            <summary>
+            tray盘ID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.StartRow">
+            <summary>
+            开始行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.StartColumn">
+            <summary>
+            开始列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.EndRow">
+            <summary>
+            结束行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.EndColumn">
+            <summary>
+            结束列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinRegion.Bin">
+            <summary>
+            bin值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.BinColor">
+            <summary>
+            bin对应颜色
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinColor.Bin">
+            <summary>
+            bin值
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinColor.ColorRGB">
+            <summary>
+            对应颜色的rgb
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.BinColor.Color">
+            <summary>
+            对应的颜色
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.TrayInfo">
+            <summary>
+            tray盘信息
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayInfo.ID">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.TrayData">
+            <summary>
+            tray盘数据
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.ID">
+            <summary>
+            key
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.TrayID">
+            <summary>
+            tray盘ID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.Row">
+            <summary>
+            行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.Column">
+            <summary>
+            列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.Barcode">
+            <summary>
+            产品码
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.TrayData.Bin">
+            <summary>
+            产品bin值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.OnlineDutBase">
+            <summary>
+            online dut数据
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.ID">
+            <summary>
+            key
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.StationID">
+            <summary>
+            当前所在工位编号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.Row">
+            <summary>
+            行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.Column">
+            <summary>
+            列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.Barcode">
+            <summary>
+            产品码
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.OnlineDutBase.Bin">
+            <summary>
+            产品bin值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.ProductBase">
+            <summary>
+            产品数据
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.ID">
+            <summary>
+            key
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.TrayID">
+            <summary>
+            输出Tray盘ID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.Row">
+            <summary>
+            行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.Column">
+            <summary>
+            列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.Barcode">
+            <summary>
+            产品码
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.Bin">
+            <summary>
+            产品bin值
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.DataBase.ProductBase.OutputTime">
+            <summary>
+            产出时间
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.DataBase.DbTableHelper">
+            <summary>
+            Table:BinStat
+            </summary>
+            <summary>
+            LotBinStat
+            </summary>
+            <summary>
+            StationBinStat
+            </summary>
+            <summary>
+            Table:DbBind
+            </summary>
+            <summary>
+            Table:DbStationStat
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.AddOrUpdateBin(System.Int32,System.Data.Entity.DbSet{CYGKit.Factory.DataBase.BinStat})">
+            <summary>
+            根据数据库中的表，更新Total和Percent变量
+            </summary>
+            <param name="binStats"></param>
+            <param name="bin"></param>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.UpdateTotalPercent(System.Data.Entity.DbSet{CYGKit.Factory.DataBase.BinStat})">
+            <summary>
+            根据binStats更新BinStat.Total和BinStat.Percent
+            </summary>
+            <param name="binStats">从数据库获取的bin集合</param>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.AddOrUpdateBin(System.String,System.Int32,System.Data.Entity.DbSet{CYGKit.Factory.DataBase.LotBinStat})">
+            <summary>
+            根据数据库中的表，更新Total和Percent变量
+            </summary>
+            <param name="bin"></param>
+            <param name="lotId"></param>
+            <param name="LotBinStats"></param>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.AddOrUpdateBin(System.String,System.String,System.Int32,System.Data.Entity.DbSet{CYGKit.Factory.DataBase.StationBinStat})">
+            <summary>
+            根据数据库中的表，更新Total和Percent变量
+            </summary>
+            <param name="bin"></param>
+            <param name="lotId"></param>
+            <param name="LotBinStats"></param>
+            <param name="stationName"></param>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.SnBind(System.String,System.String,System.Data.Entity.DbSet{CYGKit.Factory.DataBase.DbBind})">
+            <summary>
+            用于SocketSn和DutSn 绑定
+            </summary>
+            <param name="socketSn"></param>
+            <param name="dutSn"></param>
+            <param name="dbBinds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CYGKit.Factory.DataBase.DbTableHelper.SnUnbind(System.String,System.Data.Entity.DbSet{CYGKit.Factory.DataBase.DbBind})">
+            <summary>
+            用于SocketSn和DutSn解绑
+            </summary>
+            <param name="socketSn"></param>
+            <param name="dutSn"></param>
+            <param name="dbBinds"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CYGKit.Factory.Statistics.SiteStatUnit">
+            <summary>
+            统计每个位置的数据
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.Statistics.SiteStatUnit.UpdateTotalStat">
+            <summary>
+            触发外部SiteStatUnit集合的统计数据事件关联
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Statistics.SocketStat">
+            <summary>
+            统计一个Socket在不同位置的统计数据
+            </summary>
+        </member>
+        <member name="E:CYGKit.Factory.Statistics.SocketStat.UpdateDb">
+            <summary>
+            用于关联数据库更新函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.SocketStat.updateStatistics">
+            <summary>
+            SiteStats 的元素增加事件关联SiteStatUnit.UpdateAllStatistics
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.Statistics.StationStat">
+            <summary>
+            统计工站结构体
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.StationStat._input">
+            <summary>
+            产品输入数量
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.StationStat._untested">
+            <summary>
+            未测试产品数量, 输出时才统计
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.Statistics.StationStat.Output">
+            <summary>
+            产品输出数量
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.StationStat._miss">
+            <summary>
+            丢失的产品数量
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.StationStat.createContext">
+            <summary>
+            用于关联数据库更新函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.StationStat.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.StationStat.UploadFromDb">
+            <summary>
+            初始化数据库调用此函数上载数据库数据到数据源
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_LotBinDataGrid.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinDataGrid.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinDataGrid.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_BinStat.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_BinStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_BinStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_BinStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_LotBinStatDB._currentLotId">
+            <summary>
+            当前LotId
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_LotBinStatDB._dataSource">
+            <summary>
+            lotId,binStats
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.update">
+            <summary>
+            刷新数据源
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.updateLotIds">
+            <summary>
+            刷新cmbLotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.updateHist">
+            <summary>
+            根据当前cmbLotId 刷新Hist 的binStat
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_LotBinStatDB.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_LotBinStatDB.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_SiteStatUnit.BindData(CYGKit.Factory.Statistics.SiteStatUnit)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_SiteStatUnit.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_SiteStatUnit.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_SiteStatUnit.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_SocketStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_SocketStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_SocketStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:CYGKit.Factory.Statistics.UC_StationLotBinStatDB._dataSource" -->
+        <member name="F:CYGKit.Factory.Statistics.UC_StationLotBinStatDB._currentLotId">
+            <summary>
+            当前LotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.update">
+            <summary>
+            刷新数据源
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.updateLotIds">
+            <summary>
+            刷新cmbLotId
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.updateHist">
+            <summary>
+            根据当前cmbLotId 刷新Hist 的binStat
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinStatDB.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:CYGKit.Factory.Statistics.UC_StationLotBinDataGrid._dataSource" -->
+        <member name="F:CYGKit.Factory.Statistics.UC_StationLotBinDataGrid.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinDataGrid.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationLotBinDataGrid.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationStat.BindData(CYGKit.Factory.Statistics.StationStat)">
+            <summary>
+            该方法仅适用单线程操作，异步线程操作不适用
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:CYGKit.Factory.Statistics.UC_StationStat.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationStat.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.Statistics.UC_StationStat.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_BinRegion.Client">
+            <summary>
+            AdsDriverClient
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.TableView.UC_BinRegion.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_BinRegion.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_BinRegion.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.TableView.UC_OnlineDut">
+            <summary>
+            OnlineDut展示控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_OnlineDut.StationID">
+            <summary>
+            tray盘编号
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_OnlineDut.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_OnlineDut.BindDataBase``2">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.TableView.UC_Tray">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_Tray.TrayID">
+            <summary>
+            tray盘编号
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_Tray.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_Tray.EnableUpdate">
+            <summary>
+            刷新Tray盘
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_Tray.BindDataBase``1">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.TableView.UC_TraySetting">
+            <summary>
+            Tray盘分bin设置界面
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_TraySetting.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.TrayRow">
+            <summary>
+            Tray盘行数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.TrayColumn">
+            <summary>
+            Tray盘列数
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.Title">
+            <summary>
+            Title
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.Tray">
+            <summary>
+            tray盘控件
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.TrayID">
+            <summary>
+            TrayID
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.Regions">
+            <summary>
+            所有区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.Region2D">
+            <summary>
+            所有区域
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.TableView.UC_TraySetting.SelectionCount">
+            <summary>
+            选择数量
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_TraySetting.BindDataBase``1(System.Collections.Generic.List{CYGKit.Factory.DataBase.TrayInfo},System.Boolean)">
+            <summary>
+            绑定数据库
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_TraySetting.LoadData(System.Collections.Generic.List{CYGKit.Factory.DataBase.TrayInfo},System.Boolean)">
+            <summary>
+            读取数据库加载数据
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.TableView.UC_TraySetting.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_TraySetting.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.TableView.UC_TraySetting.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.UPH.UPHChart">
+            <summary>
+            UPH图
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.UPH.UPHChart.CfgName_UPHChartUpdateInterval">
+            <summary>
+            UPH图刷新间隔配置名
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.UPH.UPHChart.CfgName_UPHChartTimeSpan">
+            <summary>
+            UPH图显示范围配置名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHChart.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHChart.#ctor">
+            <summary>
+            UPH图
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHChart.BindDatabase``2">
+            <summary>
+            绑定数据库
+            </summary>
+            <typeparam name="TContext">数据库上下文类</typeparam>
+            <typeparam name="TProduct">产品表类</typeparam>
+        </member>
+        <member name="F:CYGKit.Factory.UPH.UPHChart.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHChart.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHChart.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.UPH.UPHelper">
+            <summary>
+            UPH帮助类
+            </summary>
+        </member>
+        <member name="F:CYGKit.Factory.UPH.UPHelper.CfgName_UPHCalculateTimeSpan">
+            <summary>
+            UPH计算时间跨度配置名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHelper.DefaultCalculateTimeSpan">
+            <summary>
+            默认UPH计算时间跨度
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHelper.GetUPH``2(System.String@)">
+            <summary>
+            获取UPH
+            </summary>
+            <param name="message">错误信息</param>
+            <returns>UPH，小于0时说明有错误</returns>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHelper.GetUPH``2(System.Int32,System.String@)">
+            <summary>
+            获取UPH
+            </summary>
+            <param name="calculateTimeSpan">计算时间跨度</param>
+            <param name="message">错误信息</param>
+            <returns>UPH，小于0时说明有错误</returns>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHelper.GetUPHLabel``2">
+            <summary>
+            获取UPH标签控件
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHelper.GetUPHChart``2">
+            <summary>
+            获取UPH图表
+            </summary>
+        </member>
+        <member name="T:CYGKit.Factory.UPH.UPHLabel">
+            <summary>
+            UPH标签
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.UPH">
+            <summary>
+            当前显示的UPH
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.UpdateInterval">
+            <summary>
+            UPH刷新间隔
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.Low">
+            <summary>
+            低UPH阈值，默认0
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.High">
+            <summary>
+            高UPH阈值，默认600
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.LowColor">
+            <summary>
+            UHP小于或等于低UPH阈值时标签颜色，默认红色
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.NormalColor">
+            <summary>
+            UPH介于高低之间时显示的颜色，默认蓝绿色
+            </summary>
+        </member>
+        <member name="P:CYGKit.Factory.UPH.UPHLabel.HighColor">
+            <summary>
+            UPH高于或等于高UPH阈值时显示的颜色，默认绿色
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHLabel.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHLabel.BindDatabase``2">
+            <summary>
+            绑定数据库
+            </summary>
+            <typeparam name="TContext">数据库上下文类</typeparam>
+            <typeparam name="TProduct">产品表类</typeparam>
+        </member>
+        <member name="F:CYGKit.Factory.UPH.UPHLabel.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHLabel.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.Factory.UPH.UPHLabel.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:StressCodeKit.FileIO.WriteFile(System.String)">
+            <summary>
+            FileMode:Append
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="P:StressCodeKit.StressHandler.Stresses">
+            <summary>
+            Stresses
+            </summary>
+        </member>
+        <member name="M:StressCodeKit.StressHandler.CreateStressCode(System.String,System.Collections.Generic.Dictionary{System.Int32,System.String})">
+            <summary>
+            生成StressCode
+            </summary>
+            <param name="stressLabel">stressLabel</param>
+            <param name="idAndValue">字典中存放选中的duration的id和value</param>
+        </member>
+    </members>
+</doc>

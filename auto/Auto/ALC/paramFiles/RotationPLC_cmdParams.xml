@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="Teater" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="30" Description="SocketOpened">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="31" Description="SocketClosed">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="32" Description="RotateDone">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="33" Description="PutDone">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+	<ParamsModule Name="34" Description="Rotate">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="35" Description="SocketDisable">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Data35_Results</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+	<ParamsModule Name="36" Description="PickupDutDone">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

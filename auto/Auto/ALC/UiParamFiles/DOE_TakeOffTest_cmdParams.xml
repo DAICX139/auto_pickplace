@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="DOE_TakeOffTest" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="DOE_TakeOffTest" Description="DOE_TakeOffTest" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Take_offTestNumber</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Take_offTestNumber</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

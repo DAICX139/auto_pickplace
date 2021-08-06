@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisionFlows", "VisionFlows\VisionFlows.csproj", "{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ALCPlatform", "ALCPlatform", "{EC908246-8815-4FCE-A072-AE9A446D9A4B}"
+	ProjectSection(SolutionItems) = preProject
+		ALC\ALC.exe.config = ALC\ALC.exe.config
+		ALC\config.xml = ALC\config.xml
+	EndProjectSection
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "ALC", "ALC\ALC.exe", "{A8A5AF85-F627-40AA-9F35-91F1D56858D5}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = .\ALC\ALC.exe
+		RemoteMachine = DESKTOP-34JGP7N
+		StartingDirectory = .\ALC
+		Environment = 默认值
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D7E818C-43E6-4A1F-AC88-02BB3CFD5C7F}.Release|x64.Build.0 = Release|Any CPU
+		{A8A5AF85-F627-40AA-9F35-91F1D56858D5}.Debug|Any CPU.ActiveCfg = Release|x64
+		{A8A5AF85-F627-40AA-9F35-91F1D56858D5}.Debug|x64.ActiveCfg = Release|x64
+		{A8A5AF85-F627-40AA-9F35-91F1D56858D5}.Release|Any CPU.ActiveCfg = Release|x64
+		{A8A5AF85-F627-40AA-9F35-91F1D56858D5}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A8A5AF85-F627-40AA-9F35-91F1D56858D5} = {EC908246-8815-4FCE-A072-AE9A446D9A4B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9F02DCB-D42B-4BF4-863A-72BF2E7AFE51}
+	EndGlobalSection
+EndGlobal

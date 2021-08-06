@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>for Index := 0 to |ImageFiles|-1 by 1</l>
+<l>    read_image (Image, ImageFiles[Index])</l>
+<c>    </c>
+<l>*     gen_circle_contour_xld (ContCircle, 200, 200, 163, 0, 6.28318, 'positive', 1)</l>
+<l>*     create_scaled_shape_model_xld (ContCircle, 'auto', rad(0), rad(360), 'auto', 0.8, 1.2, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID)</l>
+<l>*     write_shape_model (ModelID, 'C:/Users/25002375/Desktop/GRAB_IMAGE/图像处理过程/dut标定图片/DUTBack.sbm')</l>
+<l>    read_shape_model ('DUTBack.sbm', ModelID)</l>
+<l>    find_shape_models (Image, ModelID, rad(0), rad(360), 0.8, 0, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score, Model)</l>
+<l>    dev_display_shape_matching_results (ModelID, 'red', Row, Column, Angle, 1, 1, 0)</l>
+<l>    get_shape_model_contours (ModelContours1, ModelID, 1)</l>
+<c>    </c>
+<l>    tuple_sort_index (Column, Indices)</l>
+<l>    tuple_length (Indices, Length)</l>
+<l>    max_row:=Row[Indices[Length-1]]</l>
+<l>    max_col:=Column[Indices[Length-1]]</l>
+<c>    </c>
+<l>    min_row:=Row[Indices[0]]</l>
+<l>    min_col:=Column[Indices[0]]</l>
+<l>    center_row:=(max_row+min_row)/2</l>
+<l>    center_col:=(max_col+min_col)/2</l>
+<l>    gen_circle_contour_xld (ContCircle1, [min_row, max_row], [min_col, max_col], [163, 163],[rad(0),rad(0)],[rad(360),rad(360)], 'positive', 1)</l>
+<l>    angle_ll (0, 0, 0, 100, min_row, min_col, max_row, max_col, Angle1)</l>
+<l>endfor</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

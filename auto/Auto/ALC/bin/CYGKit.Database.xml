@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CYGKit.Database</name>
+    </assembly>
+    <members>
+        <member name="T:CYGKit.Database.Database`1">
+            <summary>
+            实现一些数据库基本功能的封装
+            </summary>
+            <typeparam name="TContext">数据库上下文类型</typeparam>
+        </member>
+        <member name="P:CYGKit.Database.Database`1.Inited">
+            <summary>
+            数据库是否初始化
+            </summary>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.InitDatabase(System.String@)">
+            <summary>
+            初始化数据库，根据数据库上下文创建或更新数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.SqlQuery``1(System.String,System.Object[])">
+            <summary> 
+            执行Sql查询 
+            </summary> 
+            <typeparam name="TEntity"></typeparam> 
+            <param name="strSql"></param> 
+            <param name="paramObjects"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.FirstOrDefault``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary> 
+            查询 
+            </summary> 
+            <param name="predicate"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.Where``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary> 
+            查询 
+            </summary> 
+            <param name="predicate"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.All``1">
+            <summary> 
+            查询全部 
+            </summary> 
+            <returns></returns> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.Add``1(``0)">
+            <summary> 
+            插入 
+            </summary> 
+            <param name="entity"></param>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.Add``1(System.Collections.Generic.List{``0})">
+            <summary> 
+            批量插入 
+            </summary> 
+            <param name="entitys"></param>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.AddOrUpdate``1(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary> 
+            更新 
+            </summary> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.DeleteFirst``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary> 
+            删除 
+            </summary> 
+        </member>
+        <member name="M:CYGKit.Database.Database`1.DeleteAll``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary> 
+            删除 
+            </summary>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.Clear``1">
+            <summary>
+            清空表。数据不多时可以使用DeleteAll，数据较多时最好使用Clear
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:CYGKit.Database.Database`1.ClearTrayData``1(System.Int32)">
+            <summary>
+            清空TrayData表中指定的tray盘数据。
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="TrayId">Tray 盘编号</param>
+        </member>
+        <member name="T:CYGKit.Database.DatabaseHelper">
+            <summary>
+            数据库助手
+            </summary>
+        </member>
+        <member name="M:CYGKit.Database.DatabaseHelper.GetMySqlConnection(System.String)">
+            <summary>
+            获取MySQL数据库连接
+            </summary>
+            <param name="connectionString">连接字符串</param>
+            <returns>MySQL数据库连接</returns>
+        </member>
+        <member name="M:CYGKit.Database.DatabaseHelper.GetMySqlConnection(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            获取MySQL数据库连接
+            </summary>
+            <param name="server">服务IP</param>
+            <param name="port">服务端口</param>
+            <param name="user">用户名</param>
+            <param name="password">密码</param>
+            <param name="database">数据库名</param>
+            <returns>MySQL数据库连接</returns>
+        </member>
+        <member name="T:CYGKit.Database.MyContext">
+            <summary>
+            可以动态添加表结构的数据库上下文，动态添加的表只能用于表操作，不能添加或更新数据库表结构
+            </summary>
+        </member>
+        <member name="M:CYGKit.Database.MyContext.#ctor(System.Data.Common.DbConnection)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="connection">数据库连接</param>
+        </member>
+        <member name="M:CYGKit.Database.MyContext.AddTable``1">
+            <summary>
+            添加一张表
+            </summary>
+            <typeparam name="T">表结构类型</typeparam>
+        </member>
+        <member name="M:CYGKit.Database.MyContext.AddTables(System.Type[])">
+            <summary>
+            添加多张表
+            </summary>
+            <param name="tables">表结构类型数组</param>
+        </member>
+        <member name="M:CYGKit.Database.MyContext.OnModelCreating(System.Data.Entity.DbModelBuilder)">
+            <summary>
+            model创建时会动态添加表
+            </summary>
+        </member>
+    </members>
+</doc>

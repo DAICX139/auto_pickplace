@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="Handler" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<ParamsModule Name="30" Description="TrayDutStatus">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data30_DutResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Data30_TrayID</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayRows</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data30_Row</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayCols</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data30_Col</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="31" Description="PickDutFromTray">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>TrayCols</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data31_Col</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Data31_TrayID</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayRows</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data31_Row</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data31_PutResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="32" Description="PutDutToSocket">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data32_PutResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="33" Description="LoadPutDutToTray">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data33_PutResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Data33_TrayID</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayRows</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data33_Row</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayCols</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data33_Col</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="34" Description="InformSocketData">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data34_DutResult</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="35" Description="PickDutFromSocket&#xD;&#xA;">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data35_PickResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="36" Description="PutDutToTray">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Results</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data36_PutResult</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayID</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineCom.Data36_TrayID</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayRows</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data36_Row</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayCols</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data36_Col</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="37" Description="CompelteFinish">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="40" Description="GRRStart">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="41" Description="GRREnd">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+    <ParamsModule Name="60" Description="UpLook camera takes pictures">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>PLCRecv</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data60_PLCRecv.Data</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>PLCSend</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data60_PLCSend.Data</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="61" Description="Load DownLook camera takes pictures">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>PLCRecv</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data61_PLCRecv.Data</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>PLCSend</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data61_PLCSend.Data</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Name="62" Description="Load DownLook camera takes pictures">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>PLCRecv</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data62_PLCRecv.Data</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>PLCSend</Key>
+          <DataType>System.Double[6]</DataType>
+          <PlcVarName>GVL_MachineCom.Data62_PLCSend.Data</PlcVarName>
+          <CtrlType>0</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

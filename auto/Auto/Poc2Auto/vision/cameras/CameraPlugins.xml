@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Cameras>
+  <CameraPlugins>
+    <CameraPlugin>
+      <相机SDK名称>巴斯勒相机</相机SDK名称>
+      <相机SDK版本>5.1.0.12681</相机SDK版本>
+      <相机dll名称>VisionCamera.Basler.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>大恒相机</相机SDK名称>
+      <相机SDK版本>1.0.1903.9201</相机SDK版本>
+      <相机dll名称>VisionCamera.Daheng.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>海康相机</相机SDK名称>
+      <相机SDK版本>sdk2.4.1.2</相机SDK版本>
+      <相机dll名称>VisionCamera.Hikvision.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>海康X86相机</相机SDK名称>
+      <相机SDK版本>sdk3.0.0.3</相机SDK版本>
+      <相机dll名称>VisionCamera.HikOpc.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>映美精相机</相机SDK名称>
+      <相机SDK版本>3.4.0.4348</相机SDK版本>
+      <相机dll名称>VisionCamera.Imaging.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>迈德威视相机</相机SDK名称>
+      <相机SDK版本>2.1.10.116</相机SDK版本>
+      <相机dll名称>VisionCamera.MindVision.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>SVS相机</相机SDK名称>
+      <相机SDK版本>1.5.3</相机SDK版本>
+      <相机dll名称>VisionCamera.SVS.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>基恩士线扫相机</相机SDK名称>
+      <相机SDK版本>1.4.2.3</相机SDK版本>
+      <相机dll名称>VisionCamera3D.Keyence.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>大华相机</相机SDK名称>
+      <相机SDK版本>2.2.1_Build20190422</相机SDK版本>
+      <相机dll名称>VisionCamera.DahuaTech.dll</相机dll名称>
+    </CameraPlugin>
+    <CameraPlugin>
+      <相机SDK名称>深视线扫相机</相机SDK名称>
+      <相机SDK版本>EdgeImaging 2.2.3</相机SDK版本>
+      <相机dll名称>VisionCamera3D.sszn.dll</相机dll名称>
+    </CameraPlugin>
+  </CameraPlugins>
+</Cameras>

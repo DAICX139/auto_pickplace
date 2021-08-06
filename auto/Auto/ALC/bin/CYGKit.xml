@@ -1,0 +1,621 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CYGKit</name>
+    </assembly>
+    <members>
+        <member name="T:CYGKit.Common.ConfigHelper">
+            <summary>
+            提供配置相关操作
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.ConfigHelper.GetString(System.String)">
+            <summary>
+            获取默认配置文件中的值，若无配置则返回null
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.ConfigHelper.GetValue``1(System.String,``0)">
+            <summary>
+            获取默认配置文件中的值，若无配置则返回默认值
+            </summary>
+            <param name="key">key</param>
+            <param name="defaultValue">默认值</param>
+        </member>
+        <member name="M:CYGKit.Common.ConfigHelper.SetValue(System.String,System.Object)">
+            <summary>
+            设置默认配置文件中的值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Common.Extensions">
+            <summary>
+            通用扩展函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.Copy_BySerialize``1(``0)">
+            <summary>
+            通过二进制序列化复制对象，深度复制
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">源对象</param>
+            <exception cref="T:System.ArgumentException">类型参数T不可序列化</exception>    
+            <exception cref="T:System.ArgumentException">参数source为null</exception>
+            <returns>复制出来的对象</returns>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.CopyTo_ByReflection``1(``0,``0,System.Reflection.BindingFlags)">
+            <summary>
+            通过反射复制对象，深度复制
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">源对象</param>
+            <param name="dest">目的对象</param>
+            <param name="flags">指定要复制的成员标记，默认为对象的公有和私有实例成员</param>
+            <exception cref="T:System.MissingMethodException">成员对象在源对象中不为null，目的对象中为null，并且没有定义无参数的构造函数</exception>
+            <exception cref="T:System.ArgumentException">参数source或dest为null</exception>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.Copy_ByReflection``1(``0,System.Reflection.BindingFlags)">
+            <summary>
+            通过反射复制对象，深度复制
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">源对象</param>
+            <param name="flags">指定要复制的成员标记，默认为对象的公有和私有实例成员</param>
+            <exception cref="T:System.MissingMethodException">类型参数T或未初始化的成员对象没有定义无参数的构造函数</exception>
+            <exception cref="T:System.ArgumentException">参数source为null</exception>
+            <returns>复制出来的对象</returns>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.CopyTo_PropertyOnly``1(``0,``0)">
+            <summary>
+            仅复制对象的可写属性，仅复制第一层，对象属性未进行深度复制
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">源对象</param>
+            <param name="dest">目的对象</param>
+            <exception cref="T:System.ArgumentException">参数source或dest为null</exception>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.Copy_PropertyOnly``1(``0)">
+            <summary>
+            仅复制对象的可写属性，仅复制第一层，对象属性未进行深度复制
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="source">源对象</param>
+            <exception cref="T:System.MissingMethodException">类型参数T没有定义无参数的构造函数</exception>
+            <exception cref="T:System.ArgumentException">参数source为null</exception>
+            <returns>复制出来的对象</returns>
+        </member>
+        <member name="M:CYGKit.Common.Extensions.GetPropertyValue(System.Object,System.String)">
+            <summary>
+            获取属性值
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="obj">对象</param>
+            <param name="propertyName">属性名</param>
+            <returns>属性值</returns>
+            <exception cref="T:System.ArgumentException">参数obj为null</exception>
+            <exception cref="T:System.ArgumentException">找不到指定属性</exception>
+        </member>
+        <member name="T:CYGKit.Common.EnumCollection`1">
+            <summary>
+            枚举值集合
+            </summary>
+            <typeparam name="T">指定的枚举</typeparam>
+        </member>
+        <member name="P:CYGKit.Common.EnumCollection`1.Name">
+            <summary>
+            枚举名
+            </summary>
+        </member>
+        <member name="P:CYGKit.Common.EnumCollection`1.Value">
+            <summary>
+            枚举值
+            </summary>
+        </member>
+        <member name="P:CYGKit.Common.EnumCollection`1.Collection">
+            <summary>
+            绑定的类型数据
+            </summary>
+        </member>
+        <member name="T:CYGKit.Common.Math">
+            <summary>
+            算数补充
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Math.Average(System.Double,System.Int32,System.Double,CYGKit.Common.Math.ApproximateMode)">
+            <summary>
+            将source平均分成num份，每一份的精度为precision
+            </summary>
+            <returns>每一份的结果</returns>
+        </member>
+        <member name="M:CYGKit.Common.Math.Max``1(``0[])">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Math.Min``1(``0[])">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Math.Average``1(``0[])">
+            <summary>
+            平均值
+            </summary>
+        </member>
+        <member name="T:CYGKit.Common.Math.ApproximateMode">
+            <summary>
+            近似值取值模式
+            </summary>
+        </member>
+        <member name="F:CYGKit.Common.Math.ApproximateMode.Round">
+            <summary>
+            四舍五入
+            </summary>
+        </member>
+        <member name="F:CYGKit.Common.Math.ApproximateMode.Ceiling">
+            <summary>
+            向上取整
+            </summary>
+        </member>
+        <member name="F:CYGKit.Common.Math.ApproximateMode.Floor">
+            <summary>
+            向下取整
+            </summary>
+        </member>
+        <member name="T:CYGKit.Common.Serialize">
+            <summary>
+            序列化
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Serialize.XmlSerializeToFile``1(``0,System.String)">
+            <summary>
+            对象序列化成 XML String
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Serialize.XmlDeserializeFromFile``1(System.String)">
+            <summary>
+            XML String 反序列化成对象
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Serialize.XmlSerialize``1(``0)">
+            <summary>
+            对象序列化成 XML String
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.Serialize.XmlDeserialize``1(System.String)">
+            <summary>
+            XML String 反序列化成对象
+            </summary>
+        </member>
+        <member name="T:CYGKit.Common.SysOperator">
+            <summary>
+            系统相关操作
+            </summary>
+        </member>
+        <member name="M:CYGKit.Common.SysOperator.AppendEnvironmentVariable(System.String,System.String[])">
+            <summary>
+            追加环境变量
+            </summary>
+            <param name="name">变量名</param>
+            <param name="value">变量值</param>
+        </member>
+        <member name="T:CYGKit.GUI.Extensions">
+            <summary>
+            UI扩展函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.Extensions.BindEnum``1(System.Windows.Forms.ComboBox)">
+            <summary>
+            绑定枚举
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.Extensions.BindEnum(System.Windows.Forms.ComboBox,System.Type)">
+            <summary>
+            绑定枚举
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.Common">
+            <summary>
+            UI通用函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.Common.IsDesignMode">
+            <summary>
+            判断控件是否处于设计模式
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.Alignment">
+            <summary>
+            对齐方式
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.Top">
+            <summary>
+            顶部（同上中）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.Bottom">
+            <summary>
+            底部（同下中）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.Left">
+            <summary>
+            左边（同左中）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.Right">
+            <summary>
+            右边（同右中）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.MinorTop">
+            <summary>
+            二级顶部（需要一级位置组合使用）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.MinorBottom">
+            <summary>
+            二级底部（需要一级位置组合使用）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.MinorLeft">
+            <summary>
+            二级左边（需要一级位置组合使用）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.MinorRight">
+            <summary>
+            二级右边（需要一级位置组合使用）
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.TopLeft">
+            <summary>
+            上左
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.TopRight">
+            <summary>
+            上右
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.BottomLeft">
+            <summary>
+            下左
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.BottomRight">
+            <summary>
+            下右
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.LeftTop">
+            <summary>
+            左上
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.LeftBottom">
+            <summary>
+            左下
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.RightTop">
+            <summary>
+            右上
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.Alignment.RightBottom">
+            <summary>
+            右下
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.CellBorderStyle">
+            <summary>
+            边框风格
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.None">
+            <summary>
+            无边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.Single">
+            <summary>
+            单行边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.Inset">
+            <summary>
+            单线凹陷边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.InsetDouble">
+            <summary>
+            双线凹陷边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.Outset">
+            <summary>
+            单线凸起边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.OutsetDouble">
+            <summary>
+            双线凸起边框
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.CellBorderStyle.OutsetPartial">
+            <summary>
+            包含凸起部分的单线边框
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.GridPanel">
+            <summary>
+            表格控件
+            </summary>
+        </member>
+        <member name="E:CYGKit.GUI.GridPanel.PropertyChanged">
+            <summary>
+            在属性值更改后触发
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridPanel.Row">
+            <summary>
+            行
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridPanel.Col">
+            <summary>
+            列
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridPanel.SizeMode">
+            <summary>
+            控件大小模式
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridPanel.FixSize">
+            <summary>
+            固定大小，在SizeMode为FixUnit或FixControl生效
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridPanel.CellBorderStyle">
+            <summary>
+            边框风格
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridPanel.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridPanel.Setup">
+            <summary>
+            根据配置属性建立控件
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.GridPanel.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridPanel.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.GUI.GridPanel.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.GridView">
+            <summary>
+            网格视图
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ShowTitle">
+            <summary>
+            是否显示标题
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.TitleAlignment">
+            <summary>
+            标题显示位置
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.Row">
+            <summary>
+            行
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.Col">
+            <summary>
+            列
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ShowRowNumber">
+            <summary>
+            是否显示行号
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ShowColNumber">
+            <summary>
+            是否显示列号
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.SizeMode">
+            <summary>
+            控件大小模式
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.FixSize">
+            <summary>
+            固定大小，在SizeMode为FixUnit或FixControl生效
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.Selectable">
+            <summary>
+            是否能够选中
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.TextAlignment">
+            <summary>
+            文本显示对齐方式
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.SelectionColor">
+            <summary>
+            选中颜色
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.SelectedRegion">
+            <summary>
+            选择区域，行列号从0开始计算
+            </summary>
+        </member>
+        <member name="E:CYGKit.GUI.GridView.SelectionChanged">
+            <summary>
+            选择区域改变时触发
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.EnableDataUpdate">
+            <summary>
+            是否自动根据数据源刷新界面
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.DataSource">
+            <summary>
+            数据源
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ArrayMember">
+            <summary>
+            数据源中二维数组成员
+            *目前只接受二维数组*
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.TextName">
+            <summary>
+            数据源单个数据中文本属性名
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ValueName">
+            <summary>
+            数据源单个数据中值属性名
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ShowText">
+            <summary>
+            是否显示文本
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.GridView.ColorMap">
+            <summary>
+            颜色映射表, value-color
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.GetCell(System.Int32,System.Int32)">
+            <summary>
+            获取单元格
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.SetText(System.String,System.Int32,System.Int32)">
+            <summary>
+            设置单元格显示文本
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.SetText(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置单元格显示文本
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.SetColor(System.Drawing.Color,System.Int32,System.Int32)">
+            <summary>
+            设置单元格显示颜色
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.SetColor(System.Drawing.Color,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置单元格显示颜色
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.UpdateDisplay">
+            <summary>
+            根据DataSource更新UI
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.ClearDisplayText">
+            <summary>
+            清除显示在界面上的值
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.ClearColor">
+            <summary>
+            清除显示在界面上的值
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.GridView.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:CYGKit.GUI.GridView.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.SizeMode">
+            <summary>
+            控件大小模式
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.SizeMode.None">
+            <summary>
+            不做任何调整
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.SizeMode.Fill">
+            <summary>
+            充满容器
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.SizeMode.FixUnit">
+            <summary>
+            固定单元大小
+            </summary>
+        </member>
+        <member name="F:CYGKit.GUI.SizeMode.FixControl">
+            <summary>
+            固定控件大小
+            </summary>
+        </member>
+        <member name="T:CYGKit.GUI.UserControlWithOnePanel">
+            <summary>
+            用户控件基类，附带一个可设计的Panel
+            </summary>
+        </member>
+        <member name="P:CYGKit.GUI.UserControlWithOnePanel.ContentPanel">
+            <summary>
+            可设计的Panel
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ImagePara xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SlotScore>0.2</SlotScore>
+  <SoketDutScore>0.7</SoketDutScore>
+  <DutScore>0.8</DutScore>
+  <DutBackScore>0.8</DutBackScore>
+  <SocketMarkScore>0.8</SocketMarkScore>
+  <SoketDut_minthreshold>81</SoketDut_minthreshold>
+  <SoketDut_maxthreshold>255</SoketDut_maxthreshold>
+  <TrayDut_minthreshold>171</TrayDut_minthreshold>
+  <TrayDut_maxthreshold>255</TrayDut_maxthreshold>
+  <SoketDut_width>200</SoketDut_width>
+  <SoketDut_height>600</SoketDut_height>
+  <SocketMark_rowCenter>1302.06433</SocketMark_rowCenter>
+  <SocketMark_colCenter>939.066833</SocketMark_colCenter>
+  <SocketMark_angleCenter>0.0187478028</SocketMark_angleCenter>
+  <SocketMark_PutDutRow>1263.65991</SocketMark_PutDutRow>
+  <SocketMark_PutDutCol>1966.16663</SocketMark_PutDutCol>
+  <SocketGet_rowCenter>1302.06433</SocketGet_rowCenter>
+  <SocketGet_colCenter>939.066833</SocketGet_colCenter>
+  <SocketGet_angleCenter>0.0187478028</SocketGet_angleCenter>
+  <DutMode_rowCenter>1204</DutMode_rowCenter>
+  <DutMode_colCenter>2043.5</DutMode_colCenter>
+  <DutMode_angleCenter>1.57079637</DutMode_angleCenter>
+  <SocketMark_GetDutRow>1251.67737</SocketMark_GetDutRow>
+  <SocketMark_GetDutCol>2072.83325</SocketMark_GetDutCol>
+  <slot_rowCenter>1371.631</slot_rowCenter>
+  <slot_colCenter>1714.29883</slot_colCenter>
+  <slot_angleCenter>0.0009925098</slot_angleCenter>
+  <slot_offe_rowCenter>1311.59009</slot_offe_rowCenter>
+  <slot_offe_colCenter>1721.72217</slot_offe_colCenter>
+  <slot_offe_angleCenter>0</slot_offe_angleCenter>
+</ImagePara>

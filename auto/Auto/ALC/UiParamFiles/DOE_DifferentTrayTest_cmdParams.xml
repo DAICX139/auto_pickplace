@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="DOE_DifferentTrayTest" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="DOE_DifferentTrayTest" Description="DOE_DifferentTrayTest" PlcMsgType="0">
+      <ArrayOfParamsValue />
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

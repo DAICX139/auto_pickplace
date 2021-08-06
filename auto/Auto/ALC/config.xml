@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<System name ="Assembly Line Controller" version ="1.1.0.2">
+  <UserAuthority>
+    OPERATOR
+    ENGINEER
+    ADMINISTRATOR
+  </UserAuthority>
+  <Buttons>
+    <Pause show="true"></Pause>
+    <Reset show="true"></Reset>
+  </Buttons>
+  <Servers>
+    <!--<StringServer port="8899"></StringServer>-->
+    <!--<BinaryServer port="8900"></BinaryServer>-->
+    <PlcDriverClients>
+		<Ads Ip="2.0.1.8.1.1" Port="851" ModuleId="Handler" CmdParamFile="HanderPLC_cmdParams.xml" CfgParamFile="HanderPLC_cfgParams.xml">Handler</Ads>
+	    <!--Ads Ip="169.254.1.18.1.1" Port="851" ModuleId="Handler" CmdParamFile="HanderPLC_cmdParams.xml" CfgParamFile="HanderPLC_cfgParams.xml">Handler</Ads>-->
+		<!--<Ads Ip="169.254.1.20.1.1" Port="851" ModuleId="Tester" CmdParamFile="RotationPLC_cmdParams.xml" CfgParamFile="RotationPLC_cfgParams.xml">Tester</Ads>-->
+    </PlcDriverClients>
+  </Servers>
+  <Plugins>
+    <Plugin>
+      <DllName>Poc2Auto.HandlerPLC.dll</DllName>
+      <Version check ="False">1.0.0.0</Version>
+      <Icon>1</Icon>
+      <ResetRanking>1</ResetRanking>
+      <StartRanking>1</StartRanking>
+      <CompleteRanking>1</CompleteRanking>
+      <StopRanking>1</StopRanking>
+      <UserControl startx="0" starty="0" length="1050" width="600"></UserControl>
+      <ConfigView startx="10" starty="10" length="1500" width="1500"></ConfigView>
+    </Plugin>
+  	    <!--<Plugin>
+      <DllName>VisionFlows.dll</DllName>
+      <Version check ="False">1.0.0.0</Version>
+      <Icon>5</Icon>
+      <ResetRanking>1</ResetRanking>
+      <StartRanking>1</StartRanking>
+      <CompleteRanking>1</CompleteRanking>
+      <StopRanking>1</StopRanking>
+      <UserControl startx="1" starty="1" length="880" width="350"></UserControl>
+      <ConfigView startx="10" starty="10" length="1500" width="1500"></ConfigView>
+    </Plugin>-->
+
+    
+    <Plugin>
+      <DllName>Poc2Auto.RotationPLC.dll</DllName>
+      <Version check ="False">1.0.0.0</Version>
+      <Icon>3</Icon>
+      <ResetRanking>2</ResetRanking>
+      <StartRanking>2</StartRanking>
+      <CompleteRanking>1</CompleteRanking>
+      <StopRanking>1</StopRanking>
+      <UserControl startx="680" starty="200" length="700" width="500"></UserControl>
+      <ConfigView startx="10" starty="10" length="1500" width="1500"></ConfigView>
+    </Plugin>
+    <Plugin>
+      <DllName>Poc2Auto.TM.dll</DllName>
+      <Version check ="False">1.0.0.0</Version>
+      <Icon>4</Icon>
+      <ResetRanking>3</ResetRanking>
+      <StartRanking>1</StartRanking>
+      <CompleteRanking>1</CompleteRanking>
+      <StopRanking>1</StopRanking>
+      <UserControl startx="680" starty="200" length="650" width="500"></UserControl>
+      <ConfigView startx="10" starty="10" length="1500" width="1500"></ConfigView>
+    </Plugin> 
+    <!--
+    -->
+    
+  </Plugins>
+</System>

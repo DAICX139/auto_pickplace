@@ -1,0 +1,6 @@
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\ALC\plugins\Poc2Auto.Vision.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\ALC\plugins\Poc2Auto.Vision.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.Vision\obj\Debug\Poc2Auto.Vision.csproj.AssemblyReference.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.Vision\obj\Debug\Poc2Auto.Vision.csproj.CoreCompileInputs.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.Vision\obj\Debug\Poc2Auto.Vision.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.Vision\obj\Debug\Poc2Auto.Vision.pdb

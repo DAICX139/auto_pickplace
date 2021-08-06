@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="DOE_SlipTest" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="DOE_SlipTest" Description="">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>ATestPosition</Key>
+          <DataType>System.Double[]</DataType>
+          <PlcVarName>GVL_MachineCom.ATestPosition</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+        <ParamsValue>
+          <Key>BTestPosition</Key>
+          <DataType>System.Double[]</DataType>
+          <PlcVarName>GVL_MachineCom.BTestPosition</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+		<ParamsValue>
+          <Key>uDoeSlipNum</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineDevice.uDoeSlipNum</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

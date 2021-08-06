@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="DOE_SameTrayTest" ModulelId="">
+  <ArrayOfParamsModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <ParamsModule Name="DOE_SameTrayTest" Description="">
+      <ArrayOfParamsValue>
+		<ParamsValue>
+          <Key>uDUTNumber</Key>
+          <DataType>System.UInt16</DataType>
+          <PlcVarName>GVL_MachineDevice.uDUTNumber</PlcVarName>
+          <CtrlType>1</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

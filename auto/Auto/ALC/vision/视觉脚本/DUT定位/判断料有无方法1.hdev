@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<c></c>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>dev_update_off () </l>
+<l>for Index := 0 to |ImageFiles|-1 by 1</l>
+<l>    read_image (Image1, ImageFiles[Index])  </l>
+<l>    SlotDetect (Image1, RegionTrans)</l>
+<l>   stop()</l>
+<l>endfor</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="SlotDetect">
+<interface>
+<io>
+<par name="Image1" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="RegionTrans" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<l> ModelID:=[]</l>
+<l>   zoom_image_size (Image1, ImageZoom, 400, 400, 'constant')</l>
+<l>   mean_curvature_flow (ImageZoom, ImageMCF, 0.5, 0.5, 10)</l>
+<l>   dev_display (ImageMCF)</l>
+<l>    if (ModelID=[])</l>
+<l>        gen_contour_polygon_xld (TMP_XLD, [136.319,182.362,232.721,252.865,278.045,298.189,304.664,305.383,306.103,305.383,295.311,278.045,264.376,245.671,244.232,232.721,134.16,136.319], [314.799,315.666,316.099,300.931,279.696,254.127,240.259,207.323,176.554,139.284,116.316,95.0807,79.9127,66.9117,66.4783,59.111,57.8109,314.799])   </l>
+<l>        create_shape_model_xld (TMP_XLD, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID)</l>
+<l>    endif   </l>
+<l>    find_shape_model (ImageMCF, ModelID, -0.39, 0.79, 0.6, 1, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score)</l>
+<l>   if(|Score|&gt;0)</l>
+<l>       vector_angle_to_rigid (0, 0, 0, Row, Column, Angle, HomMat2D)</l>
+<l>        get_shape_model_contours (ModelContours, ModelID, 1)</l>
+<l>       affine_trans_contour_xld (ModelContours, ContoursAffineTrans, HomMat2D)</l>
+<l>       gen_region_contour_xld (ContoursAffineTrans, Region, 'filled')</l>
+<l>       reduce_domain (ImageMCF, Region, ImageReduced)</l>
+<l>       threshold (ImageReduced, Region1, 100, 255)</l>
+<l>       area_center (Region1, Area, Row1, Column1)</l>
+<l>       if(Area&gt;5000)</l>
+<l>           opening_circle (Region1, RegionOpening, 6)</l>
+<l>           shape_trans (RegionOpening, RegionTrans, 'convex')        </l>
+<l>           dev_display (RegionTrans)</l>
+<l>       endif      </l>
+<l>   endif</l>
+<l>return ()</l>
+</body>
+<docu id="SlotDetect">
+<parameters>
+<parameter id="Image1"/>
+<parameter id="RegionTrans"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

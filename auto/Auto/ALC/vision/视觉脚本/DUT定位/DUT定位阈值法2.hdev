@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>list_files ('.', 'files', Files)</l>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>for Index := 1 to |ImageFiles|-1 by 1</l>
+<c> </c>
+<l>    read_image (Image, ImageFiles[Index])</l>
+<l>    read_image (Image1, 'C:/Users/Administrator.DESKTOP-KDKC337/Desktop/视觉脚本/DUT/TrayDutFront02021-05-09-11-29-07.png')</l>
+<l>    get_image_size (Image, Width, Height)</l>
+<c></c>
+<l>    dev_get_window (WindowHandle)</l>
+<l>    dev_set_line_width (3)</l>
+<l>    dev_set_draw ('margin')</l>
+<c>    </c>
+<c>    </c>
+<l>    scale_image (Image, ImageScaled, 36.4286, -2769)</l>
+<l>*     scale_image (Image, ImageScaled, 5.79545, -145)</l>
+<l>    median_image (ImageScaled, ImageMedian, 'circle', 15, 'mirrored')</l>
+<l>    binary_threshold (ImageMedian, Region, 'max_separability', 'light', UsedThreshold)</l>
+<c>    </c>
+<l>    closing_circle (Region, RegionClosing, 50)</l>
+<c>    </c>
+<l>    connection (RegionClosing, ConnectedRegions)   </l>
+<c>    </c>
+<c>    </c>
+<l>    select_shape (ConnectedRegions, SelectedRegions, ['area','outer_radius'], 'and', [732143,592.26], [1.34405e+006,1455.36])</l>
+<l>    fill_up (SelectedRegions, RegionFillUp)</l>
+<l>    opening_circle (RegionFillUp, RegionOpening, 20)</l>
+<c></c>
+<l>    select_shape (RegionOpening, SelectedRegions, ['width','height'], 'and', [1810.95,560], [2258.54,850])</l>
+<l>    shape_trans (SelectedRegions, RegionTrans, 'convex')</l>
+<c></c>
+<c>    </c>
+<l>    smallest_rectangle2 (RegionTrans, Row, Column, Phi, Length1, Length2)</l>
+<l>    gen_rectangle2 (Rectangle, Row, Column, Phi, Length1, Length2)</l>
+<c>    </c>
+<l>    area_center (Rectangle, Area, Row1, Column1)</l>
+<l>    gen_cross_contour_xld (Cross, Row1, Column1, 5000, Phi)</l>
+<c>    </c>
+<c></c>
+<l>    dev_display (Image)</l>
+<l>    dev_display (Cross)</l>
+<l>    dev_display (RegionTrans)</l>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<l>    stop ()</l>
+<c>    </c>
+<l>endfor</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

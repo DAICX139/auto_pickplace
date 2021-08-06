@@ -1,0 +1,2491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AlcUtility</name>
+    </assembly>
+    <members>
+        <member name="M:AlcUtility.ParamsValue.ValueConvertType">
+            <summary>
+            Value根据DataType转换类型
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ParamsValue.GetArrayInfo(System.String,System.Type@,System.Int32@)">
+            <summary>
+            根据datatype解析数组类型以及数组大小
+            </summary>
+            <param name="datatype"></param>
+            <param name="type">数组类型</param>
+            <param name="size">数组大小</param>
+            <returns></returns>
+        </member>
+        <member name="P:AlcUtility.ParamsModule.RecvData">
+            <summary>
+            供平台OnRecevied  使用，只打印接收数据
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ParamsModule.SendData">
+            <summary>
+            供平台send使用，只打印发送数据
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ParamsConfig.ParamsModules">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ParamsConfig.AddOrUpdate(AlcUtility.ParamsModule)">
+            <summary>
+            根据data AddOrUpdate 参数
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:AlcUtility.ParamsConfig.ExportXmlFromExcel(System.String,System.String,System.String)">
+            <summary>
+            从Excel导入协议生成ParasConfig
+            </summary>
+            <param name="path">Excel所在绝对路径</param>
+            <param name="moduleId">协议对应moduleId，用于生成文件名</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCDataGridView.FreshValue(AlcUtility.ParamsConfig)">
+            <summary>
+            PLC上载参数调用刷新
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:AlcUtility.Config.UCParamCfg.UCDataGridView.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCDataGridView.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCDataGridView.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.#ctor">
+            <summary>
+            给xml配置工具使用
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.download">
+            <summary>
+            download to plc
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.upload">
+            <summary>
+            upload from plc
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.save">
+            <summary>
+            报错xml文件，更新plcDriver.CfgParamsConfig
+            </summary>
+        </member>
+        <member name="F:AlcUtility.Config.UCParamCfg.UCParamConfig.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamConfig.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamModuleEdit.FreshValue(AlcUtility.ParamsConfig)">
+            <summary>
+            PLC上载参数调用刷新
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="F:AlcUtility.Config.UCParamCfg.UCParamModuleEdit.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamModuleEdit.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Config.UCParamCfg.UCParamModuleEdit.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.ICommonCtrlUI.DataSource">
+            <summary>
+            外部数据源
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.ICommonCtrlUI.IsInnerUpdatingOpen">
+            <summary>
+            是否开启背景刷新
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.ICommonCtrlUI.Interval">
+            <summary>
+            设置间隔时间
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.ICommonCtrlUI.Update">
+            <summary>
+            外部业务逻辑调用刷新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Cylinder.#ctor">
+            <summary>
+            UC_Cylinder
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_Cylinder.CylinderName">
+            <summary>
+            给控件设置名字
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_Cylinder.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_Cylinder.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Cylinder.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Cylinder.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_Di.DiName">
+            <summary>
+            给控件设置名字
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_Di.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Di.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Di.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.PlcVarName">
+            <summary>
+            Plc 对应结构体变量地址（）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.PlcDoVarName">
+            <summary>
+            PlcDo 对应结构体变量地址（二维数组）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.PlcDiVarName">
+            <summary>
+            PlcDi 对应结构体变量地址（二维数组）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.DOsPropName">
+            <summary>
+            上位机定义对应PLC结构体DOs属性名
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.DIsPropName">
+            <summary>
+            上位机定义对应PLC结构体DIs属性名
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.PlcVarType">
+            <summary>
+            与PLC对应封送类型
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_DIOs.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_DIOs.BindData(AlcUtility.IPlcDriver,System.Type,System.String,System.String,System.String)">
+            <summary>
+            初始化调用此函数加载csv配置和plcDriver
+            </summary>
+            <param name="plcDriver"></param>
+            <param name="plcVarType"></param>
+            <param name="indexMapCsvPath">csv路径</param>
+            <param name="dosPropName">上位机对应DO二维数组属性</param>
+            <param name="disPropName">上位机对应DI二维数组属性</param>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_DIOs.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_DIOs.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_DIOs.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_Do.DoName">
+            <summary>
+            给控件设置名字
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_Do.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Do.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_Do.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.Info">
+            <summary>
+            轴状态信息获取属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.IdleStatus">
+            <summary>
+            空闲状态颜色设置属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.NormalStatus">
+            <summary>
+            正常状态颜色设属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.ErrorStatus">
+            <summary>
+            错误状态颜色设置属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.DataSource">
+            <summary>
+            数据源
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisControl.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisControl.UpdateDisplay">
+            <summary>
+            状态刷新函数,供外部逻辑调用
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisControl.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisControl.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisControl.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisControlAndOperations.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisControlAndOperations.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisControlAndOperations.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisOps._currentSelectItem">
+            <summary>
+            ListBox当前选中的项
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisOps._isBlock">
+            <summary>
+            是否阻塞
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisOps._defaultVelocity">
+            <summary>
+            轴运动默认速度
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisOps._posInfo">
+            <summary>
+            存放对应轴的位置名和位置
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisOps.GoHomeVel">
+            <summary>
+            轴回原速度设置
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisOps.AxisPosInfo">
+            <summary>
+            存储轴位置信息，key为轴的ID，value为字典（key为该轴的位置名，value为该轴的位置）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisOps.Title">
+            <summary>
+            标题设置属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisOps.ShowTitle">
+            <summary>
+            标题显示属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.UC_SingleAxisOps.DataSource">
+            <summary>
+            数据源
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.UC_SingleAxisOps.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisOps.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.UC_SingleAxisOps.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SemiAutoCtrl.IsDone">
+            <summary>
+            【外部接口调用】收到plc动作完成消息
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SemiAutoCtrl.Execute(System.Int32,System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】触发
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SemiAutoCtrl.Stop(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】Stop
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SemiAutoCtrl.Reset(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】Reset
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SemiAutoCtrl.SetDisable(System.Boolean)">
+            <summary>
+            【外部接口调用】Disable
+            </summary>
+            <param name="value">true 表示禁用此功能</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.CylinderCtrl.MoveToWork(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】移动至工作位
+            </summary>
+            <param name="isBlock">true,表示阻塞；false，表示不阻塞</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.CylinderCtrl.MoveToBase(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】移动至基础位
+            </summary>
+            <param name="isBlock">true,表示阻塞；false，表示不阻塞</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.CylinderCtrl.Reset(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】复位
+            </summary>
+            <param name="isBlock"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.CylinderCtrl.MoveToNone(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】关闭输出
+            </summary>
+            <param name="isBlock"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.DoCtrl.Write(System.Boolean)">
+            <summary>
+            【外部接口调用】写值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.DoCtrl.Read(System.Boolean@)">
+            <summary>
+            【外部接口调用】读值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl">
+            <summary>
+            给插件调用函数
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.IsDone">
+            <summary>
+            【外部接口调用】收到plc动作完成消息
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.AbsGo(System.Double,System.Double,System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】绝对走
+            </summary>
+            <param name="pos"></param>
+            <param name="vel"></param>
+            <param name="isBlock">true,表示阻塞；false，表示不阻塞</param>
+            <param name="timeout"></param>
+            
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.RelGo(System.Double,System.Double,System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】相对走
+            </summary>
+            <param name="dis"></param>
+            <param name="vel"></param>
+            <param name="isBlock"></param>
+            <param name="timeout"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.JogGo(System.Double,System.Boolean)" -->
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.Stop(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】停止轴
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.Reset(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】复位轴
+            </summary>
+            <param name="isBlock"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.GoHome(System.Double,System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】回原点
+            </summary>
+            <param name="homeVel"></param>
+            <param name="isBlock"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SingleAxisCtrl.PowerCtrl(System.Boolean)">
+            <summary>
+            【外部接口调用】轴使能控制
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.CtrlCmd">
+            <summary>
+            【外部接口调用】读取PLC系统指令控制信息
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.Status">
+            <summary>
+            【外部接口调用】读取PLC状态
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.ActiveEvent">
+            <summary>
+            【外部接口调用】读取PLC活跃事件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.HistEvent">
+            <summary>
+            【外部接口调用】读取PLC历史事件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.ClearActEvent">
+            <summary>
+            【外部接口调用】清除PLC活跃事件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.ClearHistEvent">
+            <summary>
+            【外部接口调用】清除PLC历史事件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.Reset(System.Boolean,System.Int32)">
+            <summary>
+            【外部接口调用】手动操作前必须调用此接口
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.StateCmdCtrl(System.Int32)">
+            <summary>
+            【外部接口调用】控制系统命令
+            </summary>
+            <param name="cmd"></param>
+            <returns>0,ok;-1,fail</returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.ModeCtrl(System.Int32)">
+            <summary>
+            【外部接口调用】控制系统模式
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.SubModeCtrl(System.Int32,System.Int32)">
+            <summary>
+            【外部接口调用】控制系统子模式
+            </summary>
+            <param name="mode">主模式</param>
+            <param name="subMode">子模式</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.SyncSysTime">
+            <summary>
+            【外部接口调用】同步系统时间
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.LogLevelCtrl(System.Int32)" -->
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.OverrideCtrl(System.Single)">
+            <summary>
+            【外部接口调用】控制轴override比例
+            </summary>
+            <param value=""></param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.ClearAlarm">
+            <summary>
+            【外部接口调用】报警清除；包含轴和气缸的Reset操作
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.CommonCtrl.SystemInfoCtrl.WritePersistentData">
+            <summary>
+            【外部接口调用】写断电保持数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AlcUtility.PlcDriver.CommonCtrl.PLCActiveEvent">
+            <summary>
+            由于EventItems读取有问题，因此采用逐个读取。
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.PlcDriver">
+            <summary>
+            绘制UI需要指定属性
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction._actionName">
+            <summary>
+            绘制UI需要指定属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.PlcMode">
+            <summary>
+            PlcMode
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.PlcSubMode">
+            <summary>
+            PlcSubMode
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.SemiAutoUI.UCCommonAction.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl._actionName">
+            <summary>
+            绘制UI需要指定属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.PlcMode">
+            <summary>
+            PlcMode
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.PlcSubMode">
+            <summary>
+            PlcSubMode
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.PlcDriver">
+            <summary>
+            绘制UI需要指定属性
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.AuthorityCtrl">
+            <summary>
+            权限控制
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.PlcDriver.SemiAutoUI.UCSemiAutoCtrl.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "E:AlcUtility.ILangSwitch.LangSwitch" -->
+        <member name="T:AlcUtility.Plugin.UC_State">
+            <summary>
+            状态展示控件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.UC_State.StateMachine">
+            <summary>
+            绑定的状态机
+            </summary>
+        </member>
+        <member name="E:AlcUtility.Plugin.UC_State.CanTriggerEvent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_State.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_State.InitButtons">
+            <summary>
+            初始化按钮
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_State.BindStateMachine(AlcUtility.StateMachine{AlcUtility.SYSTEM_STATUS,AlcUtility.SYSTEM_EVENT})">
+            <summary>
+            绑定状态机
+            </summary>
+            <param name="stateMachine"></param>
+        </member>
+        <member name="F:AlcUtility.Plugin.UC_State.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_State.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_State.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:AlcUtility.Plugin.ButtonPlus">
+            <summary>
+            操作按钮
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.ButtonPlus.Event">
+            <summary>
+            对应的事件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.ButtonPlus.Button">
+            <summary>
+            按钮控件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.ButtonPlus.Text">
+            <summary>
+            按钮文本
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.ButtonPlus.IconPath">
+            <summary>
+            按钮图标
+            </summary>
+        </member>
+        <member name="T:AlcUtility.Plugin.UC_StateOfPlcModule">
+            <summary>
+            PLC单模块状态
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.UC_StateOfPlcModule.Module">
+            <summary>
+            绑定的模块
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.BindModule(AlcUtility.PluginBase.ModuleState)">
+            <summary>
+            绑定模块
+            注：只可绑定一次，请勿重复绑定
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.UpdatePlcStatus">
+            <summary>
+            更新PLC状态信息
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.UpdateErrorList(System.Collections.Generic.List{System.String})">
+            <summary>
+            更新错误列表
+            </summary>
+            <param name="errors"></param>
+        </member>
+        <member name="F:AlcUtility.Plugin.UC_StateOfPlcModule.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcModule.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="T:AlcUtility.Plugin.UC_StateOfPlcPlugin">
+            <summary>
+            PLC插件控件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.UC_StateOfPlcPlugin.Plugin">
+            <summary>
+            绑定的插件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcPlugin.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcPlugin.BindPlugin(AlcUtility.PluginBase)">
+            <summary>
+            绑定c插件
+            注：只可绑定一次，请勿重复绑定
+            </summary>
+        </member>
+        <member name="F:AlcUtility.Plugin.UC_StateOfPlcPlugin.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcPlugin.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StateOfPlcPlugin.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="P:AlcUtility.Plugin.UC_StatesOfPlugin.Plugin">
+            <summary>
+            绑定的插件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StatesOfPlugin.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StatesOfPlugin.BindPlugin(AlcUtility.PluginBase)">
+            <summary>
+            绑定插件
+            </summary>
+        </member>
+        <member name="F:AlcUtility.Plugin.UC_StatesOfPlugin.components">
+            <summary> 
+            必需的设计器变量。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StatesOfPlugin.Dispose(System.Boolean)">
+            <summary> 
+            清理所有正在使用的资源。
+            </summary>
+            <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        </member>
+        <member name="M:AlcUtility.Plugin.UC_StatesOfPlugin.InitializeComponent">
+            <summary> 
+            设计器支持所需的方法 - 不要修改
+            使用代码编辑器修改此方法的内容。
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IPlcDriver.ReadBool(System.Int32)">
+            添加一些读写的基本函数接口
+        </member>
+        <member name="P:AlcUtility.AlcSystem.EnableDefaultLog">
+            <summary>
+            是否启用默认日志打印
+            </summary>
+        </member>
+        <member name="T:AlcUtility.EngineDefine.ItemStartHandler">
+            <summary>
+            UI update or Log, Engine trigger with data
+            </summary>
+        </member>
+        <member name="T:AlcUtility.EngineDefine.LoadCsvHandler">
+            <summary>
+            Get Data From UI, UI trigger and Engine return Data
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myFunction">
+            <summary>
+            Function name, e.g. plugintest.add
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myParameters">
+            <summary>
+            paramster objects/value, e.g. Start
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myParametersTypes">
+            <summary>
+            paramter Types, e.g. system.Int32
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myResults">
+            <summary>
+            result objects/value.  
+            Before method.invoke, this is a default object. After: the real value list
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myResultsTypes">
+            <summary>
+            result Types e.g. system.Int32
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myThread">
+            <summary>
+            thread id. this will be set value during call DispatcherWithTimeout
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.isOk">
+            <summary>
+            Dispatch status. Success:True, or False
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.outMsg">
+            <summary>
+            Dispatch message, normally, only for Error
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.ItemDispatcherParams.myTimeout">
+            <summary>
+            Time out value, unit is ms
+            </summary>
+        </member>
+        <member name="M:AlcUtility.EngineDefine.ItemDispatcherParams.#ctor(System.String,System.Object[],System.Collections.Generic.List{System.Object},System.Int32,System.Type[],System.Type[])">
+            <summary>
+            build ItemDispatcherParams
+            </summary>
+            <param name="function"></param>
+            <param name="parameters"></param>
+            <param name="results"></param>
+            <param name="timeout"></param>
+            <param name="paramsTypes"></param>
+            <param name="rsltsTypes"></param>
+        </member>
+        <member name="M:AlcUtility.EngineDefine.ItemDispatcherParams.Copy">
+            <summary>
+            Copy
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AlcUtility.EngineDefine.MyMethodInfo">
+            <summary>
+            method info include instance and methodinfo
+            </summary>
+        </member>
+        <member name="T:AlcUtility.EngineDefine.EngineStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:AlcUtility.EngineDefine.EngineConfigKeyName">
+            <summary>
+            engine configuration dictionary keys
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.EngineConfigKeyName.FailContinue">
+            <summary>
+            key: value type is bool
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.EngineConfigKeyName.ErrorContinue">
+            <summary>
+            key: value type is bool
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.EngineConfigKeyName.OverStop">
+            <summary>
+            key: value type is bool
+            </summary>
+        </member>
+        <member name="F:AlcUtility.EngineDefine.EngineConfigKeyName.MainCsv">
+            <summary>
+            key: value type is string, file path
+            </summary>
+        </member>
+        <member name="M:AlcUtility.EngineDefine.EngineConfigKeyName.bKeys">
+            <summary>
+            retrun bool type keys
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.EngineDefine.EngineConfigKeyName.strKeys">
+            <summary>
+            retrun string type keys
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AlcUtility.AlcErrorLevel">
+            <summary>
+            ALC 错误等级
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.DEBUG">
+            <summary>
+            调试
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.TRACE">
+            <summary>
+            跟踪
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.WARN">
+            <summary>
+            警告
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.ERROR1">
+            <summary>
+            可以忽略的错误
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.ERROR2">
+            <summary>
+            不可以忽略的错误
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcErrorLevel.FATAL">
+            <summary>
+            致命错误
+            </summary>
+        </member>
+        <member name="T:AlcUtility.UpdateModuleStatusParam">
+            <summary>
+            UpdateModuleStatus操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.UpdateModuleStatusParam.moduleType">
+            <summary>
+            要更新状态模块的类型。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.UpdateModuleStatusParam.alive">
+            <summary>
+            模块的状态，true表示模块连接上，false表示未连接上。（必填）
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ErrorParam">
+            <summary>
+            Error操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorParam.moduleType">
+            <summary>
+            发生错误的模块类型。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorParam.errorCode">
+            <summary>
+            错误代号。（必填)
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorParam.errorLevel">
+            <summary>
+            错误等级。（可缺省，缺省值为DEBUG）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorParam.errorMsg">
+            <summary>
+            报错信息。（必填）
+            </summary>
+        </member>
+        <member name="T:AlcUtility.WriteLogParam">
+            <summary>
+            WriteLog操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.WriteLogParam.message">
+            <summary>
+            要写入日志的内容。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.WriteLogParam.errorLevel">
+            <summary>
+            错误等级，根据不同的等级会存入对应的日志中。（可缺省，缺省值为DEBUG）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.WriteLogParam.moduleOrFileName">
+            <summary>
+            模块名或要存入的文件名。（可缺省，缺省值为"ALL"）
+            </summary>
+        </member>
+        <member name="T:AlcUtility.SaveCsvParam">
+            <summary>
+            SaveCsv操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SaveCsvParam.csvName">
+            <summary>
+            csv文件名。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SaveCsvParam.head">
+            <summary>
+            csv表头，各项之间用逗号隔开。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SaveCsvParam.msg">
+            <summary>
+            要写入csv的内容，各项之间用逗号隔开，必须与表头项数匹配。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SaveCsvParam.addTime">
+            <summary>
+            是否在首列写入插入时间
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ShowMsgBoxParam">
+            <summary>
+            ShowMsgBox操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ShowMsgBoxParam.text">
+            <summary>
+            要弹框提示的内容。（必填）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ShowMsgBoxParam.caption">
+            <summary>
+            弹框标题。（可缺省，缺省值为"ALC"）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ShowMsgBoxParam.buttons">
+            <summary>
+            弹框提示可选按钮。（可缺省，缺省值为OK）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ShowMsgBoxParam.icon">
+            <summary>
+            弹框主题图片。（可缺省，缺省值为None）
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ShowMsgBoxParam.defaultbutton">
+            <summary>
+            弹框默认选中按钮。（可缺省，缺省值为Button1）
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ButtonClickRequireParam">
+            <summary>
+            ButtonClickRequire操作时需要传入的结构
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ButtonClickRequireParam.button">
+            <summary>
+            想要触发的按钮
+            </summary>
+        </member>
+        <member name="T:AlcUtility.BinaryCommandMap">
+            <summary>
+            二进制服务指令映射
+            </summary>
+        </member>
+        <member name="P:AlcUtility.BinaryCommandMap.Instance">
+            <summary>
+            类实例
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.AddCommand(System.Int32,System.String)">
+            <summary>
+            添加一个映射
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.AddCommands(System.Collections.Generic.Dictionary{System.Int32,System.String})">
+            <summary>
+            添加多个映射
+            </summary>
+            <param name="commands">Key-Command映射字典</param>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.GetCommand(System.Int32)">
+            <summary>
+            通过Key获取Command
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.GetCommands">
+            <summary>
+            获取Key-Command映射字典
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.GetKey(System.String)">
+            <summary>
+            通过Command获取Key
+            </summary>
+        </member>
+        <member name="M:AlcUtility.BinaryCommandMap.GetKeys">
+            <summary>
+            获取Command-Key映射字典
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ICommandMap`1">
+            <summary>
+            指令映射接口
+            </summary>
+            <typeparam name="T">映射Key类型</typeparam>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.GetCommands">
+            <summary>
+            获取Key-Command映射字典
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.GetCommand(`0)">
+            <summary>
+            通过Key获取Command
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.GetKeys">
+            <summary>
+            获取Command-Key映射字典
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.GetKey(System.String)">
+            <summary>
+            通过Command获取Key
+            </summary>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.AddCommands(System.Collections.Generic.Dictionary{`0,System.String})">
+            <summary>
+            添加多个映射
+            </summary>
+            <param name="commands">Key-Command映射字典</param>
+        </member>
+        <member name="M:AlcUtility.ICommandMap`1.AddCommand(`0,System.String)">
+            <summary>
+            添加一个映射
+            </summary>
+        </member>
+        <member name="T:AlcUtility.MessageSendResult">
+            <summary>
+            消息发送结果
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.None">
+            <summary>
+            无
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.Ok">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.Timeout">
+            <summary>
+            超时
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.TimeoutAndAbort">
+            <summary>
+            超时并选择了Abort
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.TimeoutAndIgnore">
+            <summary>
+            超时并选择了Ignore
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageSendResult.NotRegistered">
+            <summary>
+            ModuleId 还没有注册
+            </summary>
+        </member>
+        <member name="T:AlcUtility.MessageContext">
+            <summary>
+            消息上下文
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageContext.Event">
+            <summary>
+            用于等待消息回复
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageContext.Result">
+            <summary>
+            消息结果
+            </summary>
+        </member>
+        <member name="F:AlcUtility.MessageContext.Data">
+            <summary>
+            收到的数据
+            </summary>
+        </member>
+        <member name="T:AlcUtility.MessageHandler">
+            <summary>
+            消息处理类
+            </summary>
+        </member>
+        <member name="E:AlcUtility.MessageHandler.DataReceived">
+            <summary>
+            收到数据时触发
+            </summary>
+        </member>
+        <member name="P:AlcUtility.MessageHandler.Contexts">
+            <summary>
+            消息上下文字典，ModuleId-Context
+            </summary>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.#ctor(AlcUtility.PluginBase,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="plugin">插件对象</param>
+            <param name="messageName">消息名称</param>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.SendMessage(AlcUtility.ReceivedData,System.Int32,System.Boolean)">
+            <summary>
+            发送REQ数据到网络
+            ModuleType、Data.Type和Data.Name不需要填，填了也没用
+            ModuleId如果没填就发给第一个注册进来的
+            </summary>
+            <param name="data">数据</param>
+            <param name="timeout">
+            等待回复超时时间(ms)
+            值为 -1 时，无限等待
+            值小于 -1 时，不等待
+            </param>
+            <param name="autoShowMsgBox">超时时是否自动弹框，弹框有三个选项：Abort、Retry、Ignore</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.SendToAll(AlcUtility.ReceivedData,System.Int32,System.Boolean)">
+            <summary>
+            发送REQ数据给所有ModuleId
+            ModuleType、Data.Type和Data.Name不需要填，填了也没用
+            </summary>
+            <param name="data">数据</param>
+            <param name="timeout">
+            等待回复超时时间(ms)
+            值为 -1 时，无限等待
+            值小于 -1 时，不等待
+            </param>
+            <param name="autoShowMsgBox">超时时是否自动弹框，弹框有三个选项：Abort、Retry、Ignore</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.Reply(AlcUtility.ReceivedData)">
+            <summary>
+            回复RSP数据到网络
+            ModuleType、Data.Type和Data.Name不需要填，填了也没用
+            ModuleId如果没填就回复第一个注册进来的
+            </summary>
+            <param name="data">数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.BroadcastMessage(System.String,AlcUtility.ReceivedData)">
+            <summary>
+            发送消息到插件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.MessageHandler.HandleMessage(AlcUtility.ReceivedData)">
+            <summary>
+            处理消息
+            </summary>
+            <param name="data">消息数据</param>
+        </member>
+        <member name="T:AlcUtility.IEngineInterface">
+            <summary>
+            Engine interface
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.GetEngineCount">
+            <summary>
+            define how many engine need to creat
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.SetEngineIndex(System.Int32)">
+            <summary>
+            set Engine index to Interface After engine created. Index is define by enginemanager
+            </summary>
+            <param name="index">engine index</param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.GetEnginesIndex">
+            <summary>
+            Get Interface Engine index list
+            </summary>
+            <returns>list[int]</returns>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnEngineStart(System.Int32,System.DateTime)">
+            following index is the value of above
+             <summary>
+             Engine start event
+             </summary>
+             <param name="index">engine index</param>
+             <param name="time">engine start time</param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnItemStart(System.Int32,AlcUtility.EngineDefine.CsvSequenceDefine,System.DateTime)">
+            <summary>
+            Item start
+            </summary>
+            <param name="index">engine index</param>
+            <param name="seq">item content, CsvSequenceDefine defined in EngineDefine</param>
+            <param name="time"></param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnItemFinish(System.Int32,AlcUtility.EngineDefine.CsvSequenceDefine,System.Object[],System.Boolean,System.DateTime,System.Double)">
+            <summary>
+            item finished
+            </summary>
+            <param name="index">engine index</param>
+            <param name="seq">item content</param>
+            <param name="result">results</param>
+            <param name="status">item status, true:pass, false:fail</param>
+            <param name="time">item finished time</param>
+            <param name="expend_time">item took time</param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnItemError(System.Int32,AlcUtility.EngineDefine.CsvSequenceDefine,System.String,System.DateTime,System.Double)">
+            <summary>
+            Item error
+            </summary>
+            <param name="index">engine index</param>
+            <param name="seq">item content</param>
+            <param name="msg">error message</param>
+            <param name="time">item finished time</param>
+            <param name="expend_time">time tool time</param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnEngineStop(System.Int32,System.DateTime,System.Int32)">
+            <summary>
+            Engine stop interface
+            </summary>
+            <param name="index">engine index</param>
+            <param name="time">engine stop time</param>
+            <param name="status">finial status</param>
+        </member>
+        <member name="M:AlcUtility.IEngineInterface.OnEngineAbort(System.Int32,System.DateTime)">
+            <summary>
+            Engine abort interface
+            </summary>
+            <param name="index">engine index</param>
+            <param name="time">engine stop time</param>
+        </member>
+        <member name="T:AlcUtility.IEngineCreate">
+            <summary>
+            comsumer create engine, client will be UI, datalogger...
+            IEngineInterface is neccessary
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IEngineCreate.SetEngineCreateFunc(System.Action{System.Object})">
+             <summary>
+             create engine by user
+            if this interface is imp, engine manger will not create engine.
+            user need to call EngineCreate after lauched
+             </summary>
+             <param name="EngineCreate">engine create function, normlly object is IEngineInterface,IEngineUiInterface,IItemInterface</param>
+        </member>
+        <member name="M:AlcUtility.IEngineCreate.SetEngineCloseFunc(System.Action{System.Collections.Generic.List{System.Int32}})">
+            <summary>
+            delete / close / dispose engine by user
+            </summary>
+            <param name="EngineClose">in: list[int]engines index , can get from IEngineInterface.GetEnginesIndex</param>
+        </member>
+        <member name="T:AlcUtility.IEngineUiInterface">
+            <summary>
+            consumer operate, Engine action, client will be UI
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetFuncMethodList(System.Func{System.Int32,System.Collections.Generic.List{System.String}})">
+            <summary>
+            Get Engine Func name List
+            </summary>
+            <param name="GetFucNameList"></param>
+            Get Registered Function List For UI--- int: engine id
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetFuncGetParams(System.Func{System.Int32,System.String,AlcUtility.EngineDefine.ItemDispatcherParams},System.Func{System.Int32,System.String,AlcUtility.EngineDefine.ItemDispatcherParams})">
+            <summary>
+            GetParams for Item debug
+            </summary>
+            <param name="GetCsvParams">in: engine index, item_id, out:ItemDispatcherParams</param>
+            <param name="GetFuncParamsDefParams">in: engine index, function name, out:ItemDispatcherParams</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetSeqDebug(System.Func{System.Int32,System.Boolean},System.Func{System.Int32,System.Boolean},System.Func{System.Int32,System.Boolean},System.Func{System.Int32,System.Boolean})">
+            <summary>
+            Set Engine Debug Action to UI
+            </summary>
+            <param name="StartDebug">in: engine index, return bool</param>
+            <param name="StopDebug">in: engine index, return bool</param>
+            <param name="Continue">in: engine index, return bool</param>
+            <param name="Step">in: engine index, return bool</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetBreakPoint(System.Action{System.Int32,System.String},System.Action{System.Int32},System.Action{System.Int32,System.String})">
+            <summary>
+            Set break point action
+            </summary>
+            <param name="AddBreaker">in: engine index, point id</param>
+            <param name="ClearBreaker">in: engine index</param>
+            <param name="RemoveBreaker">in: engine index, point id</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetCsvAction(System.Func{System.Int32,System.String,System.Collections.Generic.List{AlcUtility.EngineDefine.CsvSequenceDefine}})">
+            <summary>
+            triger Engine to LoadCsv
+            </summary>
+            <param name="LoadCsv">in: engine index, filepath, out: list csv</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetEngineAction(System.Action{System.Int32},System.Action{System.Int32},System.Action{System.Int32},System.Action,System.Action,System.Action,System.Func{System.Boolean})">
+            <summary>
+            set engine action to UI
+            </summary>
+            <param name="EngineRun">in: engine index</param>
+            <param name="EngineStop">in: engine index</param>
+            <param name="EngineAbort">in: engine index</param>
+            <param name="EnginesRun">in: engine index</param>
+            <param name="EnginesStop">in: engine index</param>
+            <param name="EnginesAbort">in: engine index</param>
+            <param name="EnginesRunning">in: engine index</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetConfigAction(System.Func{System.String,System.Object,System.Boolean},System.Func{System.String,System.Object})">
+            <summary>
+            Operate engine Config
+            </summary>
+            <param name="SetConfig">in:key name->string, define in EngineConfigKeyName, value->bool or string,  out: true(success) or false(fail)</param>
+            <param name="GetConfig">in:key name->string, define in EngineConfigKeyName, out: bool or string</param>
+        </member>
+        <member name="M:AlcUtility.IEngineUiInterface.SetFunc2GetEnginesCount(System.Func{System.Int32})">
+            <summary>
+            get engines count from engine manager center.
+            </summary>
+            <param name="GetEnginesCountFromManager"></param>
+        </member>
+        <member name="M:AlcUtility.IItemInterface.SetDataOperation(System.Func{System.Int32,System.Collections.Generic.List{System.String}},System.Func{System.Int32,System.String,System.Object},System.Func{System.Int32,System.String,System.Object},System.Func{System.Int32,System.String,System.Collections.Generic.List{System.String}},System.Action{System.Int32,System.String,System.Object})">
+            <summary>
+            get/change Global data, need to imp this
+            </summary>
+            <param name="GetKeys">in: engine index, out: variant name list</param>
+            <param name="GetInstance">in: engine index, instance name,  out: instance </param>
+            <param name="GetValue">in: engine index, variant name, out: data</param>
+            <param name="GetKeysByType">in: engine index, type name, out: variant name list</param>
+            <param name="SetValue">in: engine index, variant name, out: data</param>
+        </member>
+        <member name="T:AlcUtility.IRegisterToEngine">
+            <summary>
+            Registe method / instance to engine
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IRegisterToEngine.GetInstancesToEngine">
+            <summary>
+             Instance name will be set as the definition. 
+             e.g.  There is  a method Add(x,y) in object plugintest
+             [plugintest] -> plugintest.add
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.IRegisterToEngine.GetInstanceDicToEngine">
+            <summary>
+            the key of dictionary will be set as the definition
+            e.g.  There is  a method Add(x,y) in object plugintest1 and plugintest2
+            dictionary[wooo: plugintest1 ] -> wooo:add
+            dictionary[hooo: plugintest2 ] -> hooo:add
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.IPlugins.Register(System.Action{AlcUtility.ReceivedData},System.Action{System.String,AlcUtility.ReceivedData})">
+            <summary>
+            Regist and Provide functions
+            </summary>
+            <param name="sendmessage">for sending messages to the network server.</param>
+            <param name="broadcast">for sending messages to the module which subscribes it.</param>
+            <returns>Module Name, List of interested modules.</returns>
+        </member>
+        <member name="T:AlcUtility.PluginBase">
+            <summary>
+            插件基类
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.ModuleType">
+            <summary>
+            模块类型
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.RegisteredModuleIds">
+            <summary>
+            已注册的ModuleIds
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.ExpectedModuleIds">
+            <summary>
+            期望的ModuleId集合
+            值为null时无意义
+            所有期望的Id都注册上来时状态灯自动变绿
+            相关操作无视期望Id以外的其他module，如消息处理的SendAll等
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.AutoSendCmds">
+            <summary>
+            Key: 自动发送消息的按钮命令，如：reset、start等，没有便不发送;
+            Value: 指令超时时间，单位秒；
+            注：非远程模式设置
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.DisableStateMachine">
+            <summary>
+            禁用状态机功能，不为模块创建状态机
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase._sendMessageToNetwork">
+            <summary>
+            发送消息到网络
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase._broadcastMessageToPlugins">
+            <summary>
+            广播消息给插件
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase._messageHandlers">
+            <summary>
+            消息处理对象字典，MesageName-MessageHandler
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase._moduleTypesToSub">
+            <summary>
+            List of modules to subscribe
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.#ctor(System.String,System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="moduleType">模块类型</param>
+            <param name="remoteMode">是否为远程模式，远程模式根据实际状态更新</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.#ctor(System.String,System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="moduleType">模块类型</param>
+            <param name="moduleTypesToSub">List of modules to subscribe</param>
+            <param name="remoteMode">是否为远程模式，远程模式根据实际状态更新</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Register(System.Action{AlcUtility.ReceivedData},System.Action{System.String,AlcUtility.ReceivedData})">
+            <summary>
+            regist to the ALC
+            </summary>
+            <param name="sendmessage">for sending messages to the network server</param>
+            <param name="broadcast">for sending messages to the module which subscribes it</param>
+            <returns>Module Name, List of modules to subscribe</returns>
+        </member>
+        <member name="P:AlcUtility.PluginBase.StateEnable">
+            <summary>
+            是否启用状态机
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.RemoteMode">
+            <summary>
+            是否为远程模式，远程模式根据实际状态更新
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.ModuleStates">
+            <summary>
+            每个moduleId对应的状态
+            </summary>
+        </member>
+        <member name="E:AlcUtility.PluginBase.ModuleStatesChanged">
+            <summary>
+            ModuleStates添加或移除状态机时触发
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.AddState(System.String)">
+            <summary>
+            为module添加一个状态机
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.RemoveState(System.String)">
+            <summary>
+            移除module的状态机
+            </summary>
+        </member>
+        <member name="T:AlcUtility.PluginBase.ModuleState">
+            <summary>
+            模块状态
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.ModuleState._plugin">
+            <summary>
+            插件实例
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.ModuleId">
+            <summary>
+            模块ID
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.RemoteState">
+            <summary>
+            模块远程状态
+            </summary>
+        </member>
+        <member name="F:AlcUtility.PluginBase.ModuleState.StateMachine">
+            <summary>
+            模块的状态机
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.#ctor(AlcUtility.PluginBase)">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.RunAsRemoteMode">
+            <summary>
+            以远程模式启动
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.RunAsLocalMode">
+            <summary>
+            以本地模式启动
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.AddStateThread(System.Threading.Thread)">
+            <summary>
+            添加当前状态开启的线程，当状态切换时会结束这些线程
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.RunStateThread(System.Action)">
+            <summary>
+            执行状态Action，并自动将当前线程加入状态线程，当状态切换时会结束此线程
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.PlcDriver">
+            <summary>
+            PlcDriver
+            </summary>
+        </member>
+        <member name="E:AlcUtility.PluginBase.ModuleState.OnErrorListChanged">
+            <summary>
+            ErrorList更新时触发
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.ErrorList">
+            <summary>
+            错误列表
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.PlcMode">
+            <summary>
+            PLC运行模式
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.Override">
+            <summary>
+            Override
+            </summary>
+        </member>
+        <member name="P:AlcUtility.PluginBase.ModuleState.LogLevel">
+            <summary>
+            日志等级
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.SyncTime">
+            <summary>
+            同步时间
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.Reconnect">
+            <summary>
+            重连
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ModuleState.CleaeError">
+            <summary>
+            清错
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.OnState(AlcUtility.MessageHandler,AlcUtility.ReceivedData)">
+            <summary>
+            状态上报
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.HandleMessage(AlcUtility.ReceivedData)">
+            <summary>
+            处理消息
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.OnUnknownMessage(AlcUtility.ReceivedData)">
+            <summary>
+            OnUnknownMessage
+            </summary>
+            <param name="data">数据</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.OnRegister(AlcUtility.MessageHandler,AlcUtility.ReceivedData)">
+            <summary>
+            客户端注册上来时调用
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.OnDisconnected(AlcUtility.MessageHandler,AlcUtility.ReceivedData)">
+            <summary>
+            客户端断开连接时调用
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.OnError(AlcUtility.MessageHandler,AlcUtility.ReceivedData)">
+            <summary>
+            收到字符串错误上报消息
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetControl">
+            <summary>
+            返回主界面控件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetForm">
+            <summary>
+            返回插件页面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetConfigView">
+            <summary>
+            返回配置页面
+            </summary>
+            <returns></returns>
+            
+        </member>
+        <member name="M:AlcUtility.PluginBase.Load">
+            <summary>
+            插件加载中调用
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.AddExpectedModuleId(System.String)">
+            <summary>
+            新增moduleID
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.RemoveExpectedModuleId(System.String)">
+            <summary>
+            移除moduleID
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Reset(System.String)">
+            <summary>
+            复位
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Start(System.String)">
+            <summary>
+            开始
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Complete(System.String)">
+            <summary>
+            完成
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Pause(System.String)">
+            <summary>
+            暂停
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Retry(System.String)">
+            <summary>
+            重试
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Stop(System.String)">
+            <summary>
+            停止
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Abort(System.String)">
+            <summary>
+            异常终止
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Clear(System.String)">
+            <summary>
+            清错
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Dispose">
+            <summary>
+            销毁
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetMessageHandler(System.String)">
+            <summary>
+            获取MessageHandler
+            </summary>
+            <param name="messageName">消息名称</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Log(System.String,AlcUtility.AlcErrorLevel)">
+            <summary>
+            打印日志
+            </summary>
+            <param name="text">日志内容</param>
+            <param name="errLevel">错误等级</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.UpdateModuleStatus">
+            <summary>
+            根据已注册的moduleId更新模块状态
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.UpdateModuleStatus(System.Boolean)">
+            <summary>
+            更新模块状态
+            </summary>
+            <param name="alive">是否在线</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ShowMsgBox(System.String,System.String,AlcUtility.AlcMsgBoxButtons,AlcUtility.AlcMsgBoxIcon,AlcUtility.AlcMsgBoxDefaultButton)">
+            <summary>
+            弹框
+            </summary>
+            <param name="text">内容</param>
+            <param name="caption">标题</param>
+            <param name="buttons">按钮</param>
+            <param name="icon">图标</param>
+            <param name="defaultButton">默认按钮</param>
+            <returns>弹窗后用户选择的结果</returns>
+        </member>
+        <member name="M:AlcUtility.PluginBase.SaveCsv(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            保存csv
+            </summary>
+            <param name="csvName">名称</param>
+            <param name="head">头</param>
+            <param name="text">内容</param>
+            <param name="addTime">添加时间列</param>
+        </member>
+        <member name="M:AlcUtility.PluginBase.Error(System.String,System.Int64,AlcUtility.AlcErrorLevel)">
+            <summary>
+            触发Error
+            </summary>
+            <param name="errorMsg">错误信息</param>
+            <param name="errorCode">错误码</param>
+            <param name="errorLevel">错误等级</param>
+            <returns>错误弹窗后，用户选择的结果</returns>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetSystemStatus">
+            <summary>
+            获取系统状态
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.GetUserAuthority">
+            <summary>
+            获取用户权限
+            </summary>
+        </member>
+        <member name="M:AlcUtility.PluginBase.ButtonClickRequire(AlcUtility.SYSTEM_EVENT)">
+            <summary>
+            触发按钮
+            </summary>
+            <param name="button">按钮名</param>
+        </member>
+        <member name="P:AlcUtility.BinaryParam.ExtendDataToString">
+            <summary>
+            string Func(ModuleType, MessageName, ExtendData)
+            返回null则表明无相应转换
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ErrorReqParam">
+            <summary>
+            错误上报参数
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorReqParam.Code">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorReqParam.Unit">
+            <summary>
+            单元/模块 id
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorReqParam.Level">
+            <summary>
+            错误等级
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorReqParam.Message">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:AlcUtility.ErrorRspParam">
+            <summary>
+            错误回复参数
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorRspParam.Code">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorRspParam.Unit">
+            <summary>
+            单元/模块 id
+            </summary>
+        </member>
+        <member name="P:AlcUtility.ErrorRspParam.Result">
+            <summary>
+            操作结果
+            </summary>
+        </member>
+        <member name="T:AlcUtility.PlcMode">
+            <summary>
+            PLC运行模式
+            </summary>
+        </member>
+        <member name="T:AlcUtility.SYSTEM_STATUS">
+            <summary>
+            状态枚举
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Unknown">
+            <summary>
+            未知状态
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Disconnected">
+            <summary>
+            未连接
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Idle">
+            <summary>
+            空闲
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Resetting">
+            <summary>
+            复位中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Ready">
+            <summary>
+            就绪
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Starting">
+            <summary>
+            启动中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Running">
+            <summary>
+            运行中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Stopping">
+            <summary>
+            停止中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Completing">
+            <summary>
+            完成中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Complete">
+            <summary>
+            已完成
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Pausing">
+            <summary>
+            暂停中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Paused">
+            <summary>
+            已暂停
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Resuming">
+            <summary>
+            恢复中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Aborting">
+            <summary>
+            异常终止中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Abort">
+            <summary>
+            异常终止
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Clearing">
+            <summary>
+            错误清除中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Erroring">
+            <summary>
+            错误中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.Retrying">
+            <summary>
+            重试中
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.ResetFailed">
+            <summary>
+            复位失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.StartFailed">
+            <summary>
+            启动失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.PauseFailed">
+            <summary>
+            暂停失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.ResumeFailed">
+            <summary>
+            恢复失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.CompleteFailed">
+            <summary>
+            完成失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.StopFailed">
+            <summary>
+            停止失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.AbortFailed">
+            <summary>
+            异常终止失败
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_STATUS.ClearFailed">
+            <summary>
+            错误清除失败
+            </summary>
+        </member>
+        <member name="T:AlcUtility.SYSTEM_EVENT">
+            <summary>
+            状态机事件
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Invalid">
+            <summary>
+            无效命令
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Reset">
+            <summary>
+            初始化/重置
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Start">
+            <summary>
+            开始
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Complete">
+            <summary>
+            完成
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Stop">
+            <summary>
+            停止
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Pause">
+            <summary>
+            暂停
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Resume">
+            <summary>
+            恢复
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Abort">
+            <summary>
+            异常终止
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Clear">
+            <summary>
+            清除错误
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.Retry">
+            <summary>
+            重试
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.ActionOk">
+            <summary>
+            动作执行成功
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SYSTEM_EVENT.ActionFail">
+            <summary>
+            动作执行失败
+            </summary>
+        </member>
+        <member name="T:AlcUtility.SystemState">
+            <summary>
+            状态基类
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SystemState.NextStateWhenActionOk">
+            <summary>
+            Action执行成功时跳转的状态
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SystemState.NextStateWhenActionFail">
+            <summary>
+            Action执行失败时跳转的状态
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SystemState._threads">
+            <summary>
+            当前状态开启的线程，当状态切换时会结束这些线程
+            </summary>
+        </member>
+        <member name="F:AlcUtility.SystemState._events">
+            <summary>
+            状态可接受的事件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SystemState.EventsAllowed">
+            <summary>
+            状态可接受的事件
+            </summary>
+        </member>
+        <member name="P:AlcUtility.SystemState.Name">
+            <summary>
+            状态名
+            </summary>
+        </member>
+        <member name="E:AlcUtility.SystemState.OnActive">
+            <summary>
+            激活此状态时触发
+            </summary>
+        </member>
+        <member name="M:AlcUtility.SystemState.AddThread(System.Threading.Thread)">
+            <summary>
+            添加当前状态开启的线程，当状态切换时会结束这些线程
+            </summary>
+        </member>
+        <member name="M:AlcUtility.SystemState.ActiveAction">
+            <summary>
+            激活此状态时执行，默认触发OnActive事件，重写后需注意调用基类的该函数，否则不会触发OnActive事件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.SystemState.Trigger(AlcUtility.SYSTEM_EVENT,AlcUtility.SYSTEM_STATUS@,System.String@)">
+            <summary>
+            触发状态事件
+            </summary>
+            <param name="event">事件</param>
+            <param name="nextState">要跳转的状态</param>
+            <param name="message">信息</param>
+            <returns>事件是否触发成功</returns>
+        </member>
+        <member name="M:AlcUtility.SystemState.Dispose(System.Threading.Thread)">
+            <summary>
+            状态停止，终止状态的线程
+            </summary>
+            <param name="threadActive"></param>
+        </member>
+        <member name="M:AlcUtility.SystemState.AddEvents(AlcUtility.SYSTEM_EVENT[])">
+            <summary>
+            添加状态可接受的状态事件
+            </summary>
+            <param name="events"></param>
+        </member>
+        <member name="T:AlcUtility.StateMachine`2">
+            <summary>
+            状态机
+            </summary>
+            <typeparam name="TName">状态名称类型</typeparam>
+            <typeparam name="TEvent">事件类型</typeparam>
+        </member>
+        <member name="F:AlcUtility.StateMachine`2._states">
+            <summary>
+            状态字典：状态名称-状态对象
+            </summary>
+        </member>
+        <member name="P:AlcUtility.StateMachine`2.CurrentState">
+            <summary>
+            当前状态名称
+            </summary>
+        </member>
+        <member name="E:AlcUtility.StateMachine`2.OnStateChanged">
+            <summary>
+            状态改变时触发
+            </summary>
+        </member>
+        <member name="P:AlcUtility.StateMachine`2.Active">
+            <summary>
+            状态机是否激活
+            </summary>
+        </member>
+        <member name="E:AlcUtility.StateMachine`2.OnActive">
+            <summary>
+            状态机激活时触发
+            </summary>
+        </member>
+        <member name="F:AlcUtility.StateMachine`2._threadActive">
+            <summary>
+            当期激活动作的线程
+            </summary>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.#ctor(`0)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="initialState">初始状态名称</param>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.RegisterStates(AlcUtility.IState{`0,`1}[])">
+            <summary>
+            注册状态
+            </summary>
+            <param name="states">状态对象数组</param>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.RegisterAction(`0,System.Action)">
+            <summary>
+            为状态注册激活动作
+            </summary>
+            <param name="stateName">状态名称</param>
+            <param name="action">动作</param>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.UnregisterAction(`0,System.Action)">
+            <summary>
+            为状态注销激活动作
+            </summary>
+            <param name="stateName">状态名称</param>
+            <param name="action">动作</param>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.Activate(System.String@,System.Boolean)">
+            <summary>
+            激活状态机
+            </summary>
+            <param name="message">信息</param>
+            <param name="runAction">是否执行状态Action</param>
+            <returns>是否激活成功</returns>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.Activate(`0,System.String@,System.Boolean)">
+            <summary>
+            激活状态机
+            </summary>
+            <param name="state">初始状态</param>
+            <param name="message">信息</param>
+            <param name="runAction">是否执行状态Action</param>
+            <returns>是否激活成功</returns>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.ReActivate(`0,System.String@,System.Boolean)">
+            <summary>
+            重启状态机
+            </summary>
+            <param name="state">初始状态</param>
+            <param name="message">信息</param>
+            <param name="runAction">是否执行状态Action</param>
+            <returns>是否激活成功</returns>
+        </member>
+        <member name="P:AlcUtility.StateMachine`2.EventsAllowed">
+            <summary>
+            当前可接受的事件
+            </summary>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.Trigger(`1,System.String@)">
+            <summary>
+            触发事件
+            若事件触发成功就跳到下一个状态
+            注意：跳到下一个状态时会结束当前状态的激活动作和子线程
+            </summary>
+            <param name="event">事件</param>
+            <param name="message">信息</param>
+            <returns>是否触发成功</returns>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.GetStateObj(`0)">
+            <summary>
+            获取状态对象
+            </summary>
+        </member>
+        <member name="M:AlcUtility.StateMachine`2.Dispose">
+            <summary>
+            停止状态机
+            </summary>
+        </member>
+        <member name="T:AlcUtility.IState`2">
+            <summary>
+            状态对象接口
+            </summary>
+            <typeparam name="TName">状态名称类型</typeparam>
+            <typeparam name="TEvent">事件类型</typeparam>
+        </member>
+        <member name="P:AlcUtility.IState`2.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:AlcUtility.IState`2.EventsAllowed">
+            <summary>
+            可接受的事件
+            </summary>
+        </member>
+        <member name="E:AlcUtility.IState`2.OnActive">
+            <summary>
+            激活动作执行时触发
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IState`2.ActiveAction">
+            <summary>
+            激活动作
+            进入该状态时便会执行的动作
+            </summary>
+        </member>
+        <member name="M:AlcUtility.IState`2.Trigger(`1,`0@,System.String@)">
+            <summary>
+            触发事件
+            </summary>
+            <param name="event">事件</param>
+            <param name="nextState">下一个状态</param>
+            <param name="message">信息</param>
+            <returns>是否触发成功</returns>
+        </member>
+        <member name="M:AlcUtility.IState`2.Dispose(System.Threading.Thread)">
+            <summary>
+            结束激活动作和子线程
+            注意：如果是在激活动作中触发的事件，则不要结束触发所在线程
+            </summary>
+            <param name="threadActive">激活动作的线程</param>
+        </member>
+    </members>
+</doc>

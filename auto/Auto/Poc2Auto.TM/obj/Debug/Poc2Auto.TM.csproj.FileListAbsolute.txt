@@ -1,0 +1,8 @@
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\ALC\plugins\Poc2Auto.TM.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\ALC\plugins\Poc2Auto.TM.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.csproj.AssemblyReference.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.Form1.resources
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.csproj.GenerateResource.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.csproj.CoreCompileInputs.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.TM\obj\Debug\Poc2Auto.TM.pdb

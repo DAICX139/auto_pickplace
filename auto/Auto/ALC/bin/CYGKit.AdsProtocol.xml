@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CYGKit.AdsProtocol</name>
+    </assembly>
+    <members>
+        <member name="T:CYGKit.AdsProtocol.AdsExtension">
+            <summary>
+            ads扩展方法
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_TrayInfo">
+            <summary>
+            TrayInfo全路径名称
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_RegionMax">
+            <summary>
+            nRegion_Max 相对于TrayInfo的路径名称
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_RegionNum">
+            <summary>
+            RegionNum相对于TrayInfo的路径名称
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_RegionValue">
+            <summary>
+            RegionValue相对于TrayInfo的路径名称
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_TrayRegion">
+            <summary>
+            TrayRegion相对于TrayInfo的路径名称
+            </summary>
+        </member>
+        <member name="F:CYGKit.AdsProtocol.AdsExtension.Name_TrayData">
+            <summary>
+            TrayData相对于TrayInfo的路径名称
+            </summary>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.Write2DArray``2(NetAndEvent.PlcDriver.AdsDriverClient,System.String,``0[0:,0:],System.String@)">
+            <summary>
+            写入二维数组数据
+            </summary>
+            <typeparam name="TSource">源数据类型</typeparam>
+            <typeparam name="TDest">写入数据类型</typeparam>
+            <param name="client">AdsDriverClient</param>
+            <param name="name">变量全路径名称</param>
+            <param name="data">二维数组数据</param>
+            <param name="message">信息</param>
+            <returns>是否写入成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.Read2DArray``2(NetAndEvent.PlcDriver.AdsDriverClient,System.String,System.Int32,System.Int32,``1[0:,0:]@,System.String@)">
+            <summary>
+            读取二维数组
+            </summary>
+            <typeparam name="TSource">读取数据类型</typeparam>
+            <typeparam name="TDest">输出数据类型</typeparam>
+            <param name="client">AdsDriverClient</param>
+            <param name="name">变量全路径名称</param>
+            <param name="row">数组行数</param>
+            <param name="column">数组列数</param>
+            <param name="data">输出二维数组</param>
+            <param name="message">信息</param>
+            <returns>是否读取成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.WriteTrayData(NetAndEvent.PlcDriver.AdsDriverClient,System.Int32,System.Int32[0:,0:],System.String@)">
+            <summary>
+            写入tray盘数据
+            </summary>
+            <param name="client">AdsDriverClient</param>
+            <param name="index">tray盘下标</param>
+            <param name="data">二维数组数据</param>
+            <param name="message">信息</param>
+            <returns>是否写入成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.ReadTrayData(NetAndEvent.PlcDriver.AdsDriverClient,System.Int32,System.Int32,System.Int32,System.Int32[0:,0:]@,System.String@)">
+            <summary>
+            读取Tray盘数据
+            </summary>
+            <param name="client">AdsDriverClient</param>
+            <param name="index">tray盘下标</param>
+            <param name="row">Tray盘行数</param>
+            <param name="column">Tray盘列数</param>
+            <param name="data">Tray盘数据</param>
+            <param name="message">信息</param>
+            <returns>是否读取成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.WriteBinRegion(NetAndEvent.PlcDriver.AdsDriverClient,System.Collections.Generic.List{CYGKit.AdsProtocol.Models.BinRegion},System.Int32,System.Int32,System.String@)">
+            <summary>
+            写入Bin分区
+            </summary>
+            <param name="client">AdsDriverClient</param>
+            <param name="regions">所有分区</param>
+            <param name="row">Tray行数</param>
+            <param name="column">Tray列数</param>
+            <param name="message">信息</param>
+            <returns>是否下发成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.WriteBinRegion(NetAndEvent.PlcDriver.AdsDriverClient,System.Int32,System.Collections.Generic.List{CYGKit.AdsProtocol.Models.RegionInfo{System.Int32}},System.Int32,System.Int32,System.String@)">
+            <summary>
+            写入单个Tray的Bin分区
+            </summary>
+            <param name="client">AdsDriverClient</param>
+            <param name="index">Tray编号</param>
+            <param name="regions">分区</param>
+            <param name="row">Tray行数</param>
+            <param name="column">Tray列数</param>
+            <param name="regionMax">region_value的个数</param>
+            <param name="message">信息</param>
+            <returns>是否下发成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.WriteBinRegion(NetAndEvent.PlcDriver.AdsDriverClient,System.Int32,System.Int32[0:,0:],System.String@)">
+            <summary>
+            写入单个Tray的Bin分区
+            </summary>
+            <param name="client">AdsDriverClient</param>
+            <param name="index">Tray编号</param>
+            <param name="region">分区数据</param>
+            <param name="message">信息</param>
+            <returns>是否下发成功</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.RegionsTo2DArray``1(System.Collections.Generic.List{CYGKit.AdsProtocol.Models.RegionInfo{``0}},``0,System.Int32,System.Int32)">
+            <summary>
+            区域转二维数组
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+            <param name="regions">区域</param>
+            <param name="defaultValue">缺省值</param>
+            <param name="row">数组行数</param>
+            <param name="column">数组列数</param>
+            <returns>二维数组</returns>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.RegionsTo2DArray``1(``0[0:,0:],System.Collections.Generic.List{CYGKit.AdsProtocol.Models.RegionInfo{``0}})">
+            <summary>
+            区域转二维数组
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+            <param name="data">原始数据</param>
+            <param name="regions">区域</param>
+        </member>
+        <member name="M:CYGKit.AdsProtocol.AdsExtension.ReadTrayCellsCoordination``1(NetAndEvent.PlcDriver.AdsDriverClient,System.String,System.Int32,System.Int32)">
+            <summary>
+            读取Tray盘单元格坐标系
+            </summary>
+            <typeparam name="TPosition">坐标系的类</typeparam>
+            <param name="client">AdsDriverClient</param>
+            <param name="varName">plc变量名</param>
+            <param name="row">Tray盘的行</param>
+            <param name="col">Tray盘的列</param>
+            <returns></returns>
+        </member>
+        <member name="T:CYGKit.AdsProtocol.Models.RegionInfo`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.RegionInfo`1.StartRow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.RegionInfo`1.StartColume">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.RegionInfo`1.EndRow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.RegionInfo`1.EndColumn">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.RegionInfo`1.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:CYGKit.AdsProtocol.Models.BinRegion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CYGKit.AdsProtocol.Models.BinRegion.TrayIndex">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

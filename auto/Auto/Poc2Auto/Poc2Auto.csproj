@@ -1,0 +1,634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E6817E8F-4FD8-4F09-AC7F-314F4807F5AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Poc2Auto</RootNamespace>
+    <AssemblyName>Poc2Auto</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\ALC\plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\ALC\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AlcUtility">
+      <HintPath>..\ALC\bin\AlcUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="AmpLanguage">
+      <HintPath>..\ALC\bin\AmpLanguage.dll</HintPath>
+    </Reference>
+    <Reference Include="CYGKit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\CYGKit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CYGKit.AdsProtocol">
+      <HintPath>..\ALC\bin\CYGKit.AdsProtocol.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CYGKit.Database">
+      <HintPath>..\ALC\bin\CYGKit.Database.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CYGKit.Factory">
+      <HintPath>..\ALC\bin\CYGKit.Factory.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CYGKit.MTCP">
+      <HintPath>..\ALC\bin\CYGKit.MTCP.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\ALC\bin\EntityFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="halcondotnet, Version=18.11.1.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\halcondotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Log">
+      <HintPath>..\ALC\bin\Log.dll</HintPath>
+    </Reference>
+    <Reference Include="NetAndEvent">
+      <HintPath>..\ALC\bin\NetAndEvent.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\ALC\bin\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ConfigMgr.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\EventCenter.cs" />
+    <Compile Include="Common\MTCP.cs" />
+    <Compile Include="Common\Protocols.cs" />
+    <Compile Include="Common\RunMode.cs" />
+    <Compile Include="Database\DbModels.cs" />
+    <Compile Include="Database\DragonDbHelper.cs" />
+    <Compile Include="GUI\FormMode\FMAutoMark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMAutoMark.designer.cs">
+      <DependentUpon>FMAutoMark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMDifferentTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMDifferentTray.Designer.cs">
+      <DependentUpon>FMDifferentTray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSlipTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSlipTest.Designer.cs">
+      <DependentUpon>FMSlipTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSocketTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSocketTest.Designer.cs">
+      <DependentUpon>FMSocketTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMTakeOff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMTakeOff.Designer.cs">
+      <DependentUpon>FMTakeOff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMGRR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMGRR.Designer.cs">
+      <DependentUpon>FMGRR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSameTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSameTray.Designer.cs">
+      <DependentUpon>FMSameTray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSelectBin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSelectBin.Designer.cs">
+      <DependentUpon>FMSelectBin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSelectSN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormMode\FMSelectSN.Designer.cs">
+      <DependentUpon>FMSelectSN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_AutoMark.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_AutoMark.Designer.cs">
+      <DependentUpon>UCModeParams_AutoMark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeTakeOffTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeTakeOffTest.Designer.cs">
+      <DependentUpon>UCModeParams_DoeTakeOffTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeDifferentTrayTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeDifferentTrayTest.Designer.cs">
+      <DependentUpon>UCModeParams_DoeDifferentTrayTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeSameTrayTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeSameTrayTest.Designer.cs">
+      <DependentUpon>UCModeParams_DoeSameTrayTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeSlipTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_DoeSlipTest.Designer.cs">
+      <DependentUpon>UCModeParams_DoeSlipTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_GRR.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_GRR.Designer.cs">
+      <DependentUpon>UCModeParams_GRR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SelectDut_Bin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SelectDut_Bin.Designer.cs">
+      <DependentUpon>UCModeParams_SelectDut_Bin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SelectDut_SN.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SelectDut_SN.Designer.cs">
+      <DependentUpon>UCModeParams_SelectDut_SN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SocketTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeParams_SocketTest.Designer.cs">
+      <DependentUpon>UCModeParams_SocketTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCErrorList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCErrorList.Designer.cs">
+      <DependentUpon>UCErrorList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCGeneralConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCGeneralConfig.Designer.cs">
+      <DependentUpon>UCGeneralConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCHandlerConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCHandlerConfig.Designer.cs">
+      <DependentUpon>UCHandlerConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCHandlerConfig_New.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCHandlerConfig_New.Designer.cs">
+      <DependentUpon>UCHandlerConfig_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCMain.Designer.cs">
+      <DependentUpon>UCMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RunModeConfig\UCModeConfig.Designer.cs">
+      <DependentUpon>UCModeConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormAxisLoaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormAxisLoaction.Designer.cs">
+      <DependentUpon>FormAxisLoaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormAxisPosName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormAxisPosName.Designer.cs">
+      <DependentUpon>FormAxisPosName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormOperationAxis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\FormOperationAxis.Designer.cs">
+      <DependentUpon>FormOperationAxis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\LocationNameMgr.cs" />
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinder_New.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinder_New.designer.cs">
+      <DependentUpon>UC_Cylinder_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinders.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinders.designer.cs">
+      <DependentUpon>UC_Cylinders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis.designer.cs">
+      <DependentUpon>UC_SingleAxis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxises.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxises.designer.cs">
+      <DependentUpon>UC_SingleAxises.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxisOperation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxisOperation.designer.cs">
+      <DependentUpon>UC_SingleAxisOperation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCIndex.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCIndex.Designer.cs">
+      <DependentUpon>UCIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeDoe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeDoe.Designer.cs">
+      <DependentUpon>UCModeDoe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeManual.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeManual.Designer.cs">
+      <DependentUpon>UCModeManual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeSemiAuto.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeSemiAuto.Designer.cs">
+      <DependentUpon>UCModeSemiAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCModeUI.Designer.cs">
+      <DependentUpon>UCModeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_ModeSemiAuto.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_ModeSemiAuto.designer.cs">
+      <DependentUpon>UC_ModeSemiAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_PlcVarList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_PlcVarList.designer.cs">
+      <DependentUpon>UC_PlcVarList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_SemiAuto.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCModeUI\UCSemiAuto\UC_SemiAuto.designer.cs">
+      <DependentUpon>UC_SemiAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCRecipe_New.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCRecipe_New.Designer.cs">
+      <DependentUpon>UCRecipe_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCRunLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCRunLog.Designer.cs">
+      <DependentUpon>UCRunLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCRunMode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCRunMode.designer.cs">
+      <DependentUpon>UCRunMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCSocket.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCSocket.Designer.cs">
+      <DependentUpon>UCSocket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCSocketDisableList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCSocketDisableList.Designer.cs">
+      <DependentUpon>UCSocketDisableList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCSocket_New.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCSocket_New.Designer.cs">
+      <DependentUpon>UCSocket_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCStation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCStation.Designer.cs">
+      <DependentUpon>UCStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCStations.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCStations.Designer.cs">
+      <DependentUpon>UCStations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCStatistics.Designer.cs">
+      <DependentUpon>UCStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCTMConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCTMConfig.Designer.cs">
+      <DependentUpon>UCTMConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCTrays.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCTrays.Designer.cs">
+      <DependentUpon>UCTrays.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCStationDutTestResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCStationDutTestResult.designer.cs">
+      <DependentUpon>UCStationDutTestResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UCTraySetting_New.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCTraySetting_New.Designer.cs">
+      <DependentUpon>UCTraySetting_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dut.cs" />
+    <Compile Include="Model\DutStatistics.cs" />
+    <Compile Include="Model\LotInfo.cs" />
+    <Compile Include="Model\Overall.cs" />
+    <Compile Include="Model\Socket.cs" />
+    <Compile Include="Model\Station.cs" />
+    <Compile Include="Model\Tray.cs" />
+    <Compile Include="MTCP\Models.cs" />
+    <Compile Include="MTCP\MTCPHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\FormMode\FMAutoMark.resx">
+      <DependentUpon>FMAutoMark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMDifferentTray.resx">
+      <DependentUpon>FMDifferentTray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMGRR.resx">
+      <DependentUpon>FMGRR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMSameTray.resx">
+      <DependentUpon>FMSameTray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMSelectBin.resx">
+      <DependentUpon>FMSelectBin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMSelectSN.resx">
+      <DependentUpon>FMSelectSN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMSlipTest.resx">
+      <DependentUpon>FMSlipTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMSocketTest.resx">
+      <DependentUpon>FMSocketTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormMode\FMTakeOff.resx">
+      <DependentUpon>FMTakeOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_AutoMark.resx">
+      <DependentUpon>UCModeParams_AutoMark.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_DoeTakeOffTest.resx">
+      <DependentUpon>UCModeParams_DoeTakeOffTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_DoeDifferentTrayTest.resx">
+      <DependentUpon>UCModeParams_DoeDifferentTrayTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_DoeSameTrayTest.resx">
+      <DependentUpon>UCModeParams_DoeSameTrayTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_DoeSlipTest.resx">
+      <DependentUpon>UCModeParams_DoeSlipTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_GRR.resx">
+      <DependentUpon>UCModeParams_GRR.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_SelectDut_Bin.resx">
+      <DependentUpon>UCModeParams_SelectDut_Bin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_SelectDut_SN.resx">
+      <DependentUpon>UCModeParams_SelectDut_SN.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_SocketTest.resx">
+      <DependentUpon>UCModeParams_SocketTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCErrorList.resx">
+      <DependentUpon>UCErrorList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCGeneralConfig.resx">
+      <DependentUpon>UCGeneralConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCHandlerConfig.resx">
+      <DependentUpon>UCHandlerConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCHandlerConfig_New.resx">
+      <DependentUpon>UCHandlerConfig_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCMain.resx">
+      <DependentUpon>UCMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RunModeConfig\UCModeConfig.resx">
+      <DependentUpon>UCModeConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\FormAxisLoaction.resx">
+      <DependentUpon>FormAxisLoaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\FormAxisPosName.resx">
+      <DependentUpon>FormAxisPosName.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\FormOperationAxis.resx">
+      <DependentUpon>FormOperationAxis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinder_New.resx">
+      <DependentUpon>UC_Cylinder_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_Cylinders.resx">
+      <DependentUpon>UC_Cylinders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis.resx">
+      <DependentUpon>UC_SingleAxis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxises.resx">
+      <DependentUpon>UC_SingleAxises.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxisOperation.resx">
+      <DependentUpon>UC_SingleAxisOperation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCIndex.resx">
+      <DependentUpon>UCIndex.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCModeDOE.resx">
+      <DependentUpon>UCModeDoe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCModeManual.resx">
+      <DependentUpon>UCModeManual.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCModeUI.resx">
+      <DependentUpon>UCModeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCModeUI\UCSemiAuto\UC_SemiAuto.resx">
+      <DependentUpon>UC_SemiAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCRecipe_New.resx">
+      <DependentUpon>UCRecipe_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCRunLog.resx">
+      <DependentUpon>UCRunLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCRunMode.resx">
+      <DependentUpon>UCRunMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCSocket.resx">
+      <DependentUpon>UCSocket.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCSocketDisableList.resx">
+      <DependentUpon>UCSocketDisableList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCSocket_New.resx">
+      <DependentUpon>UCSocket_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCStation.resx">
+      <DependentUpon>UCStation.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCStations.resx">
+      <DependentUpon>UCStations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCStatistics.resx">
+      <DependentUpon>UCStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCTMConfig.resx">
+      <DependentUpon>UCTMConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCTrays.resx">
+      <DependentUpon>UCTrays.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCStationDutTestResult.resx">
+      <DependentUpon>UCStationDutTestResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCTraySetting_New.resx">
+      <DependentUpon>UCTraySetting_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
