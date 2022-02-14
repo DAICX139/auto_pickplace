@@ -66,6 +66,7 @@ namespace VisionFlows
                 try
                 {
                     HOperatorSet.ClearShapeModel(shapeModel);
+                    shapeModel.Dispose();
                 }
                 catch
                 {
@@ -93,12 +94,12 @@ namespace VisionFlows
         /// <summary>
         /// 拟合出来的角度（在图像中）
         /// </summary>
-        public double Angle;
+        public double Phi;
 
         /// <summary>
         /// 输出 最小外接矩形 的xld对象
         /// </summary>
-        public HXLDCont SmallestRec2Xld;
+        public HObject SmallestRec2Xld;
 
         /// <summary>
         /// 输出 区域

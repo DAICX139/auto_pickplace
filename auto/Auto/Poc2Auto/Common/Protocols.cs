@@ -16,6 +16,7 @@ namespace Poc2Auto.Common
         public const string CMD_PickDutFromSocket = "35";
         public const string CMD_PutDutToTray = "36";
         public const string CMD_CompelteFinish = "37";
+        public const string CMD_BinValue = "38";
         public const string CMD_GRRStrat = "40";
         public const string CMD_GRREnd = "41";
 
@@ -38,6 +39,7 @@ namespace Poc2Auto.Common
         #region TM
         public const string CMD_TestStart = "teststart";
         public const string CMD_TestDone = "testdone";
+        public const string CMD_Reset = "reset";
         #endregion TM
     }
 
@@ -52,22 +54,23 @@ namespace Poc2Auto.Common
         public const string TrayRows = "TrayRows";
         public const string TrayCols = "TrayCols";
         public const string Bins = "Bins";
-
+        public const string BinValue = "Data38_BinValue";
     }
 
     public class StartTestParam
     {
         [JsonProperty("dutsn")]
         public List<string> DutSn { get; set; }
-
         [JsonProperty("socketsn")]
         public string SocketSn { get; set; }
-
         [JsonProperty("stresscode")]
         public string StressCode { get; set; }
-
         [JsonProperty("lotid")]
         public string LotId { get; set; }
+        [JsonProperty("mode")]
+        public string Mode { get; set; }
+        [JsonProperty("mtcp")]
+        public bool MTCP { get; set; }
 
         [JsonIgnore]
         public string[,] DutSnArray

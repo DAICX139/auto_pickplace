@@ -66,10 +66,10 @@ namespace Poc2Auto.GUI.RunModeConfig
             // 
             this.textBoxInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInput.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxInput.Location = new System.Drawing.Point(0, 5);
-            this.textBoxInput.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxInput.Location = new System.Drawing.Point(3, 5);
+            this.textBoxInput.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(249, 27);
+            this.textBoxInput.Size = new System.Drawing.Size(246, 27);
             this.textBoxInput.TabIndex = 6;
             // 
             // buttonAddSnList
@@ -77,10 +77,10 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.buttonAddSnList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAddSnList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAddSnList.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonAddSnList.Location = new System.Drawing.Point(249, 0);
-            this.buttonAddSnList.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonAddSnList.Location = new System.Drawing.Point(251, 0);
+            this.buttonAddSnList.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.buttonAddSnList.Name = "buttonAddSnList";
-            this.buttonAddSnList.Size = new System.Drawing.Size(115, 37);
+            this.buttonAddSnList.Size = new System.Drawing.Size(111, 37);
             this.buttonAddSnList.TabIndex = 4;
             this.buttonAddSnList.Text = "Add";
             this.buttonAddSnList.UseVisualStyleBackColor = true;
@@ -172,12 +172,12 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.listBoxSNs.FormattingEnabled = true;
             this.listBoxSNs.IntegralHeight = false;
             this.listBoxSNs.ItemHeight = 20;
-            this.listBoxSNs.Location = new System.Drawing.Point(0, 79);
-            this.listBoxSNs.Margin = new System.Windows.Forms.Padding(0);
+            this.listBoxSNs.Location = new System.Drawing.Point(3, 79);
+            this.listBoxSNs.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.listBoxSNs.Name = "listBoxSNs";
             this.tableLayoutPanel4.SetRowSpan(this.listBoxSNs, 5);
             this.listBoxSNs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxSNs.Size = new System.Drawing.Size(364, 339);
+            this.listBoxSNs.Size = new System.Drawing.Size(358, 339);
             this.listBoxSNs.TabIndex = 1;
             this.listBoxSNs.SelectedIndexChanged += new System.EventHandler(this.ListBoxSNs_SelectedIndexChanged);
             // 
@@ -226,8 +226,8 @@ namespace Poc2Auto.GUI.RunModeConfig
             // 
             this.ckbxOnlyScan.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ckbxOnlyScan.AutoSize = true;
-            this.ckbxOnlyScan.Location = new System.Drawing.Point(0, 7);
-            this.ckbxOnlyScan.Margin = new System.Windows.Forms.Padding(0);
+            this.ckbxOnlyScan.Location = new System.Drawing.Point(3, 7);
+            this.ckbxOnlyScan.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.ckbxOnlyScan.Name = "ckbxOnlyScan";
             this.ckbxOnlyScan.Size = new System.Drawing.Size(102, 24);
             this.ckbxOnlyScan.TabIndex = 12;
@@ -238,10 +238,9 @@ namespace Poc2Auto.GUI.RunModeConfig
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(141, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Location = new System.Drawing.Point(144, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(223, 39);
+            this.button1.Size = new System.Drawing.Size(217, 33);
             this.button1.TabIndex = 13;
             this.button1.Text = "Save path selection";
             this.button1.UseVisualStyleBackColor = true;
@@ -257,20 +256,21 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.tableLayoutPanel1.Controls.Add(this.ckbxAllSelect, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 40);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 37);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(358, 36);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(364, 42);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // btnImport
             // 
             this.btnImport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnImport.Location = new System.Drawing.Point(248, 0);
-            this.btnImport.Margin = new System.Windows.Forms.Padding(0);
+            this.btnImport.Location = new System.Drawing.Point(254, 0);
+            this.btnImport.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(110, 36);
+            this.btnImport.Size = new System.Drawing.Size(108, 42);
             this.btnImport.TabIndex = 0;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;
@@ -280,7 +280,7 @@ namespace Poc2Auto.GUI.RunModeConfig
             // 
             this.ckbxAllSelect.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ckbxAllSelect.AutoSize = true;
-            this.ckbxAllSelect.Location = new System.Drawing.Point(150, 6);
+            this.ckbxAllSelect.Location = new System.Drawing.Point(153, 9);
             this.ckbxAllSelect.Margin = new System.Windows.Forms.Padding(0);
             this.ckbxAllSelect.Name = "ckbxAllSelect";
             this.ckbxAllSelect.Size = new System.Drawing.Size(96, 24);
@@ -293,8 +293,8 @@ namespace Poc2Auto.GUI.RunModeConfig
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 8);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 20);
             this.label1.TabIndex = 7;

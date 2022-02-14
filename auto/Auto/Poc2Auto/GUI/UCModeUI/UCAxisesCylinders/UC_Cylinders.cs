@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AlcUtility;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using AlcUtility;
 
 namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
 {
@@ -12,7 +12,8 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
             //init();
         }
 
-        IPlcDriver _plcDriver;
+        private IPlcDriver _plcDriver;
+
         public IPlcDriver PlcDriver
         {
             get
@@ -30,10 +31,12 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
                 {
                     BindData();
                 }
-            }   
+            }
         }
+
         public int CYL_COUNT { get; set; }
-        public bool IsInnerUpdatingOpen 
+
+        public bool IsInnerUpdatingOpen
         {
             set
             {
@@ -43,8 +46,10 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
                     cylinders[i].EnableUpdate = value;
             }
         }
-        List<UC_Cylinder_New> cylinders = new List<UC_Cylinder_New>();
-        public bool AuthorityCtrl 
+
+        private List<UC_Cylinder_New> cylinders = new List<UC_Cylinder_New>();
+
+        public bool AuthorityCtrl
         {
             set
             {
@@ -54,13 +59,14 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
                     cylinders[i].AuthorityCtrl = value;
             }
         }
+
         private void init()
         {
             for (int i = 0; i < CYL_COUNT; i++)
             {
                 UC_Cylinder_New cylinder = new UC_Cylinder_New();
                 //cylinder.Dock = DockStyle.Fill;
-                cylinder.Margin = new Padding(0,0,0,0);
+                cylinder.Margin = new Padding(0, 0, 0, 0);
                 cylinders.Add(cylinder);
                 tableLayoutPanel1.Controls.Add(cylinder);
             }
@@ -70,17 +76,17 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
         {
             for (int i = 0; i < CYL_COUNT; i++)
             {
-                cylinders[i].Cylinder = PlcDriver.GetCylinderCtrl(i+1);
-                
-            }    
+                cylinders[i].Cylinder = PlcDriver.GetCylinderCtrl(i + 1);
+            }
         }
 
-        public bool EnableUI { set
+        public bool EnableUI
+        {
+            set
             {
                 foreach (var ui in cylinders)
                     ui.EnableUI = value;
             }
         }
-
     }
 }

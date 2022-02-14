@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="19.11.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>for Index := 0 to |ImageFiles|-1 by 1</l>
+<l>    read_image (Image, ImageFiles[Index])</l>
+<l>    gen_rectangle1 (ROI_0, 268.56, 181.9, 2557.36, 3625.1)</l>
+<l>    reduce_domain (Image, ROI_0, ImageReduced)</l>
+<l>    threshold (ImageReduced, Region, 0, 50)</l>
+<l>    connection (Region, ConnectedRegions)</l>
+<l>    fill_up_shape (Region, RegionFillUp, 'area', 300, 1200000)</l>
+<l>    opening_circle (RegionFillUp, RegionOpening, 13.5)</l>
+<l>    connection (RegionOpening, ConnectedRegions1)</l>
+<l>    select_shape_std (ConnectedRegions1, SelectedRegions, 'max_area', 70)</l>
+<l>    fill_up (SelectedRegions, RegionFillUp1)</l>
+<l>    reduce_domain (ImageReduced, RegionFillUp1, ImageReduced1)</l>
+<c>    *检查是否有料</c>
+<l>    threshold (ImageReduced1, Region2, 200, 255)</l>
+<l>    connection (Region2, ConnectedRegions3)</l>
+<l>    select_shape_std (ConnectedRegions3, SelectedRegions2, 'max_area', 70)</l>
+<l>    area_center (SelectedRegions2, Area, Row, Column)</l>
+<l>    if(Area&lt;2000)</l>
+<c>        *无料</c>
+<l>        continue</l>
+<l>    endif</l>
+<c>    *提取有料部分</c>
+<l>    threshold (ImageReduced1, Region1, 128, 255)</l>
+<l>    fill_up (Region1, RegionFillUp2)</l>
+<l>    connection (RegionFillUp2, ConnectedRegions2)</l>
+<l>    select_shape (ConnectedRegions2, SelectedRegions1, 'area', 'and', 500, 9999999)</l>
+<l>    union1 (SelectedRegions1, RegionUnion)</l>
+<l>    dev_display (Image)</l>
+<l>    shape_trans (RegionUnion, RegionTrans, 'rectangle2')</l>
+<l>    stop()</l>
+<l>endfor</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

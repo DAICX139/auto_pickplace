@@ -138,7 +138,6 @@ namespace Poc2Auto.GUI
             this.btnSocketOpen.TabIndex = 3;
             this.btnSocketOpen.Text = "LoadOrUnload";
             this.btnSocketOpen.UseVisualStyleBackColor = true;
-            this.btnSocketOpen.Click += new System.EventHandler(this.btnSocketOpen_Click);
             // 
             // checkBoxAllOk
             // 

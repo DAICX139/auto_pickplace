@@ -78,7 +78,7 @@ namespace Poc2Auto.GUI
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.gridViewTray, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 20);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 16);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
@@ -88,7 +88,7 @@ namespace Poc2Auto.GUI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.114229F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.114229F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 59.42886F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 530);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 534);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // buttonDelete
@@ -132,10 +132,10 @@ namespace Poc2Auto.GUI
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(43, 140);
+            this.label4.Location = new System.Drawing.Point(53, 142);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 20);
+            this.label4.Size = new System.Drawing.Size(43, 17);
             this.label4.TabIndex = 8;
             this.label4.Text = "Color:";
             // 
@@ -143,10 +143,10 @@ namespace Poc2Auto.GUI
             // 
             this.comboBoxBin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxBin.FormattingEnabled = true;
-            this.comboBoxBin.Location = new System.Drawing.Point(104, 93);
+            this.comboBoxBin.Location = new System.Drawing.Point(104, 97);
             this.comboBoxBin.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxBin.Name = "comboBoxBin";
-            this.comboBoxBin.Size = new System.Drawing.Size(132, 28);
+            this.comboBoxBin.Size = new System.Drawing.Size(132, 25);
             this.comboBoxBin.TabIndex = 7;
             this.comboBoxBin.TextChanged += new System.EventHandler(this.ComboBoxBin_TextChanged);
             // 
@@ -154,10 +154,10 @@ namespace Poc2Auto.GUI
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(61, 97);
+            this.label3.Location = new System.Drawing.Point(67, 99);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 20);
+            this.label3.Size = new System.Drawing.Size(29, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Bin:";
             // 
@@ -166,10 +166,10 @@ namespace Poc2Auto.GUI
             this.labelRegion.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelRegion.AutoSize = true;
             this.labelRegion.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelRegion.Location = new System.Drawing.Point(104, 54);
+            this.labelRegion.Location = new System.Drawing.Point(104, 56);
             this.labelRegion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelRegion.Name = "labelRegion";
-            this.labelRegion.Size = new System.Drawing.Size(112, 20);
+            this.labelRegion.Size = new System.Drawing.Size(99, 17);
             this.labelRegion.TabIndex = 5;
             this.labelRegion.Text = "( - , - ) ~ ( - , - )";
             // 
@@ -178,10 +178,10 @@ namespace Poc2Auto.GUI
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(31, 54);
+            this.label2.Location = new System.Drawing.Point(44, 56);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 20);
+            this.label2.Size = new System.Drawing.Size(52, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "Region:";
             // 
@@ -191,10 +191,10 @@ namespace Poc2Auto.GUI
             this.comboBoxTrayName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTrayName.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBoxTrayName.FormattingEnabled = true;
-            this.comboBoxTrayName.Location = new System.Drawing.Point(104, 7);
+            this.comboBoxTrayName.Location = new System.Drawing.Point(104, 9);
             this.comboBoxTrayName.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxTrayName.Name = "comboBoxTrayName";
-            this.comboBoxTrayName.Size = new System.Drawing.Size(132, 28);
+            this.comboBoxTrayName.Size = new System.Drawing.Size(132, 25);
             this.comboBoxTrayName.TabIndex = 3;
             this.comboBoxTrayName.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTrayName_SelectedIndexChanged);
             // 
@@ -203,10 +203,10 @@ namespace Poc2Auto.GUI
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(52, 11);
+            this.label1.Location = new System.Drawing.Point(60, 13);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 20);
+            this.label1.Size = new System.Drawing.Size(36, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Tray:";
             // 
@@ -228,7 +228,7 @@ namespace Poc2Auto.GUI
             this.gridViewTray.ShowColNumber = true;
             this.gridViewTray.ShowRowNumber = true;
             this.gridViewTray.ShowTitle = false;
-            this.gridViewTray.Size = new System.Drawing.Size(324, 530);
+            this.gridViewTray.Size = new System.Drawing.Size(324, 534);
             this.gridViewTray.SizeMode = CYGKit.GUI.SizeMode.None;
             this.gridViewTray.TabIndex = 0;
             this.gridViewTray.TextAlignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -240,7 +240,7 @@ namespace Poc2Auto.GUI
             // 
             // UCTraySetting_New
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

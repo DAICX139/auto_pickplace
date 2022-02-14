@@ -74,14 +74,30 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
                 if (value == null)
                     return;
                 _config = value;
-
+                AxisPosInfo.Clear();
+                ListBoxDisplay.DataSource = null;
+                init();
                 foreach (var module in _config.ParamsModules.Values)
                 {
                     foreach (var val in module.KeyValues.Values)
                     {
-                        if (val.Remark.Contains("速度") || val.Remark.Contains("间距") || val.Remark.Contains("长度") || val.Remark.Contains("行数") || val.Remark.Contains("列数"))
+                        if (val.Remark.Contains("速度") || val.Remark.Contains("间距") || val.Remark.Contains("长度") || val.Remark.Contains("行数") || val.Remark.Contains("列数") || val.Remark.Contains("时间"))
                             continue;
-                        if (val.Key.Contains(string.IsNullOrEmpty(Info?.Name) ? AxisName : Info.Name))
+                        if (AxisName == "S")
+                        {
+                            if(val.Key.Contains("Z"))
+                            {
+                                AxisPosInfo.Add(val);
+                            }
+                        }
+                        else if (AxisName == "L")
+                        {
+                            if (val.Key.Contains("Y"))
+                            {
+                                AxisPosInfo.Add(val);
+                            }
+                        }
+                        else if (val.Key.Contains(string.IsNullOrEmpty(Info?.Name) ? AxisName : Info.Name))
                         {
                             AxisPosInfo.Add(val);
                         }

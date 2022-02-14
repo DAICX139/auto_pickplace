@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisionFlows.VisionCalculate;
-using VisionModules;
-using VisionUtility;
 
 namespace VisionFlows
 {
@@ -24,110 +22,70 @@ namespace VisionFlows
         /// <param name="ho_RegionTrans"></param>
         private static HTuple socket_ModelID = null;
 
-        public override bool SocketDetect(HImage image, out HObject ho_RegionTrans)
+        public override int SocketDetect(HImage image, out HObject ho_RegionTrans)
         {
-           
+            HOperatorSet.SetSystem("clip_region", "false");
             HOperatorSet.GenEmptyObj(out ho_RegionTrans);
             try
             {
-                HRegion ho_SerchRoi = new HRegion();
-                string SocketName = "SerchROI{0}.hobj";
-                ho_SerchRoi.ReadObject(Utility.Model + string.Format(SocketName, CurrentSoket));
-                FindSocketMark(image, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Phi, out HObject mark);
+                HRegion ho_SerchRoi1 = ImagePara.Instance.GetSerchROI(ImagePara.Instance.RegionROI1[ImageProcessBase.CurrentSoket]);
+                HRegion ho_SerchRoi2 = ImagePara.Instance.GetSerchROI(ImagePara.Instance.RegionROI2[ImageProcessBase.CurrentSoket]);
+                FindSocketMarkFirst(image, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Phi, out HObject mark);
+                if(hv_Row.Length<=0)
+                {
+                    Flow.Log("mark点未定位到");
+                    return 0;
+                }
                 HHomMat2D hv_HomMat2D = new HHomMat2D();
                 hv_HomMat2D.VectorAngleToRigid(ImagePara.Instance.SocketGet_rowCenter[ImageProcessBase.CurrentSoket], ImagePara.Instance.SocketGet_colCenter[ImageProcessBase.CurrentSoket],
                     ImagePara.Instance.SocketGet_angleCenter[ImageProcessBase.CurrentSoket], hv_Row, hv_Column, hv_Phi);
-                HRegion ho_RegionAffineTrans = hv_HomMat2D.AffineTransRegion(ho_SerchRoi, "nearest_neighbor");
-                ho_SerchRoi.Dispose();
-                HImage ho_ImageReduced = image.ReduceDomain(ho_RegionAffineTrans);
-                //   HRegion ho_Regions = ho_ImageReduced.Threshold((HTuple)ImagePara.Instance.SoketDut_minthreshold[CurrentSoket], 255);
-                //  ho_RegionTrans = ho_Regions.OpeningCircle(20d);
-                //   HOperatorSet.AreaCenter(ho_RegionTrans, out HTuple area, out HTuple row, out HTuple colum);
-                //   if (area.Length > 0 && area.D > 400000)
-                //   {
-                //有料
-                //       return true;
-                //    }
-                //   return false;
-                HOperatorSet.LocalThreshold(ho_ImageReduced, out HObject ho_Region, "adapted_std_deviation",
-             "dark", "mask_size", 180);
-                HOperatorSet.Connection(ho_Region, out HObject ho_ConnectedRegions);
-                HOperatorSet.SelectShape(ho_ConnectedRegions, out HObject ho_SelectedRegions_area,
-                    "area", "and", 10000, 80000);
-                HOperatorSet.FillUp(ho_SelectedRegions_area, out HObject ho_RegionFillUp);
+                HRegion ho_RegionAffineTrans1 = hv_HomMat2D.AffineTransRegion(ho_SerchRoi1, "nearest_neighbor");
+                HRegion ho_RegionAffineTrans2 = hv_HomMat2D.AffineTransRegion(ho_SerchRoi2, "nearest_neighbor");
+                HImage ho_ImageReduced1 = image.ReduceDomain(ho_RegionAffineTrans1);
+                HImage ho_ImageReduced2 = image.ReduceDomain(ho_RegionAffineTrans2);
 
-                HObject regionOPening = new HObject();
-                regionOPening.Dispose();
-                HOperatorSet.OpeningCircle(ho_RegionFillUp, out regionOPening, 25);
-                HOperatorSet.Connection(regionOPening, out regionOPening);
-                //HOperatorSet.Connection(ho_RegionFillUp, out HObject connectionRegion);
-                //HOperatorSet.AreaCenter(connectionRegion, out HTuple are, out _, out _);
-                HOperatorSet.SelectShape(regionOPening, out ho_RegionTrans, (((new HTuple("area")).TupleConcat(
-                    "convexity")).TupleConcat("roundness")).TupleConcat("width"), "and", ((
-                    (new HTuple(30000)).TupleConcat(0.7)).TupleConcat(0.7)).TupleConcat(200),
-                    (((new HTuple(70000)).TupleConcat(2)).TupleConcat(2)).TupleConcat(400));
-                HOperatorSet.CountObj(ho_RegionTrans, out HTuple hv_Number);
-                ho_Region.Dispose();
-                ho_ConnectedRegions.Dispose();
-                ho_SelectedRegions_area.Dispose();
-                ho_RegionFillUp.Dispose();
-
-                // 添加 
-                HOperatorSet.MedianImage(ho_ImageReduced, out HObject imageMean, "circle", 5, "mirrored");
-                HOperatorSet.Emphasize(imageMean, out HObject imageEnphasize, 7, 7, 1);
-                HOperatorSet.Threshold(imageEnphasize, out HObject region, 240, 255);
-                HOperatorSet.ClosingCircle(region, out HObject regionClosing, 21);
-                HOperatorSet.OpeningRectangle1(regionClosing, out HObject regionOpening, 21, 21);
-                HOperatorSet.Connection(regionOpening, out HObject regionConnection);
-                HOperatorSet.AreaCenter(regionConnection, out HTuple area, out _, out _);
-                HOperatorSet.SelectShape(regionConnection, out HObject regionSelect,
-                    new HTuple("area", "width", "height"), "and", new HTuple(10000, 181, 90), new HTuple(99332, 853, 800));
-                imageMean.Dispose();
-                imageEnphasize.Dispose();
-                region.Dispose();
-                regionClosing.Dispose();
-                regionConnection.Dispose();
-                regionOpening.Dispose();
-                ho_ImageReduced.Dispose();
-                regionOPening.Dispose();
-
-                HOperatorSet.GenEmptyObj(out HObject emptyObject);
-                HOperatorSet.TestEqualObj(regionSelect, emptyObject, out HTuple i);
-                // 当 i 表示，当 RegionSelect 为emptyObject时，返回 1.其余返回 0
-                // 1: 无料
-                // 0: 有料
-
-
-                if ((int)(new HTuple(hv_Number.TupleGreater(0))) != 0 && i.I != 0)
+                //匹配
+                if (SocketDUT_ModelID == null)
                 {
-                    //无料
-                    ho_RegionTrans = ho_RegionTrans.ConcatObj(regionSelect);
-                    emptyObject.Dispose();
-                    regionSelect.Dispose();
-                    
-                    //GC.Collect();
-                    return false;
+                    HOperatorSet.GenCircleContourXld(out HObject ho_ContCircle, 2338.65, 2888.99, 82.5602, 0, 6.28318, "positive", 1);
+                    HOperatorSet.CreateShapeModelXld(ho_ContCircle, "auto", -0.39, 0.79, "auto", "auto", "ignore_local_polarity", 3, out SocketDUT_ModelID);
                 }
-                else
+                HOperatorSet.GetShapeModelContours(out HObject ho_ModelContours, SocketDUT_ModelID, 1);
+                HOperatorSet.FindShapeModel(ho_ImageReduced1, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+                        1, 0.5, "least_squares", 0, 0.9, out HTuple Row1, out HTuple Column1, out HTuple Angle1, out HTuple Score1);
+                if (Row1.Length<=0)
                 {
-                    ho_RegionTrans = ho_RegionTrans.ConcatObj(regionSelect);
-                    emptyObject.Dispose();
-                    regionSelect.Dispose();                    
-                    //GC.Collect();
-                    return true;
+                    return 0;
+                }
+                HOperatorSet.VectorAngleToRigid(0, 0, 0, Row1, Column1, Angle1, out HTuple HomMat2D1);
+                HOperatorSet.AffineTransContourXld(ho_ModelContours, out HObject ho_ContoursAffineTrans1, HomMat2D1);
+
+                HOperatorSet.FindShapeModel(ho_ImageReduced2, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+        1, 0.5, "least_squares", 0, 0.9, out HTuple Row2, out HTuple Column2, out HTuple Angle2, out HTuple Score2);
+                if (Row2.Length <= 0)
+                {
+                    return 0;
+                }
+                HOperatorSet.VectorAngleToRigid(0, 0, 0, Row2, Column2, Angle2, out HTuple HomMat2D2);
+                HOperatorSet.AffineTransContourXld(ho_ModelContours, out HObject ho_ContoursAffineTrans2, HomMat2D2);
+                if (Row2.Length > 0 || Row1.Length > 0)
+                {
                     //有料
+                    return 3;
                 }
+                //物料
+                return 0;
             }
             catch (Exception ex)
             {
                 Flow.Log(ex.Message + " + " + ex.StackTrace);
                 //GC.Collect();
-                return true;
+                return 0;
             }
         }
 
         /// <summary>
-        /// 判断slot产品有无
+        /// 判断slot产品有无 有料返回true 无料返回false
         /// </summary>
         /// <param name="ho_Image1"></param>
         /// <param name="ho_RegionTrans"></param>
@@ -135,58 +93,95 @@ namespace VisionFlows
         private static HTuple slot_ModelID = null;
 
      
-        public override bool SlotDetect(InputPara parameter, out HObject ho_RegionTrans)
+        public override bool SlotDetect(InputPara parameter, out HObject ho_RegionShape)
         {
-            HOperatorSet.GenEmptyObj(out ho_RegionTrans);
+            HOperatorSet.SetSystem("clip_region", "false");
+            HOperatorSet.GenEmptyObj(out ho_RegionShape);
             try
             {
-                //GC.Collect();
-                HOperatorSet.MedianImage(parameter.image, out HObject ho_ImageMedian, "circle", 10, "mirrored");
-                HOperatorSet.MeanImage(ho_ImageMedian, out HObject ho_ImageMean, 600, 600);
-                HOperatorSet.DynThreshold(ho_ImageMedian, ho_ImageMean, out HObject ho_RegionDynThresh,10, "dark");
-                HOperatorSet.ClosingCircle(ho_RegionDynThresh, out HObject ho_RegionClosing, 10);
-                HOperatorSet.FillUpShape(ho_RegionClosing, out HObject ho_RegionFillUp, "area", 1000,1000000);
+                HOperatorSet.MeanImage(parameter.image, out HObject ho_ImageMean, 600, 600);
+                HOperatorSet.DynThreshold(parameter.image, ho_ImageMean, out HObject ho_RegionDynThresh, 10, "dark");
+                HOperatorSet.FillUpShape(ho_RegionDynThresh, out HObject ho_RegionFillUp, "area", 1, 1000000);
                 HOperatorSet.Connection(ho_RegionFillUp, out HObject ho_ConnectedRegions);
-                HOperatorSet.SelectShape(ho_ConnectedRegions, out HObject ho_SelectedRegions1, (new HTuple("area")).TupleConcat(
-                    "convexity"), "and", (new HTuple(2168630)).TupleConcat(0.83953), (new HTuple(3668630)).TupleConcat(
-                    2));
-                HOperatorSet.GenEmptyObj(out HObject ho_EmptyObject);
-                HOperatorSet.TestEqualObj(ho_EmptyObject, ho_SelectedRegions1, out HTuple hv_IsEqual);
-                ho_ImageMedian.Dispose();
-                ho_ImageMean.Dispose();
-                ho_RegionDynThresh.Dispose();
-                ho_RegionFillUp.Dispose();
-                ho_RegionClosing.Dispose();
-                ho_ConnectedRegions.Dispose();
-                if ((int)(new HTuple(hv_IsEqual.TupleEqual(1))) != 0)
+                HOperatorSet.SelectShape(ho_ConnectedRegions, out HObject ho_SelectedRegions, (new HTuple("area")).TupleConcat(
+                    "convexity"), "and", (new HTuple(2168630)).TupleConcat(0.83953), (new HTuple(3668630)).TupleConcat(2));
+                //HOperatorSet.GenEmptyObj(out HObject ho_EmptyObject);
+                //HOperatorSet.TestEqualObj(ho_EmptyObject, ho_SelectedRegions, out HTuple hv_IsEqual);
+                //ho_ImageMean.Dispose();
+                //ho_RegionDynThresh.Dispose();
+                //ho_RegionFillUp.Dispose();
+                //ho_ConnectedRegions.Dispose();
+                //if ((int)(new HTuple(hv_IsEqual.TupleNotEqual(0))) != 0)
+                //{
+                //    //定位失败有料
+                //    return true;
+                //}
+                //HOperatorSet.OpeningCircle(ho_SelectedRegions, out HObject ho_RegionOpening, 30);
+                //HOperatorSet.ReduceDomain(parameter.image, ho_RegionOpening, out HObject ho_ImageReduced);
+                //HOperatorSet.BinaryThreshold(ho_ImageReduced, out HObject ho_Region, "max_separability",
+                //    "light", out HTuple hv_UsedThreshold);
+                //HOperatorSet.OpeningRectangle1(ho_Region, out HObject ho_RegionOpening1, 20, 20);
+                //HOperatorSet.Connection(ho_RegionOpening1, out HObject ho_ConnectedRegions1);
+                //HOperatorSet.SelectShape(ho_ConnectedRegions1, out HObject ho_SelectedRegions1, (new HTuple("width")).TupleConcat(
+                //    "height"), "and", (new HTuple(420)).TupleConcat(450), (new HTuple(800)).TupleConcat(
+                //    1000));
+                //HOperatorSet.ShapeTrans(ho_SelectedRegions1, out ho_RegionShape, "convex");
+                //HOperatorSet.CountObj(ho_RegionShape, out HTuple hv_Number);
+                //ho_SelectedRegions.Dispose();
+                //ho_RegionOpening.Dispose();
+                //ho_ImageReduced.Dispose();
+                //ho_Region.Dispose();
+                //ho_RegionOpening1.Dispose();
+                //ho_ConnectedRegions1.Dispose();
+                //ho_SelectedRegions1.Dispose();
+                //if ((int)(new HTuple(hv_Number.TupleNotEqual(3))) != 0)
+                //{
+                //    //有料存在
+                //    return true;
+                //}
+                //return false;
+                HOperatorSet.OpeningCircle(ho_SelectedRegions, out HObject ho_RegionOpening, 30);
+                HOperatorSet.ReduceDomain(parameter.image, ho_RegionOpening, out HObject ho_ImageReduced);
+                HOperatorSet.BinaryThreshold(ho_ImageReduced, out HObject ho_Region, "max_separability",
+                    "light", out HTuple hv_UsedThreshold);
+                HOperatorSet.OpeningRectangle1(ho_Region, out HObject ho_RegionOpening1, 20, 20);
+                HOperatorSet.Connection(ho_RegionOpening1, out HObject ho_ConnectedRegions1);
+                HOperatorSet.SelectShape(ho_ConnectedRegions1, out HObject ho_SelectedRegions1, (new HTuple("width")).TupleConcat(
+                    "height"), "and", (new HTuple(420)).TupleConcat(450), (new HTuple(800)).TupleConcat(
+                    1000));
+                HOperatorSet.ShapeTrans(ho_SelectedRegions1, out ho_RegionShape, "convex");
+                HOperatorSet.CountObj(ho_RegionShape, out HTuple hv_Number);
+                ho_SelectedRegions.Dispose();
+                ho_RegionOpening.Dispose();
+                ho_ImageReduced.Dispose();
+                ho_Region.Dispose();
+                ho_RegionOpening1.Dispose();
+                ho_ConnectedRegions1.Dispose();
+                ho_SelectedRegions1.Dispose();
+                if ((int)(new HTuple(hv_Number.TupleNotEqual(3))) != 0)
                 {
-                    ho_SelectedRegions1.Dispose();
-                    return false;
-                    //定位异常
+                    //有料存在
+                    return true;
                 }
-                else
-                {
-                    HOperatorSet.OpeningRectangle1(ho_SelectedRegions1, out HObject ho_RegionOpening,130, 130);
-                    HOperatorSet.ShapeTrans(ho_RegionOpening, out ho_RegionTrans, "convex");
-                    HOperatorSet.ErosionCircle(ho_RegionTrans, out HObject ho_RegionErosion, 50);
-                    HOperatorSet.SmallestRectangle2(ho_RegionErosion, out HTuple hv_Row, out HTuple hv_Column,
-                        out HTuple hv_Phi, out HTuple hv_Length1, out HTuple hv_Length2);
-                    HOperatorSet.ReduceDomain(parameter.image, ho_RegionErosion, out HObject ho_ImageReduced1);
-                    HOperatorSet.Threshold(ho_ImageReduced1, out ho_RegionTrans, ImagePara.Instance.TrayDut_minthreshold, ImagePara.Instance.TrayDut_maxthreshold);
-                    HOperatorSet.AreaCenter(ho_RegionTrans, out HTuple hv_Area, out HTuple hv_Row1, out HTuple hv_Column1);
-                    ho_SelectedRegions1.Dispose();
-                    ho_RegionTrans.Dispose();
-                    ho_RegionOpening.Dispose();
-                    ho_RegionErosion.Dispose();
-                    if ((int)(new HTuple(hv_Area.TupleGreater(50000))) != 0)
-                    {
-                        ho_ImageReduced1.Dispose();
-                        return true;
-                    }
-                    ho_ImageReduced1.Dispose();
-                    return false;
-                }
-               
+                //HOperatorSet.ScaleImage(parameter.image, out HObject imageScale, 5.1, -15);
+                //HOperatorSet.ReadShapeModel(Utility.ModelFile + "P2D_Inner_Slot_model", out HTuple modelID);
+                //HOperatorSet.FindShapeModel(imageScale, modelID, -0.39, 0.79, 0.7, 1, 0.5, "least_squares", 0, 0.9, out HTuple Row1, out HTuple Column1, out HTuple Angle1, 
+                //    out HTuple Score1);
+                //if (Score1.Length != 0)
+                //{
+
+                //    return false;
+                //}
+                //HOperatorSet.Threshold(parameter.image, out HObject region, 180, 255);
+                //HOperatorSet.OpeningCircle(region, out HObject regionOpening, 3.5);
+                //HOperatorSet.AreaCenter(regionOpening, out HTuple area, out HTuple row, out HTuple col);
+                //if (area>100000)
+                //{
+                //    return true;
+                //}
+
+
+                return false;
             }
             catch (Exception ex)
             {
@@ -205,12 +200,12 @@ namespace VisionFlows
         /// <returns></returns>
         public override bool BlockDetect(HTuple markrow,HTuple markcol, InputPara parameter, out int distance,out HObject ho_RegionTrans)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             HOperatorSet.GenEmptyObj(out ho_RegionTrans);
             try
             {
                 //GC.Collect();
-                HOperatorSet.GenRectangle1(out HObject ho_ROI_0, 1231.1, 86.2638, 2740.01, 3646.38);
-                
+                HRegion ho_ROI_0 = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketBlockROI);
                 HOperatorSet.ReduceDomain( parameter.image, ho_ROI_0, out HObject ho_ImageReduced);
                
                 HOperatorSet.Threshold(ho_ImageReduced, out HObject ho_Region, 35, 255);
@@ -258,6 +253,7 @@ namespace VisionFlows
         /// <returns></returns>
         public override OutPutResult ShotSlotMark(InputPara parameter)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             OutPutResult locationResult = new OutPutResult();
             try
             {
@@ -281,68 +277,79 @@ namespace VisionFlows
         /// <returns></returns>
         public override OutPutResult TrayDutFront(InputPara parameter)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             OutPutResult locationResult = new OutPutResult();
             try
             {
-                if (true)
-                {
-                    string[] selectparaname1 = { "area", "outer_radius" };
-                    double[] selectpara11 = { 732143, 592.26 };
-                    double[] selectpara12 = { 1.34405e+006, 1455.36 };
-
-                    string[] selectparaname2 = { "width", "height" };
-                    double[] selectpara21 = { 1810.95, 560 };
-                    double[] selectpara22 = { 2258.54, 1000 };
                     try
                     {
-                        HImage ImageScaled = parameter.image.ScaleImage(36.4286, -2769);
-                        HImage MedianImage = ImageScaled.MedianImage("circle", 15, "mirrored");
-                        HRegion Region = MedianImage.BinaryThreshold("max_separability", "light", out HTuple usedThreshold);
-                        HRegion RegionClosing = Region.ClosingCircle(50.0);
-                        HRegion ConnectedRegions = RegionClosing.Connection();
+                        HOperatorSet.Threshold(parameter.image, out HObject ho_Region, 0, 50);
+                        HOperatorSet.Connection(ho_Region, out HObject ho_ConnectedRegions);
+                        HOperatorSet.FillUpShape(ho_Region, out HObject ho_RegionFillUp, "area", 300, 1200000);
+                        HOperatorSet.OpeningCircle(ho_RegionFillUp, out HObject ho_RegionOpening, 13.5);
+                        HOperatorSet.Connection(ho_RegionOpening, out HObject ho_ConnectedRegions1);
+                        HOperatorSet.SelectShapeStd(ho_ConnectedRegions1, out HObject ho_SelectedRegions, "max_area",70);
+                        HOperatorSet.FillUp(ho_SelectedRegions, out HObject ho_RegionFillUp1);
+                        HOperatorSet.ReduceDomain(parameter.image, ho_RegionFillUp1, out HObject ho_ImageReduced1);
+                    //检查是否有料
+                        HOperatorSet.Threshold(ho_ImageReduced1, out HObject region2, 200, 255);
+                        HOperatorSet.Connection(region2, out region2);
+                        HOperatorSet.SelectShapeStd(region2, out HObject SelectedRegions, "max_area", 70);
+                        HOperatorSet.AreaCenter(SelectedRegions,out HTuple area1,out HTuple row1,out HTuple column1);
 
-                        HRegion SelectedRegions = ConnectedRegions.SelectShape(selectparaname1, "and", selectpara11, selectpara12);
-                        HRegion RegionFillUp = SelectedRegions.FillUp();
-                        HRegion RegionOpening = RegionFillUp.OpeningCircle(20.0);
-                        HRegion SelectedRegions1 = RegionOpening.SelectShape(selectparaname2, "and", selectpara21, selectpara22);
-                        HRegion RegionTrans = SelectedRegions1.ShapeTrans("convex");
-                        RegionTrans.SmallestRectangle2(out double row, out double col, out double phi, out double length1, out double length2);
+                    ho_Region.Dispose();
+                    ho_ConnectedRegions.Dispose();
+                    ho_RegionFillUp.Dispose();
+                    ho_RegionOpening.Dispose();
+                    ho_ConnectedRegions1.Dispose();
+                    ho_RegionFillUp1.Dispose();
+                    ho_SelectedRegions.Dispose();
+                    region2.Dispose();
+                    SelectedRegions.Dispose();
+                    if (area1.D<2000)
+                    {
+                        locationResult.ErrString = "识别失败，无料";
+                        locationResult.IsRunOk = false;
+                        return locationResult;
+                    }
 
-                        int RegionNumber = SelectedRegions1.CountObj();
-                        if (RegionNumber > 1)
+                    //提取有料的部分
+                        HOperatorSet.Threshold(ho_ImageReduced1, out HObject ho_Region1, ImagePara.Instance.TrayDut_minthreshold, ImagePara.Instance.TrayDut_maxthreshold);
+                        HOperatorSet.FillUp(ho_Region1, out HObject ho_RegionFillUp2);
+                        HOperatorSet.Connection(ho_RegionFillUp2, out HObject ho_ConnectedRegions2);
+                        HOperatorSet.SelectShape(ho_ConnectedRegions2, out HObject ho_SelectedRegions1, "area",
+                            "and", 2000, 9999999);
+                        HOperatorSet.Union1(ho_SelectedRegions1, out HObject ho_RegionUnion);
+                        HOperatorSet.SmallestRectangle2(ho_RegionUnion,out HTuple row, out HTuple col,out HTuple phi,out HTuple length1, out HTuple length2);
+                        ho_Region1.Dispose();
+                        ho_RegionFillUp2.Dispose();
+                        ho_ConnectedRegions2.Dispose();
+                        ho_SelectedRegions1.Dispose();
+                        int RegionNumber = ho_RegionUnion.CountObj();
+                        ho_RegionUnion.Dispose();
+                    if (RegionNumber <=0)
                         {
                             locationResult.ErrString = "识别失败，RegionNumber>1";
                             locationResult.IsRunOk = false;
                         }
-
                         HRegion Rectangle = new HRegion();
                         Rectangle.GenRectangle2(row, col, phi, length1, length2);
                         Rectangle.AreaCenter(out double arearow, out double areacol);
                         HXLDCont ContourXld = new HXLDCont(Rectangle.GenContourRegionXld("border"));
 
                         HOperatorSet.TupleDeg(phi, out HTuple angle);
-                        locationResult.Angle = angle.D;
+                        locationResult.Phi = angle.D;
                         locationResult.findPoint = new PointPosition_Image();
                         locationResult.findPoint.Row = arearow;
                         locationResult.findPoint.Column = areacol;
                         locationResult.SmallestRec2Xld = new HXLDCont(ContourXld);
                         locationResult.IsRunOk = true;
 
-                        locationResult.region = RegionTrans;
+                        locationResult.region = Rectangle;
                         locationResult.shapeModelContour = new HXLDCont();
                         locationResult.shapeModelContour.GenEmptyObj();
-                        ImageScaled.Dispose();
-                        MedianImage.Dispose();
-                        Region.Dispose();
-                        RegionClosing.Dispose();
-                        ConnectedRegions.Dispose();
-                        SelectedRegions.Dispose();
-                        RegionFillUp.Dispose();
-                        RegionOpening.Dispose();
-                        SelectedRegions1.Dispose();
-
-                        Rectangle.Dispose();
                         ContourXld.Dispose();
+                        GC.Collect();
                     }
                     catch (Exception ex)
                     {
@@ -351,7 +358,6 @@ namespace VisionFlows
                         locationResult.IsRunOk = false;
                     }
                     return locationResult;
-                }
                 locationResult.IsRunOk = true;
                 parameter.shapeModel.Dispose();
 
@@ -365,6 +371,11 @@ namespace VisionFlows
             }
         }
 
+        public override bool IsTrayDutHaveOrNot_Normal(InputPara parameter, out HObject ho_RegionTrans)
+        {
+            return base.IsTrayDutHaveOrNot_Normal(parameter, out ho_RegionTrans);
+        }
+
         /// <summary>
         /// 定位空Tary盘的位置
         /// </summary>
@@ -372,6 +383,7 @@ namespace VisionFlows
         /// <returns></returns>
         public override OutPutResult ShotSlot(InputPara parameter)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             OutPutResult locationResult = new OutPutResult();
 
             try
@@ -379,46 +391,66 @@ namespace VisionFlows
                 if (true)
                 {
                     //GC.Collect();
-                  
-                    HOperatorSet.MedianImage(parameter.image, out HObject ho_ImageMedian, "circle", 10, "mirrored");
-                    HOperatorSet.MeanImage(ho_ImageMedian, out HObject ho_ImageMean, 600, 600);
-                    HOperatorSet.DynThreshold(ho_ImageMedian, ho_ImageMean, out HObject ho_RegionDynThresh, 10, "dark");
-                    HOperatorSet.FillUpShape(ho_RegionDynThresh, out HObject ho_RegionFillUp, "area", 1000, 1000000);
-                    HOperatorSet.Connection(ho_RegionFillUp, out HObject ho_ConnectedRegions);
-                    HOperatorSet.SelectShape(ho_ConnectedRegions, out HObject ho_SelectedRegions1, (new HTuple("area")).TupleConcat(
-                        "convexity"), "and", (new HTuple(2168630)).TupleConcat(0.83953), (new HTuple(3668630)).TupleConcat(
-                        2));
-                    HOperatorSet.GenEmptyObj(out HObject ho_EmptyObject);
-                    HOperatorSet.TestEqualObj(ho_EmptyObject, ho_SelectedRegions1, out HTuple hv_IsEqual);
-                    ho_ImageMedian.Dispose();
-                    ho_ImageMean.Dispose();
-                    ho_RegionDynThresh.Dispose();
-                    ho_RegionFillUp.Dispose();
-                    ho_ConnectedRegions.Dispose();
-                    if ((int)(new HTuple(hv_IsEqual.TupleEqual(1))) != 0)
+                    HOperatorSet.ScaleImage(parameter.image, out HObject imageScale, 5.1, -15);
+                    HOperatorSet.ReadShapeModel(Utility.ModelFile + "P2D_new_tray_model", out HTuple modelID);
+                    HOperatorSet.GetShapeModelContours(out HObject modelContours, modelID, 1);
+                    HOperatorSet.FindShapeModel(imageScale, modelID, -0.39, 0.79, 0.3, 1, 0.5, "least_squares", 0, 0.9, out HTuple row, out HTuple col, out HTuple angle, out HTuple score);
+                    if (row.Length!=1)
                     {
                         locationResult.ErrString = "定位失败";
                         locationResult.IsRunOk = false;
                         return locationResult;
-                        //定位异常
+                        //    //定位异常
                     }
-
-                    HOperatorSet.OpeningRectangle1(ho_SelectedRegions1, out HObject ho_RegionOpening, 130, 130);
-                    HOperatorSet.ShapeTrans(ho_RegionOpening, out HObject ho_RegionTrans, "convex");
-                    HOperatorSet.ErosionCircle(ho_RegionTrans, out HObject ho_RegionErosion, 50);
-                    HOperatorSet.SmallestRectangle2(ho_RegionErosion, out HTuple hv_Row, out HTuple hv_Column,
-                        out HTuple hv_Phi, out HTuple hv_Length1, out HTuple hv_Length2);
-                    locationResult.findPoint = new PointPosition_Image(hv_Row, hv_Column);
-                    locationResult.Angle = hv_Phi;
-                    locationResult.shapeModelContour.GenRectangle2ContourXld(hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
+                    HOperatorSet.VectorAngleToRigid(0, 0, 0, row, col, angle, out HTuple hom2d);
+                    HOperatorSet.AffineTransContourXld(modelContours, out HObject contours, hom2d);
+                    HOperatorSet.ShapeTransXld(contours, out locationResult.SmallestRec2Xld, "rectangle2");
+                    locationResult.findPoint = new PointPosition_Image(row, col);
+                    locationResult.Phi = angle;
+                    //locationResult.shapeModelContour.GenRectangle2ContourXld(hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
                     locationResult.region = new HRegion();
                     locationResult.region.GenEmptyRegion();
-   
-                    //模板匹配轮廓的外切矩形
-                    locationResult.SmallestRec2Xld.GenRectangle2ContourXld(hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
-                    ho_RegionOpening.Dispose();
-                    ho_RegionTrans.Dispose();
-                    ho_RegionErosion.Dispose();
+
+
+                    //HOperatorSet.MedianImage(parameter.image, out HObject ho_ImageMedian, "circle", 10, "mirrored");
+                    //HOperatorSet.MeanImage(ho_ImageMedian, out HObject ho_ImageMean, 600, 600);
+                    //HOperatorSet.DynThreshold(ho_ImageMedian, ho_ImageMean, out HObject ho_RegionDynThresh, 10, "dark");
+                    //HOperatorSet.FillUpShape(ho_RegionDynThresh, out HObject ho_RegionFillUp, "area", 1000, 1000000);
+                    //HOperatorSet.Connection(ho_RegionFillUp, out HObject ho_ConnectedRegions);
+                    //HOperatorSet.SelectShape(ho_ConnectedRegions, out HObject ho_SelectedRegions1, (new HTuple("area")).TupleConcat(
+                    //    "convexity"), "and", (new HTuple(2168630)).TupleConcat(0.83953), (new HTuple(3668630)).TupleConcat(
+                    //    2));
+                    //HOperatorSet.GenEmptyObj(out HObject ho_EmptyObject);
+                    //HOperatorSet.TestEqualObj(ho_EmptyObject, ho_SelectedRegions1, out HTuple hv_IsEqual);
+                    ////ho_ImageMedian.Dispose();
+                    ////ho_ImageMean.Dispose();
+                    ////ho_RegionDynThresh.Dispose();
+                    ////ho_RegionFillUp.Dispose();
+                    ////ho_ConnectedRegions.Dispose();
+                    //if ((int)(new HTuple(hv_IsEqual.TupleEqual(1))) != 0)
+                    //{
+                    //    locationResult.ErrString = "定位失败";
+                    //    locationResult.IsRunOk = false;
+                    //    return locationResult;
+                    //    //定位异常
+                    //}
+
+                    //HOperatorSet.OpeningRectangle1(ho_SelectedRegions1, out HObject ho_RegionOpening, 130, 130);
+                    //HOperatorSet.ShapeTrans(ho_RegionOpening, out HObject ho_RegionTrans, "convex");
+                    //HOperatorSet.ErosionCircle(ho_RegionTrans, out HObject ho_RegionErosion, 50);
+                    //HOperatorSet.SmallestRectangle2(ho_RegionErosion, out HTuple hv_Row, out HTuple hv_Column,
+                    //    out HTuple hv_Phi, out HTuple hv_Length1, out HTuple hv_Length2);
+                    //locationResult.findPoint = new PointPosition_Image(hv_Row, hv_Column);
+                    //locationResult.Phi = hv_Phi;
+                    //locationResult.shapeModelContour.GenRectangle2ContourXld(hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
+                    //locationResult.region = new HRegion();
+                    //locationResult.region.GenEmptyRegion();
+
+                    ////模板匹配轮廓的外切矩形
+                    //HOperatorSet.GenRectangle2ContourXld(out locationResult.SmallestRec2Xld, hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
+                    //ho_RegionOpening.Dispose();
+                    //ho_RegionTrans.Dispose();
+                    //ho_RegionErosion.Dispose();
                 }
                 locationResult.IsRunOk = true;
             }
@@ -431,130 +463,21 @@ namespace VisionFlows
             }
             return locationResult;
         }
-
-        public static void FindSocktMark(HObject ho_Image, HTuple hv_ModelID, out HTuple hv_center_row,
-              out HTuple hv_center_col, out HTuple hv_Angle1, out HTuple hv_max_row, out HTuple hv_max_col,
-              out HTuple hv_min_row, out HTuple hv_min_col)
-        {
-            // Local iconic variables
-
-            HObject ho_ModelContours1, ho_ContCircle1;
-
-            // Local control variables
-
-            HTuple hv_Row = new HTuple(), hv_Column = new HTuple();
-            HTuple hv_Angle = new HTuple(), hv_Score = new HTuple();
-            HTuple hv_Model = new HTuple(), hv_Indices = new HTuple();
-            HTuple hv_Length = new HTuple();
-            // Initialize local and output iconic variables
-            HOperatorSet.GenEmptyObj(out ho_ModelContours1);
-            HOperatorSet.GenEmptyObj(out ho_ContCircle1);
-            hv_center_row = new HTuple();
-            hv_center_col = new HTuple();
-            hv_Angle1 = new HTuple();
-            hv_max_row = new HTuple();
-            hv_max_col = new HTuple();
-            hv_min_row = new HTuple();
-            hv_min_col = new HTuple();
-            HOperatorSet.Threshold(ho_Image, out HObject region, 0, 143);
-            HOperatorSet.FillUp(region, out HObject regionFill);
-            HOperatorSet.Connection(regionFill, out regionFill);
-            HOperatorSet.SelectShapeStd(regionFill, out HObject regionmax, "max_area", 70);
-            HOperatorSet.ReduceDomain(ho_Image, regionmax, out HObject imagereduced);
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_Row.Dispose(); hv_Column.Dispose(); hv_Angle.Dispose(); hv_Score.Dispose(); hv_Model.Dispose();
-                HOperatorSet.FindShapeModels(imagereduced, hv_ModelID, (new HTuple(0)).TupleRad()
-                    , (new HTuple(360)).TupleRad(), ImagePara.Instance.SocketMarkScore, 0, 0.1, "least_squares", 0, 0.9, out hv_Row,
-                    out hv_Column, out hv_Angle, out hv_Score, out hv_Model);
-            }
-            regionmax.Dispose();
-            region.Dispose();
-            regionFill.Dispose();
-            imagereduced.Dispose();
-            ho_ModelContours1.Dispose();
-            HOperatorSet.GetShapeModelContours(out ho_ModelContours1, hv_ModelID, 1);
-
-            hv_Indices.Dispose();
-            HOperatorSet.TupleSortIndex(hv_Column, out hv_Indices);
-            hv_Length.Dispose();
-            HOperatorSet.TupleLength(hv_Indices, out hv_Length);
-            hv_max_row.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_max_row = hv_Row.TupleSelect(
-                    hv_Indices.TupleSelect(hv_Length - 1));
-            }
-            hv_max_col.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_max_col = hv_Column.TupleSelect(
-                    hv_Indices.TupleSelect(hv_Length - 1));
-            }
-
-            hv_min_row.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_min_row = hv_Row.TupleSelect(
-                    hv_Indices.TupleSelect(0));
-            }
-            hv_min_col.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_min_col = hv_Column.TupleSelect(
-                    hv_Indices.TupleSelect(0));
-            }
-            hv_center_row.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_center_row = (hv_max_row + hv_min_row) / 2;
-            }
-            hv_center_col.Dispose();
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                hv_center_col = (hv_max_col + hv_min_col) / 2;
-            }
-            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-            {
-                ho_ContCircle1.Dispose();
-                HOperatorSet.GenCircleContourXld(out ho_ContCircle1, hv_min_row.TupleConcat(hv_max_row),
-                    hv_min_col.TupleConcat(hv_max_col), (new HTuple(111.382)).TupleConcat(111.382),
-                    (new HTuple((new HTuple(0)).TupleRad())).TupleConcat((new HTuple(0)).TupleRad()
-                    ), (new HTuple((new HTuple(360)).TupleRad())).TupleConcat((new HTuple(360)).TupleRad()
-                    ), "positive", 1);
-            }
-            hv_Angle1.Dispose();
-            HOperatorSet.AngleLl(0, 0, 0, 100, hv_min_row, hv_min_col, hv_max_row, hv_max_col,
-                out hv_Angle1);
-
-            ho_ModelContours1.Dispose();
-            ho_ContCircle1.Dispose();
-
-            hv_Row.Dispose();
-            hv_Column.Dispose();
-            hv_Angle.Dispose();
-            hv_Score.Dispose();
-            hv_Model.Dispose();
-            hv_Indices.Dispose();
-            hv_Length.Dispose();
-
-            return;
-        }
-
         /// <summary>
-        /// 新标定函数   定位Socket mark点上的
+        /// 定位Socket mark点上的
         /// </summary>
         /// <param name="image"></param>
         /// <param name="findPoint"></param>
         /// <returns></returns>
         public override OutPutResult SocketMark(InputPara locationPara, out HObject mark)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             //给出定位中心点位 给出定位轮廓 给出角度计算直线
             OutPutResult locationResult = new OutPutResult();
             HOperatorSet.GenEmptyObj(out mark);
             try
             {
-                FindSocketMark(locationPara.image, out HTuple row1, out HTuple colum1, out HTuple phi, out mark);
+                FindSocketMarkFirst(locationPara.image, out HTuple row1, out HTuple colum1, out HTuple phi, out mark);
                 if (colum1.Length > 0)
                 {
                     HHomMat2D hv_HomMat2D = new HHomMat2D();
@@ -562,14 +485,14 @@ namespace VisionFlows
                         colum1, phi);
                     HTuple CenterRow = hv_HomMat2D.AffineTransPoint2d(ImagePara.Instance.SocketMark_PutDutRow, ImagePara.Instance.SocketMark_PutDutCol, out HTuple CenterCol);
                     locationResult.findPoint = new PointPosition_Image(CenterRow, CenterCol);
-                    locationResult.Angle = phi;
+                    locationResult.Phi = phi;
                     locationResult.IsRunOk = true;
                 }
                 else
                 {
                     locationResult.ErrString = "mark点定位失败";
                     locationResult.findPoint = new PointPosition_Image(0, 0);
-                    locationResult.Angle = 0;
+                    locationResult.Phi = 0;
                     locationResult.IsRunOk = false;
                 }
             }
@@ -582,7 +505,9 @@ namespace VisionFlows
             return locationResult;
         }
 
-        
+
+
+        HTuple SocketDUT_ModelID;
 
         /// <summary>
         /// 定位 Socket中Dut位置 函数 （圆定位方式）
@@ -593,49 +518,80 @@ namespace VisionFlows
         /// <returns></returns>
         public override OutPutResult SocketDutFront(InputPara parameter)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             OutPutResult locationResult = new OutPutResult();
-
             try
             {
-                HRegion ho_SerchRoi = new HRegion();
-                string SocketName = "SerchROI{0}.hobj";
-                ho_SerchRoi.ReadObject(Utility.Model + string.Format(SocketName,CurrentSoket));
-                FindSocketMark(parameter.image, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Phi, out HObject mark);
+                
+                FindSocketMarkFirst(parameter.image, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Phi, out HObject mark);
                 HHomMat2D hv_HomMat2D = new HHomMat2D();
-
-                //HOperatorSet.GenCrossContourXld(out HObject cross, hv_Row, hv_Column, 1000, hv_Phi);   // 验证定位是否准
-                hv_HomMat2D.VectorAngleToRigid(ImagePara.Instance.SocketGet_rowCenter[ImageProcessBase.CurrentSoket], 
-                    ImagePara.Instance.SocketGet_colCenter[ImageProcessBase.CurrentSoket],
+                hv_HomMat2D.VectorAngleToRigid(ImagePara.Instance.SocketGet_rowCenter[ImageProcessBase.CurrentSoket], ImagePara.Instance.SocketGet_colCenter[ImageProcessBase.CurrentSoket],
                     ImagePara.Instance.SocketGet_angleCenter[ImageProcessBase.CurrentSoket], hv_Row, hv_Column, hv_Phi);
-                HRegion ho_RegionAffineTrans = hv_HomMat2D.AffineTransRegion(ho_SerchRoi, "nearest_neighbor");
+                HRegion ho_SerchRoi1 = ImagePara.Instance.GetSerchROI(ImagePara.Instance.RegionROI1[ImageProcessBase.CurrentSoket]);
+                HRegion ho_SerchRoi2 = ImagePara.Instance.GetSerchROI(ImagePara.Instance.RegionROI2[ImageProcessBase.CurrentSoket]);
+                HRegion ho_RegionAffineTrans1 = hv_HomMat2D.AffineTransRegion(ho_SerchRoi1, "nearest_neighbor");
+                HRegion ho_RegionAffineTrans2 = hv_HomMat2D.AffineTransRegion(ho_SerchRoi2, "nearest_neighbor");
+                HImage ho_ImageReduced1 = parameter.image.ReduceDomain(ho_RegionAffineTrans1);
+                HImage ho_ImageReduced2 = parameter.image.ReduceDomain(ho_RegionAffineTrans2);
 
-                HImage ho_ImageReduced = parameter.image.ReduceDomain(ho_RegionAffineTrans);
+                //匹配
+                //if(SocketDUT_ModelID==null)
+                //{
+                //    HOperatorSet.GenCircleContourXld(out HObject ho_ContCircle, 2338.65, 2888.99, 82.5602, 0, 6.28318, "positive", 1);
+                //    HOperatorSet.CreateShapeModelXld(ho_ContCircle, "auto", -0.39, 0.79, "auto", "auto", "ignore_local_polarity", 3, out SocketDUT_ModelID);
+                //}
+                // 新增模板匹配，以突出梯形为特征，取代圆
+                //上特征                
+                HOperatorSet.ReadShapeModel(Utility.ModelFile+ "trapezium_Top_model", out SocketDUT_ModelID);
+                HOperatorSet.GetShapeModelContours(out HObject ho_ModelContours1, SocketDUT_ModelID, 1);
+                HOperatorSet.FindShapeModel(ho_ImageReduced1, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+                                1, 0.5, "least_squares", 0, 0.9, out HTuple Row1, out HTuple Column1, out HTuple Angle1,out HTuple Score1);
+                HOperatorSet.VectorAngleToRigid(0, 0, 0, Row1, Column1, Angle1, out HTuple HomMat2D1);
+                HOperatorSet.AffineTransContourXld(ho_ModelContours1, out HObject ho_ContoursAffineTrans1,HomMat2D1);
+                HOperatorSet.GenRegionContourXld(ho_ContoursAffineTrans1, out HObject topRegion,"filled");
+                HOperatorSet.ShapeTrans(topRegion, out HObject top_region, "inner_circle");
+                HOperatorSet.AreaCenter(top_region, out HTuple area, out HTuple row_Top, out HTuple col_Top);
+                //下特征
+                HOperatorSet.ReadShapeModel(Utility.ModelFile + "trapezium_Botm_model", out SocketDUT_ModelID);
+                HOperatorSet.GetShapeModelContours(out HObject ho_ModelContours2, SocketDUT_ModelID, 1);
+                HOperatorSet.FindShapeModel(ho_ImageReduced2, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+                                1, 0.5, "least_squares", 0, 0.9, out HTuple Row2, out HTuple Column2, out HTuple Angle2, out HTuple Score2);
+                HOperatorSet.VectorAngleToRigid(0, 0, 0, Row2, Column2, Angle2, out HTuple HomMat2D2);
+                HOperatorSet.AffineTransContourXld(ho_ModelContours2, out HObject ho_ContoursAffineTrans2, HomMat2D2);
+                HOperatorSet.GenRegionContourXld(ho_ContoursAffineTrans2, out HObject botRegion, "filled");
+                HOperatorSet.ShapeTrans(botRegion, out HObject bot_region, "inner_circle");
+                HOperatorSet.AreaCenter(bot_region, out HTuple area1, out HTuple row_Bottom, out HTuple col_Bottom);
+                //        HOperatorSet.GetShapeModelContours(out HObject ho_ModelContours, SocketDUT_ModelID, 1);
+                //        HOperatorSet.FindShapeModel(ho_ImageReduced1, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+                //                1, 0.5, "least_squares", 0, 0.9, out HTuple Row1, out HTuple Column1, out HTuple Angle1,out HTuple Score1);
+                //            HOperatorSet.VectorAngleToRigid(0, 0, 0, Row1, Column1, Angle1, out HTuple HomMat2D1);
+                //            HOperatorSet.AffineTransContourXld(ho_ModelContours, out HObject ho_ContoursAffineTrans1,HomMat2D1);
 
-                HRegion ho_Regions = ho_ImageReduced.Threshold((HTuple)ImagePara.Instance.SoketDut_minthreshold[CurrentSoket],
-                    (HTuple)ImagePara.Instance.SoketDut_maxthreshold[CurrentSoket]);
-                HRegion ho_RegionOpening = ho_Regions.OpeningCircle(15d);
+                //        HOperatorSet.FindShapeModel(ho_ImageReduced2, SocketDUT_ModelID, -0.39, 0.79, ImagePara.Instance.SoketDutScore,
+                //1, 0.5, "least_squares", 0, 0.9, out HTuple Row2, out HTuple Column2, out HTuple Angle2, out HTuple Score2);
+                //        HOperatorSet.VectorAngleToRigid(0, 0, 0, Row2, Column2, Angle2, out HTuple HomMat2D2);
+                //        HOperatorSet.AffineTransContourXld(ho_ModelContours, out HObject ho_ContoursAffineTrans2, HomMat2D2);
+                //        //排序
 
-                HRegion ho_RegionTrans = ho_RegionOpening.ShapeTrans("convex");
+                //        HOperatorSet.ConcatObj(ho_ContoursAffineTrans1, ho_ContoursAffineTrans2, out HObject obj);
+                //        HOperatorSet.SortContoursXld(obj, out HObject sortobj, "character", "true", "row");
+                //        HOperatorSet.SelectObj(sortobj, out HObject sortobj1, 1);
+                //        HOperatorSet.AreaCenterXld(sortobj1, out HTuple a, out HTuple row_Top, out HTuple col_Top, out HTuple p1);
+                //        HOperatorSet.SelectObj(sortobj, out HObject sortobj2, 2);
+                //        HOperatorSet.AreaCenterXld(sortobj2, out HTuple b, out HTuple row_Bottom, out HTuple col_Bottom, out HTuple p2);
 
-                HOperatorSet.SmallestRectangle2(ho_RegionTrans, out HTuple hv_Row1, out HTuple hv_Column1,
-                    out HTuple hv_Phi1, out HTuple hv_Length1, out HTuple hv_Length2);
-                HRegion ho_Rectangle = new HRegion();
-                ho_Rectangle.GenRectangle2(hv_Row1, hv_Column1, hv_Phi1, hv_Length1, hv_Length2);
-                ho_ImageReduced.Dispose();
-                ho_Regions.Dispose();
-                ho_RegionOpening.Dispose();
-                ho_SerchRoi.Dispose();
-                locationResult.Dutwidth = (int)hv_Length2.D;
-                locationResult.Dutheight = (int)hv_Length1.D;
-                if (hv_Length1.D > ImagePara.Instance.SoketDut_heightmin && hv_Length1.D < ImagePara.Instance.SoketDut_heightmax &&
-                    hv_Length2.D > ImagePara.Instance.SoketDut_widthmin && hv_Length2.D < ImagePara.Instance.SoketDut_widthmax)
 
+
+                if (Row2.Length>0&& Row1.Length>0)
                 {
                     //找到目标
-                    locationResult.Angle = hv_Phi1;
-                    locationResult.findPoint = new PointPosition_Image(hv_Row1.D, hv_Column1.D);
-                    locationResult.region = ho_RegionTrans.ConcatObj(ho_RegionAffineTrans);
-                    locationResult.SmallestRec2Xld = ho_Rectangle;
+                    HOperatorSet.AngleLx(row_Top, col_Top, row_Bottom, col_Bottom, out HTuple phi);
+                    //HOperatorSet.AngleLl(row_Top, col_Top,row_Bottom, col_Bottom, 0,0,0,100,out HTuple phi);//和水平线的夹角
+                    locationResult.Phi = phi.TupleDeg();
+                    locationResult.findPoint = new PointPosition_Image((Row2.D+ Row1.D)/2, (Column2.D+ Column1.D)/2);
+                    locationResult.region = ho_RegionAffineTrans1.ConcatObj(ho_RegionAffineTrans2);
+                    locationResult.SmallestRec2Xld = ho_ContoursAffineTrans1.ConcatObj(ho_ContoursAffineTrans2);
+                    locationResult.SmallestRec2Xld = bot_region.ConcatObj(top_region);
                     locationResult.IsRunOk = true;
                 }
                 else
@@ -662,98 +618,121 @@ namespace VisionFlows
         /// <param name="hv_Column1"></param>
         /// <param name="hv_Phi"></param>
         /// <param name="mark"></param>
-        public override void FindSocketMark(HObject ho_Image, out HTuple hv_Row1, out HTuple hv_Column1,
+        public override void FindSocketMarkFirst(HObject ho_Image, out HTuple hv_row_center, out HTuple hv_col_center,
     out HTuple hv_Phi, out HObject mark)
         {
-            // Local iconic variables
 
-            HObject ho_Region, ho_ConnectedRegions, ho_SelectedRegions;
-            HObject ho_SelectedRegions1, ho_Circle = null;
+            hv_row_center = new HTuple();
+            hv_col_center = new HTuple();
+            // Local iconic variables 
+            mark = new HObject();
+            HObject ho_Region, ho_ConnectedRegions, ho_RegionOpening;
+            HObject ho_SelectedRegions, ho_RegionClosing, ho_RegionFillUp;
+            HObject ho_SortedRegions = null, ho_Sorted1 = null, ho_Sorted2 = null;
+            HObject ho_Cross = null;
 
-            // Local control variables
+            // Local control variables 
 
-            HTuple hv_UsedThreshold = new HTuple(), hv_Number = new HTuple();
-            HTuple hv_Row = new HTuple(), hv_Column = new HTuple();
-            HTuple hv_Radius = new HTuple(), hv_Length1 = new HTuple();
-            HTuple hv_Length2 = new HTuple();
-            // Initialize local and output iconic variables
+            HTuple hv_Number = new HTuple(), hv_Radius1 = new HTuple();
+            HTuple hv_Row2 = new HTuple(), hv_Column2 = new HTuple();
+            HTuple hv_Radius2 = new HTuple();
+            HTuple hv_angle = new HTuple(), hv_WindowHandle = new HTuple();
+            // Initialize local and output iconic variables 
             HOperatorSet.GenEmptyObj(out ho_Region);
             HOperatorSet.GenEmptyObj(out ho_ConnectedRegions);
+            HOperatorSet.GenEmptyObj(out ho_RegionOpening);
             HOperatorSet.GenEmptyObj(out ho_SelectedRegions);
-            HOperatorSet.GenEmptyObj(out ho_SelectedRegions1);
-            HOperatorSet.GenEmptyObj(out ho_Circle);
-            HOperatorSet.GenEmptyObj(out mark);
-            hv_Row1 = new HTuple();
-            hv_Column1 = new HTuple();
+            HOperatorSet.GenEmptyObj(out ho_RegionClosing);
+            HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
+            HOperatorSet.GenEmptyObj(out ho_SortedRegions);
+            HOperatorSet.GenEmptyObj(out ho_Sorted1);
+            HOperatorSet.GenEmptyObj(out ho_Sorted2);
+            HOperatorSet.GenEmptyObj(out ho_Cross);
             hv_Phi = new HTuple();
-            ho_Region.Dispose(); hv_UsedThreshold.Dispose();
+            ho_Region.Dispose();
             HOperatorSet.Threshold(ho_Image, out ho_Region, ImagePara.Instance.SoketMark_minthreshold, ImagePara.Instance.SoketMark_maxthreshold);
-            //HOperatorSet.BinaryThreshold(ho_Image_white, out ho_Region, "max_separability",
-            //    "light", out hv_UsedThreshold);
             ho_ConnectedRegions.Dispose();
             HOperatorSet.Connection(ho_Region, out ho_ConnectedRegions);
+            ho_RegionOpening.Dispose();
+            HOperatorSet.ClosingCircle(ho_ConnectedRegions,out ho_ConnectedRegions,10);
+            HOperatorSet.OpeningCircle(ho_ConnectedRegions, out ho_RegionOpening, 17);
             ho_SelectedRegions.Dispose();
-            HOperatorSet.OpeningCircle(ho_ConnectedRegions, out ho_ConnectedRegions, 30);
-            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, (new HTuple("area")).TupleConcat(
-                "circularity"), "and", (new HTuple(30000)).TupleConcat(0.700), (new HTuple(60000)).TupleConcat(
-                2));
-
-            //HOperatorSet.Connection(ho_SelectedRegions, out ho_SelectedRegions);
-            //HOperatorSet.AreaCenter(ho_SelectedRegions, out HTuple areea, out _, out _);
-            // 验证 定位过程产生的问题
-            ho_SelectedRegions1.Dispose();
-            HOperatorSet.SelectShape(ho_SelectedRegions, out ho_SelectedRegions1, "row",
-                "and", 900, 1800);
+            HOperatorSet.SelectShape(ho_RegionOpening, out HObject hObject, "area", "and", 20000, 70000);
+            HOperatorSet.SelectShape(hObject, out ho_SelectedRegions, (new HTuple("ra")).TupleConcat(
+                "roundness"), "and", (new HTuple(120)).TupleConcat(0.8), (new HTuple(150)).TupleConcat(
+                1));
+            
+            ho_RegionClosing.Dispose();
+            HOperatorSet.ClosingCircle(ho_SelectedRegions, out ho_RegionClosing, 7);
+            ho_RegionFillUp.Dispose();
+            HOperatorSet.FillUp(ho_RegionClosing, out ho_RegionFillUp);
+            HOperatorSet.ShapeTrans(ho_RegionFillUp, out HObject region, "outer_circle");
             hv_Number.Dispose();
-            HOperatorSet.CountObj(ho_SelectedRegions1, out hv_Number);
-            if (hv_Number.D > 1)
+            HOperatorSet.CountObj(region, out hv_Number);
+            if ((int)(new HTuple(hv_Number.TupleEqual(2))) != 0)
             {
-                HOperatorSet.Connection(ho_SelectedRegions1, out ho_ConnectedRegions);
-                HOperatorSet.AreaCenter(ho_ConnectedRegions, out HTuple area, out HTuple Row, out HTuple Column);
-                HOperatorSet.TupleSortIndex(Column, out HTuple index);
-                HOperatorSet.SelectObj(ho_ConnectedRegions, out HObject objmin, index[0] + 1);
-                HOperatorSet.SelectObj(ho_ConnectedRegions, out HObject objmax, index[index.Length - 1] + 1);
-                HOperatorSet.Union2(objmin, objmax, out HObject ho_circles);
-
-                ho_ConnectedRegions.Dispose();
-                HOperatorSet.Union1(ho_circles, out ho_circles);
-
-                hv_Row.Dispose(); hv_Column.Dispose(); hv_Radius.Dispose();
-                HOperatorSet.OpeningCircle(ho_circles, out ho_SelectedRegions1, 3.5);
-                HOperatorSet.Connection(ho_SelectedRegions1, out ho_SelectedRegions1);
-                HOperatorSet.SmallestCircle(ho_SelectedRegions1, out hv_Row, out hv_Column,
-                    out hv_Radius);
-                ho_Circle.Dispose();
-                HOperatorSet.GenCircle(out ho_Circle, hv_Row, hv_Column, hv_Radius);
-                HOperatorSet.Union1(ho_Circle, out mark);
-                hv_Row1.Dispose(); hv_Column1.Dispose(); hv_Phi.Dispose(); hv_Length1.Dispose(); hv_Length2.Dispose();
-                HOperatorSet.SmallestRectangle2(mark, out hv_Row1, out hv_Column1,
-                    out hv_Phi, out hv_Length1, out hv_Length2);
+                ho_SortedRegions.Dispose();
+                HOperatorSet.SortRegion(region, out ho_SortedRegions, "character",
+                    "true", "row");
+                ho_Sorted1.Dispose();
+                HOperatorSet.SelectObj(ho_SortedRegions, out ho_Sorted1, 1);
+                ho_Sorted2.Dispose();
+                HOperatorSet.SelectObj(ho_SortedRegions, out ho_Sorted2, 2);
+                hv_Radius1.Dispose();
+                HOperatorSet.SmallestCircle(ho_Sorted1, out HTuple hv_Row1, out HTuple hv_Column1, out hv_Radius1);
+                hv_Row2.Dispose(); hv_Column2.Dispose(); hv_Radius2.Dispose();
+                HOperatorSet.SmallestCircle(ho_Sorted2, out hv_Row2, out hv_Column2, out hv_Radius2);
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_row_center = (hv_Row1 + hv_Row2) / 2;
+                }
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_col_center = (hv_Column1 + hv_Column2) / 2;
+                }
+                HOperatorSet.AngleLx(hv_Row1, hv_Column1, hv_Row2, hv_Column2, out hv_Phi);
+                hv_angle.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_angle = hv_Phi;
+                }
+                ho_Cross.Dispose();
+                HOperatorSet.GenCrossContourXld(out mark, hv_row_center, hv_col_center,196, hv_Phi);
             }
             ho_Region.Dispose();
             ho_ConnectedRegions.Dispose();
+            ho_RegionOpening.Dispose();
             ho_SelectedRegions.Dispose();
-            ho_SelectedRegions1.Dispose();
-            ho_Circle.Dispose();
+            ho_RegionClosing.Dispose();
+            ho_RegionFillUp.Dispose();
+            ho_SortedRegions.Dispose();
+            ho_Sorted1.Dispose();
+            ho_Sorted2.Dispose();
+            ho_Cross.Dispose();
 
-            hv_UsedThreshold.Dispose();
             hv_Number.Dispose();
-            hv_Row.Dispose();
-            hv_Column.Dispose();
-            hv_Radius.Dispose();
-            hv_Length1.Dispose();
-            hv_Length2.Dispose();
+            hv_Radius1.Dispose();
+            hv_Row2.Dispose();
+            hv_Column2.Dispose();
+            hv_Radius2.Dispose();
+            hv_row_center.Dispose();
+            hv_col_center.Dispose();
+            hv_angle.Dispose();
+            hv_WindowHandle.Dispose();
+
+
         }
 
         /// <summary>
-        /// 定位Dut 在吸嘴上的
+        /// 定位背面Dut 在吸嘴上的
         /// </summary>
         /// <param name="image"></param>
         /// <param name="DutCenter"></param>
         /// <param name="AngleLX"></param>
         /// <returns></returns>
-        public override OutPutResult SecondDutBack(InputPara locationPara, PLCSend plcsend)
+        public override OutPutResult SecondDutBack_Circle(InputPara locationPara, PLCSend plcsend)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             OutPutResult locationResult = new OutPutResult();
 
             try
@@ -826,7 +805,7 @@ namespace VisionFlows
                 locationResult.region = ReadDataCodeRegion; //裁剪读码 图片区域 给出去
 
                 locationResult.findPoint = new PointPosition_Image(CenterRow, CenterCol);
-                locationResult.Angle = Angle;
+                locationResult.Phi = Angle;
                 locationResult.shapeModelContour = CircleContourXld;
                 locationResult.IsRunOk = true;
             }
@@ -840,14 +819,54 @@ namespace VisionFlows
             return locationResult;
         }
 
-        
-       
+        /// <summary>
+        /// 定位背面Dut 在吸嘴上的
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="DutCenter"></param>
+        /// <param name="AngleLX"></param>
+        /// <returns></returns>
+        public override OutPutResult SecondDutBack(InputPara locationPara, PLCSend plcsend)
+        {
+            HOperatorSet.SetSystem("clip_region", "false");
+            OutPutResult locationResult = new OutPutResult();
 
-      
+            try
+            {
+                HOperatorSet.BinaryThreshold(locationPara.image, out HObject ho_Region, "max_separability", "dark", out HTuple hv_UsedThreshold);
+                HOperatorSet.Connection(ho_Region, out HObject ho_ConnectedRegions);
+                HOperatorSet.SelectShapeStd(ho_ConnectedRegions, out HObject ho_SelectedRegions, "max_area",70);
+                HOperatorSet.SmallestRectangle2(ho_SelectedRegions, out HTuple hv_Row, out HTuple hv_Column,out HTuple hv_Phi, out HTuple hv_Length1, out HTuple hv_Length2);
+                //HOperatorSet.GenRectangle2(out HObject ho_Rectangle, hv_Row, hv_Column, hv_Phi, hv_Length1,hv_Length2);
+                HRegion ho_Rectangle = new HRegion();
+                ho_Rectangle.GenRectangle2(hv_Row, hv_Column, hv_Phi, hv_Length1, hv_Length2);
+                //裁剪读码 图片
+                HImage ReadCodeImage = locationPara.image.ReduceDomain(ho_Rectangle);
+                locationResult.IsReadDataCode = ReadDataCode(ReadCodeImage, out locationResult.DatacodeString, out HXLDCont RecDataCodeXld);
+                locationResult.SmallestRec2Xld = RecDataCodeXld; //扫码的矩形框 利用形状模板xld给出去
+                locationResult.region = ho_Rectangle; //裁剪读码 图片区域 给出去
+
+                locationResult.findPoint = new PointPosition_Image(hv_Row, hv_Column);
+                locationResult.Phi = hv_Phi;
+                locationResult.IsRunOk = true;
+            }
+            catch (Exception ex)
+            {
+                locationResult.ErrString = "图像处理错误";
+                //定位吸嘴上的Dut 失败
+                Flow.Log("定位吸嘴上的Dut 失败 " + ex.Message + ex.StackTrace);
+                locationResult.IsRunOk = false;
+            }
+            return locationResult;
+        }
+
+
+
 
         public static bool create_shape(HImage image, HWindow wind, HRegion ROI, HTuple MinAngle, HTuple MaxAngle,
    ref HShapeModel hv_ModelID, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Angle, out HObject origin_conturs)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             try
             {
                 HImage ho_ImageReduced;
@@ -914,6 +933,7 @@ namespace VisionFlows
 
         public static bool Find_Shape(HImage image, HRegion ROI, HShapeModel hv_ModelID, HTuple numlevel, HTuple minscore, HTuple NumMatch, HTuple MaxOverLop, HTuple MinAngle, HTuple MaxAngle, out HTuple hv_Score, out HTuple hv_Row, out HTuple hv_Column, out HTuple hv_Angle)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             HImage image_reduce = new HImage();
             try
             {
@@ -951,6 +971,7 @@ namespace VisionFlows
         public static void get_Calibcenter_nozzle(HRegion ho_ROI_0, HObject image, out HTuple hv_Row,
     out HTuple hv_Column, out HTuple hv_angle, out HObject ho_Rectangle)
         {
+            HOperatorSet.SetSystem("clip_region", "false");
             // Local iconic variables
 
             HObject ho_ImageReduced, ho_Region;

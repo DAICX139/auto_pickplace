@@ -13,6 +13,7 @@ namespace Poc2Auto.GUI.FormMode
     {
         public AdsDriverClient _client;
         public string CurrentLanguage { get; set; } = LangParser.DefaultLanguage;
+        private static AdsDriverClient TesterClient = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Tester.ToString()) as AdsDriverClient;
         public FMGRR(AdsDriverClient client)
         {
             InitializeComponent();
@@ -36,20 +37,27 @@ namespace Poc2Auto.GUI.FormMode
             if (_client == null)
                 return;
 
+            var result = AlcSystem.Instance.ShowMsgBox("确认切换至GRR模式吗？", "提醒", AlcMsgBoxButtons.YesNo, icon: AlcMsgBoxIcon.Question);
+            if (result == AlcMsgBoxResult.No)
+                return;
+
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Both))
                  {
 
                      if (RunModeMgr.GRR(_client, ucModeParams_GRR1.ParamData, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.AutoGRR;
                          RunModeMgr.Running = false;
-                         AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         RunModeMgr.OriginValue = false;
+                         TesterClient?.WriteObject(RunModeMgr.Name_CompleteFinish, false);
+                         
+                         //AlcSystem.Instance.ShowMsgBox("OK", "Information");
+                         //UCMain.Instance.Reset();
 
-                         AlcSystem.Instance.ButtonClickRequire(SYSTEM_EVENT.Start);
+                         //AlcSystem.Instance.ButtonClickRequire(SYSTEM_EVENT.Reset);
                      }
                      else
                      {

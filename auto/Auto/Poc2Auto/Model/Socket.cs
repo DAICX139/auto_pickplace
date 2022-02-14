@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CYGKit.Factory.Statistics;
+using Newtonsoft.Json;
 using Poc2Auto.Common;
 
 namespace Poc2Auto.Model
@@ -9,13 +10,20 @@ namespace Poc2Auto.Model
     {
         public const int ROW = 1;
         public const int COL = 1;
-
+        [JsonProperty("Index")]
         public int Index { get; }
+        [JsonProperty("Enable")]
         public bool Enable { get; set; } = true;
+        /// <summary>
+        /// Socket连续测试失败次数
+        /// </summary>
+        [JsonProperty("SocketTestFailTimes")]
+        public int TestFailTimes { get; set; }
+        [JsonIgnore]
         public string DisplayMember { get => $"{Enum.GetName(typeof(StationName), Index)} Socket"; }
         public Socket[,] Sockets = new Socket[ROW, COL];
         private Dut[,] _duts = new Dut[ROW, COL];
-
+        [JsonProperty("Duts")]
         public Dut[,] Duts
         {
             get
@@ -27,6 +35,10 @@ namespace Poc2Auto.Model
                 }
 
                 return _duts;
+            }
+            set
+            {
+                _duts = value;
             }
         }
 
@@ -44,12 +56,12 @@ namespace Poc2Auto.Model
 
     public class Socket
     {
+        [JsonProperty("SocketIndex")]
         public int Index { get; }
 
         public Dut Dut;
-
+        [JsonIgnore]
         public SocketStat Stat { get; set; }
-
         public Socket(int index)
         {
             Index = index;
@@ -63,7 +75,10 @@ namespace Poc2Auto.Model
 
             Stat.SiteStats = siteSites;
             Stat.UpdateDb += Database.DragonDbHelper.AddOrUpdateSocketStat;
-            SocketManager.Sockets.Add(index, this);
+            if (!SocketManager.Sockets.ContainsKey(index))
+            {
+                SocketManager.Sockets.Add(index, this);
+            }
         }
     }
 

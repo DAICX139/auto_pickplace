@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using AlcUtility.Language;
 
 namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
 {
@@ -13,6 +14,8 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
             timer1.Tick += (e, sender) => { updateStatus(); };
         }
 
+        const string cn = "zh-CN";
+        const string en = "en-US";
         public CylinderCtrl Cylinder { get; set; }
 
         public bool AuthorityCtrl
@@ -34,6 +37,10 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
         {
             if (Cylinder == null)
                 return;
+            if (Cylinder.Info == null)
+            {
+                return;
+            }
             if (Cylinder.Info.IsBase)
                 Cylinder.MoveToWork();
             else if (Cylinder.Info.IsWork)
@@ -54,17 +61,96 @@ namespace Poc2Auto.GUI.UCModeUI.UCAxisesCylinders
             }
             else
                 Cylinder.MoveToWork();
-
-
         }
 
         private void updateStatus()
         {
-            if (Cylinder == null)
-                return;
-            var info = Cylinder.Info;
-            button1.Text = info.Name;
-            label1.BackColor = GetColor(info);
+            try
+            {
+                if (Cylinder == null)
+                    return;
+                var lg = LangParser.CurrentLanguage;
+                var info = Cylinder.Info;
+                if (info == null)
+                {
+                    return;
+                }
+                button1.Text = info.Name;
+                var color = GetColor(info);
+                label1.BackColor = color;
+                if (Color.Red == color)
+                {
+                    label1.ForeColor = Color.White;
+                    if (cn == lg)
+                    {
+                        label1.Text = "报错";
+                    }
+                    else if (en == lg)
+                    {
+                        label1.Text = "Error";
+                    }
+                    else
+                    {
+                        label1.Text = "报错";
+                    }
+
+                }
+                else if (Color.Blue == color)
+                {
+                    label1.ForeColor = Color.White;
+                    if (cn == lg)
+                    {
+                        label1.Text = "基础位";
+                    }
+                    else if (en == lg)
+                    {
+                        label1.Text = "Base";
+                    }
+                    else
+                    {
+                        label1.Text = "基础位";
+                    }
+
+
+                }
+                else if (Color.Green == color)
+                {
+                    label1.ForeColor = Color.White;
+                    if (cn == lg)
+                    {
+                        label1.Text = "工作位";
+                    }
+                    else if (en == lg)
+                    {
+                        label1.Text = "Work";
+                    }
+                    else
+                    {
+                        label1.Text = "工作位";
+                    }
+
+                }
+                else
+                {
+                    label1.ForeColor = Color.Black;
+                    if (cn == lg)
+                    {
+                        label1.Text = "关闭输出";
+                    }
+                    else if (en == lg)
+                    {
+                        label1.Text = "None";
+                    }
+                    else
+                    {
+                        label1.Text = "关闭输出";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private Color GetColor(PLCCylInfo info)

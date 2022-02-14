@@ -2,6 +2,8 @@
 using AlcUtility;
 using AlcUtility.Plugin;
 using WeifenLuo.WinFormsUI.Docking;
+using Poc2Auto.HandlerPLC;
+using Poc2Auto.Common;
 
 namespace Poc2Auto.HandlerPLC
 {

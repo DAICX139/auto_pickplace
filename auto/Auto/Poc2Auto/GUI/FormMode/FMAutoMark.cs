@@ -26,14 +26,15 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Handler))
                  {
                      if (RunModeMgr.AutoMark(_client, ucModeParams_AutoMark1.AutoMarkParam, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.AutoMark;
                          RunModeMgr.Running = false;
+                         RunModeMgr.OriginValue = false;
                          AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {

@@ -501,6 +501,11 @@
             EndLot点击事件
             </summary>
         </member>
+        <member name="M:CYGKit.Factory.Lot.UC_Lot`2.ClearAllData">
+            <summary>
+            清空界面上的数据
+            </summary>
+        </member>
         <member name="F:CYGKit.Factory.Lot.UC_Lot`2.components">
             <summary> 
             必需的设计器变量。
@@ -898,6 +903,11 @@
             使用代码编辑器修改此方法的内容。
             </summary>
         </member>
+        <member name="T:CYGKit.Factory.Manual.UC_TraySet">
+             <summary>
+            托盘设置
+             </summary>
+        </member>
         <member name="T:CYGKit.Factory.Manual.UC_TraySet.TrayName">
              <summary>
             托盘名称枚举，方便判断使用，可根据项目增减
@@ -928,6 +938,11 @@
             返回下料Pass盘的所选区域，所选中的为1
              </summary>
         </member>
+        <member name="P:CYGKit.Factory.Manual.UC_TraySet.NGTrayDutNumbers">
+            <summary>
+            选定区域的格子个数
+            </summary>
+        </member>
         <member name="M:CYGKit.Factory.Manual.UC_TraySet.BindEnum``1">
              <summary>
             BinName绑定combox
@@ -938,6 +953,21 @@
         <member name="M:CYGKit.Factory.Manual.UC_TraySet.IsLoadTraySelectable(System.Boolean)">
              <summary>
             上料盘是否可选
+             </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.BindDataBase``1">
+             <summary>
+            外部绑定数据库
+             </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.SetNGTrayBinRegion">
+             <summary>
+            从数据库获取NGtray的所有bin区域并下发，用于正常生产
+             </summary>
+        </member>
+        <member name="M:CYGKit.Factory.Manual.UC_TraySet.SetPassTrayBinRegion">
+             <summary>
+            从数据库获取PassTray的所有bin区域并下发,用于挑料
              </summary>
         </member>
         <member name="F:CYGKit.Factory.Manual.UC_TraySet.components">

@@ -5,18 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using VisionDemo;
-using VisionModules;
-
 using Poc2Auto.GUI;
 using System.Threading.Tasks;
+using VisionSDK;
+using HalconDotNet;
 
 namespace VisionFlows
 {
     public class VisionPlugin : PluginBase
     {
         private static VisionPlugin _instance;
-
+        
         public static VisionPlugin GetInstance()
         {
             return _instance;
@@ -28,8 +27,23 @@ namespace VisionFlows
         public VisionPlugin() : base("Vision", new List<string> { "Handler" }, false)
         {
             _instance = this;
+
+            HOperatorSet.SetSystem("global_mem_cache", "idle");
+            HOperatorSet.SetSystem("tsp_temporary_mem_cache", "idle");
+            HOperatorSet.SetSystem("temporary_mem_cache", "idle");
+
             ExpectedModuleIds = null;
+            DisableStateMachine = true;
             PlcDriver = PlcDriverClientManager.GetInstance().GetPlcDriver("Handler");//Add and change according to actual demand
+            GetMessageHandler(MessageNames.CMD_LeftTopCamera).DataReceived -= LeftTopCamera;//Add and change according to actual demand
+            GetMessageHandler(MessageNames.CMD_RightTopCamera).DataReceived -= RightTopCamera;//Add and change according to actual demand
+            GetMessageHandler(MessageNames.CMD_BottomCamera).DataReceived -= BottomCamera;
+
+            // 需要实时显示时 触发
+            EventCenter.LeftCamera -= Camera1LiveDisplay;
+            EventCenter.RightCamera -= Camera2LiveDisplay;
+            EventCenter.DownCamera -= Camera3LiveDisplay;
+            EventCenter.StateChanged -= StateChanged;
             GetMessageHandler(MessageNames.CMD_LeftTopCamera).DataReceived += LeftTopCamera;//Add and change according to actual demand
             GetMessageHandler(MessageNames.CMD_RightTopCamera).DataReceived += RightTopCamera;//Add and change according to actual demand
             GetMessageHandler(MessageNames.CMD_BottomCamera).DataReceived += BottomCamera;
@@ -38,10 +52,10 @@ namespace VisionFlows
             EventCenter.LeftCamera += Camera1LiveDisplay;
             EventCenter.RightCamera += Camera2LiveDisplay;
             EventCenter.DownCamera += Camera3LiveDisplay;
-
             EventCenter.StateChanged += StateChanged;
-        }
 
+
+        }
         private void StateChanged()
         {
             if (AlcSystem.Instance.GetSystemStatus() == SYSTEM_STATUS.Starting || AlcSystem.Instance.GetSystemStatus() == SYSTEM_STATUS.Running)
@@ -86,17 +100,18 @@ namespace VisionFlows
                     while (isCamera1Dsiplay)
                     {
                         GC.Collect();
-                        VisionModulesManager.CameraList[0].CaptureImage();
-                        VisionModulesManager.CameraList[0].CaptureSignal.WaitOne(Utility.CaptureDelayTime);
-                        UCMain.Instance.ShowObject(0, VisionModulesManager.CameraList[0].Image);
+                        var image = CameraManager.CameraList[1].GrabImage(Utility.CaptureDelayTime);
+                        UCMain.Instance.ShowObject(0, image);
+                        image?.Dispose();
                         if (!isCamera1Dsiplay)
                         {
                             return;
                         }
+
                     }
                 });
 
-                VisionModulesManager.CameraList[0].SetExposureTime(ImagePara.Instance.SlotExposeTime);
+                CameraManager.CameraList[0].ShuterCur = (long)(ImagePara.Instance.Exposure_LeftCamGetDUT);
                 TkCameraLive1.Start();
             }
             else
@@ -122,13 +137,13 @@ namespace VisionFlows
                     while (isCamera2Dsiplay)
                     {
                         GC.Collect();
-                        VisionModulesManager.CameraList[1].CaptureImage();
-                        VisionModulesManager.CameraList[1].CaptureSignal.WaitOne(Utility.CaptureDelayTime);
-                        UCMain.Instance.ShowObject(1, VisionModulesManager.CameraList[1].Image);
+                        var image = CameraManager.CameraList[0].GrabImage(Utility.CaptureDelayTime);
+                        UCMain.Instance.ShowObject(1, image);
+                        image?.Dispose();
                         if (!isCamera2Dsiplay) return;
                     }
                 });
-                VisionModulesManager.CameraList[1].SetExposureTime(ImagePara.Instance.SlotExposeTime);
+                CameraManager.CameraList[1].ShuterCur = (long)(ImagePara.Instance.Exposure_LeftCamGetDUT);
                 TkCameraLive2.Start();
             }
 
@@ -141,6 +156,36 @@ namespace VisionFlows
             }
         }
 
+        protected override void OnError(MessageHandler handler, ReceivedData data)
+        {
+            //
+        }
+
+        protected override void OnState(MessageHandler handler, ReceivedData data)
+        {
+            //
+        }
+
+        protected override void OnDisconnected(MessageHandler handler, ReceivedData data)
+        {
+            if (RegisteredModuleIds.Contains(data.ModuleId))
+            {
+                RegisteredModuleIds.Remove(data.ModuleId);
+            }
+        }
+
+        protected override void OnRegister(MessageHandler handler, ReceivedData data)
+        {
+            if (!RegisteredModuleIds.Contains(data.ModuleId))
+            {
+                RegisteredModuleIds.Add(data.ModuleId);
+            }
+        }
+
+        protected override void OnUnknownMessage(ReceivedData data)
+        {
+            //
+        }
         private static void Camera3LiveDisplay(int id, bool isDisplay)
         {
             isCamera3Dsiplay = isDisplay;
@@ -154,13 +199,13 @@ namespace VisionFlows
                     while (isCamera3Dsiplay)
                     {
                         GC.Collect();
-                        VisionModulesManager.CameraList[2].CaptureImage();
-                        VisionModulesManager.CameraList[2].CaptureSignal.WaitOne(Utility.CaptureDelayTime);
-                        UCMain.Instance.ShowObject(2, VisionModulesManager.CameraList[2].Image);
+                        var image= CameraManager.CameraList[2].GrabImage(Utility.CaptureDelayTime);
+                        UCMain.Instance.ShowObject(2, image);
+                        image.Dispose();
                         if (!isCamera3Dsiplay) return;
                     }
                 });
-                VisionModulesManager.CameraList[2].SetExposureTime(ImagePara.Instance.SlotExposeTime);
+                CameraManager.CameraList[2].ShuterCur=(long)(ImagePara.Instance.Exposure_LeftCamGetDUT);
                 TkCameraLive3.Start();
             }
             else
@@ -177,21 +222,21 @@ namespace VisionFlows
 
         public override bool Dispose()
         {
-            foreach (var item in VisionModulesManager.CameraList)
+            foreach (var item in CameraManager.CameraList)
             {
-                item.DisConnect();
+                item.Close();
             }
             return true;
         }
-
+        //public override 
         public override Form GetForm()
         {
-            return Flow.FrmMain;
+            return Flow.FrmVisionUI;
         }
 
         public override bool Load()
         {
-            if (VisionModulesManager.CameraList.Count <= 0 || !VisionModulesManager.CameraList[1].IsConnected || !VisionModulesManager.CameraList[0].IsConnected || !VisionModulesManager.CameraList[2].IsConnected)
+            if (CameraManager.CameraList.Count <3)
             {
                 UpdateModuleStatus(false);
             }
@@ -199,26 +244,28 @@ namespace VisionFlows
             {
                 UpdateModuleStatus(true);
             }
-            foreach (var item in VisionModulesManager.CameraList)
+            foreach (var item in CameraManager.CameraList)
             {
-                item.CameraLoss += VisionPlugin_CameraLoss;
+                item.Camera_loss-= VisionPlugin_CameraLoss;
+                item.Camera_loss += VisionPlugin_CameraLoss;
             }
 
-            Flow.FrmMain.Show();
-            Flow.FrmMain.Hide();
+           // Flow.FrmMain.Show();
+            //Flow.FrmMain.Hide();
             return base.Load();
         }
 
-        private void VisionPlugin_CameraLoss(object sender, VisionUtility.CameralossArgs e)
+ 
+        private void VisionPlugin_CameraLoss(bool arg1, string arg2)
         {
-            if (e.Message == "loss")
+            if (arg1)
             {
                 UpdateModuleStatus(false);
                 AlcSystem.Instance.ShowMsgBox("相机掉线", "提示", icon: AlcMsgBoxIcon.Error);
             }
             else
             {
-                if (VisionModulesManager.CameraList.Count == 3 && VisionModulesManager.CameraList[1].IsConnected && VisionModulesManager.CameraList[0].IsConnected && VisionModulesManager.CameraList[2].IsConnected)
+                if (CameraManager.CameraList.Count == 3 && CameraManager.CameraList[1].IsConnected && CameraManager.CameraList[0].IsConnected && CameraManager.CameraList[2].IsConnected)
                 {
                     UpdateModuleStatus(true);
                 }
@@ -227,100 +274,112 @@ namespace VisionFlows
 
         public override Dictionary<string, ToolStripItem[]> GetMenuList()
         {
-            //seq.SetRightMouseMenuStatus();
-            return Flow.FrmMain.GetMenu();
+            return null;
         }
 
-        private void LeftTopCamera(MessageHandler handler, ReceivedData data)
+        public static void LeftTopCamera(MessageHandler handler, ReceivedData data)
         {
-            if (Utility.OriginValue)
-            {
-                Plc.SetIO((int)EnumLight.LeftTop + 1, true);
-                var plcSend = (double[])handler.CmdParam.KeyValues[PLCParamNames.PLCSend].Value;
-                var plcRecv = new double[6];
-                plcRecv[(int)EnumPLCRecv.XPos] = plcSend[(int)EnumPLCSend.XPos];
-                plcRecv[(int)EnumPLCRecv.YPos] = plcSend[(int)EnumPLCSend.YPos];
-                plcRecv[(int)EnumPLCRecv.ZPos] = plcSend[(int)EnumPLCSend.ZPos];
-                plcRecv[(int)EnumPLCRecv.RPos] = plcSend[(int)EnumPLCSend.RPos];
-                plcRecv[(int)EnumPLCRecv.Result] = 1;
-                handler.CmdParam.KeyValues[PLCParamNames.PLCRecv].Value = plcRecv;
-                handler.SendMessage(new ReceivedData()
-                {
-                    ModuleId = ModuleTypes.Handler.ToString(),
-                    Data = new MessageData() { Param = handler.CmdParam }
-                }, -2);
-                Plc.SetIO((int)EnumLight.LeftTop + 1, false);
-                Flow.Log("视觉屏蔽已开启   plcRecv[(int)EnumPLCRecv.XPos]:" + plcRecv[(int)EnumPLCRecv.XPos] + "    plcRecv[(int)EnumPLCRecv.YPos]" + plcRecv[(int)EnumPLCRecv.YPos]);
-            }
-            else
+            GC.Collect();
+            UCMain.Instance.hWindowControl1.HalconWindow.ClearWindow();
+            Flow.Windlist[0].viewController.viewPort.HalconWindow.ClearWindow();
+            SetLightON((int)EnumLight.LeftTop);
+            using (HDevDisposeHelper dh = new HDevDisposeHelper())
             {
                 ImageProcessBase.Execute_New(handler, EnumCamera.LeftTop);
             }
+            SetLightOFF((int)EnumLight.LeftTop);
+            GC.Collect();
         }
 
-        private void RightTopCamera(MessageHandler handler, ReceivedData data)
+        public static void RightTopCamera(MessageHandler handler, ReceivedData data)
         {
-            if (Utility.OriginValue)
-            {
-                Plc.SetIO((int)EnumLight.RightTop + 1, true);
-                var plcSend = (double[])handler.CmdParam.KeyValues[PLCParamNames.PLCSend].Value;
-                var plcRecv = new double[6];
-                plcRecv[(int)EnumPLCRecv.XPos] = plcSend[(int)EnumPLCSend.XPos];
-                plcRecv[(int)EnumPLCRecv.YPos] = plcSend[(int)EnumPLCSend.YPos];
-                plcRecv[(int)EnumPLCRecv.ZPos] = plcSend[(int)EnumPLCSend.ZPos];
-                plcRecv[(int)EnumPLCRecv.RPos] = plcSend[(int)EnumPLCSend.RPos];
-                plcRecv[(int)EnumPLCRecv.Result] = 1;
-                handler.CmdParam.KeyValues[PLCParamNames.PLCRecv].Value = plcRecv;
-                handler.SendMessage(new ReceivedData()
-                {
-                    ModuleId = ModuleTypes.Handler.ToString(),
-                    Data = new MessageData() { Param = handler.CmdParam }
-                }, -2);
-                Plc.SetIO((int)EnumLight.RightTop + 1, false);
-                Flow.Log("视觉屏蔽已开启   plcRecv[(int)EnumPLCRecv.XPos]:" + plcRecv[(int)EnumPLCRecv.XPos] + "    plcRecv[(int)EnumPLCRecv.YPos]" + plcRecv[(int)EnumPLCRecv.YPos]);
-            }
-            else
+            GC.Collect();
+            UCMain.Instance.hWindowControl2.HalconWindow.ClearWindow();
+            Flow.Windlist[1].viewController.viewPort.HalconWindow.ClearWindow();
+            SetLightON((int)EnumLight.RightTop);
+            using (HDevDisposeHelper dh = new HDevDisposeHelper())
             {
                 ImageProcessBase.Execute_New(handler, EnumCamera.RightTop);
             }
+            SetLightOFF((int)EnumLight.RightTop);
+            GC.Collect();
         }
-
-        private void BottomCamera(MessageHandler handler, ReceivedData data)
+        public static void BottomCamera(MessageHandler handler, ReceivedData data)
         {
-            if (Utility.OriginValue)
-            {
-                Plc.SetIO((int)EnumLight.Bottom + 1, true);
-                var plcSend = (double[])handler.CmdParam.KeyValues[PLCParamNames.PLCSend].Value;
-                var plcRecv = new double[6];
-                plcRecv[(int)EnumPLCRecv.XPos] = plcSend[(int)EnumPLCSend.XPos];
-                plcRecv[(int)EnumPLCRecv.YPos] = plcSend[(int)EnumPLCSend.YPos];
-                plcRecv[(int)EnumPLCRecv.ZPos] = plcSend[(int)EnumPLCSend.ZPos];
-                plcRecv[(int)EnumPLCRecv.RPos] = plcSend[(int)EnumPLCSend.RPos];
-                plcRecv[(int)EnumPLCRecv.Result] = 1;
-                handler.CmdParam.KeyValues[PLCParamNames.PLCRecv].Value = plcRecv;
-                handler.SendMessage(new ReceivedData()
-                {
-                    ModuleId = ModuleTypes.Handler.ToString(),
-                    Data = new MessageData() { Param = handler.CmdParam }
-                }, -2);
-
-                Plc.SetIO((int)EnumLight.Bottom + 1, false);
-                Flow.Log("视觉屏蔽已开启   plcRecv[(int)EnumPLCRecv.XPos]:" + plcRecv[(int)EnumPLCRecv.XPos] + "    plcRecv[(int)EnumPLCRecv.YPos]" + plcRecv[(int)EnumPLCRecv.YPos]);
-            }
-            else
+            GC.Collect();
+            UCMain.Instance.hWindowControl3.HalconWindow.ClearWindow();
+            Flow.Windlist[2].viewController.viewPort.HalconWindow.ClearWindow();
+            SetLightON((int)EnumLight.Bottom);
+            using (HDevDisposeHelper dh = new HDevDisposeHelper())
             {
                 ImageProcessBase.Execute_New(handler, EnumCamera.Bottom);
             }
+            SetLightOFF((int)EnumLight.Bottom);
+            GC.Collect();
+        }
+        private void SetLight(int io,bool targ)
+        {
+            Plc.SetIO(io, targ);
+            Thread.Sleep(100);
+            bool state = Plc.ReadIO(io);
+            int index = 0;
+            ropen:
+            if (!state && index < 30)
+            {
+                Thread.Sleep(20);
+                Plc.SetIO(io, targ);
+                Thread.Sleep(80);
+                state = Plc.ReadIO(io);
+                index++;
+                if (!state)
+                {
+                    goto ropen;
+                }
+            }
         }
 
-        protected override void OnUnknownMessage(ReceivedData data)
+        private static void SetLightON(int io)
         {
-            //do nothing
+            Plc.SetIO(io, true);
+            Thread.Sleep(120);
+            bool state = Plc.ReadIO(io);
+            int index = 0;
+            ropen:
+            if (!state && index < 30)
+            {
+                Thread.Sleep(20);
+                Plc.SetIO(io, true);
+                Thread.Sleep(80);
+                state = Plc.ReadIO(io);
+                index++;
+                if (!state)
+                {
+                    goto ropen;
+                }
+            }
         }
 
-        protected override void OnError(MessageHandler handler, ReceivedData data)
+        private static void SetLightOFF(int io)
         {
-            //do nothing
+            Plc.SetIO(io, false);
+            Thread.Sleep(120);
+            bool state = Plc.ReadIO(io);
+            int index = 0;
+            ropen:
+            if (state && index < 10)
+            {
+                Thread.Sleep(20);
+                Plc.SetIO(io, false);
+                Thread.Sleep(80);
+                state = Plc.ReadIO(io);
+                index++;
+                if (state)
+                {
+                    goto ropen;
+                }
+            }
         }
+
+      
     }
 }

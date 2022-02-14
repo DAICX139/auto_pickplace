@@ -21,16 +21,25 @@ namespace VisionFlows
         public static ImagePara Instance = new ImagePara();
 
         //曝光
-        public double SlotExposeTime;
+        public double Exposure_LeftCamPutDUT;//
+        public double Exposure_LeftCamGetDUT;//
+        public double Exposure_LeftCamPutSocket;//
+        public double Exposure_LeftCamCheckSocket;//
+        public double Exposure_LeftCamCheckTray;//
 
-        public double SoketDutExposeTime;
-        public double DutExposeTime;
-        public double SoketMarkExposeTime;
-        public double DutBackExposeTime;
+
+        public double Exposure_DownCamScan;//
+        public double Exposure_RightCamPutDUT;
+        public double Exposure_RightCamGetDUT;//
+        public double Exposure_RightCamCheckTray;//
+        public double Exposure_RightCamGetSocket;//
+        public double Exposure_RightCamCheckSocket;//
+
+        
+
 
         //模板匹配识别分数
         public float SlotScore;
-
         public float SoketDutScore;
         public float DutScore;
         public float DutBackScore;
@@ -60,31 +69,17 @@ namespace VisionFlows
 
         //SocketMark模板坐标
         public float SocketMark_rowCenter;
-
         public float SocketMark_colCenter;
         public float SocketMark_angleCenter;
 
         //Socket自定义的放料中心
         public float SocketMark_PutDutRow;
-
         public float SocketMark_PutDutCol;
 
         //取料时候的mark中心
         public float[] SocketGet_rowCenter;
-
         public float[] SocketGet_colCenter;
         public float[] SocketGet_angleCenter;
-
-        //socket mark中心
-        public float[] DutMode_rowCenter;
-
-        public float[] DutMode_colCenter;
-        public float[] DutMode_angleCenter;
-
-        //自定义的放料中心
-        public float[] SocketMark_GetDutRow;
-
-        public float[] SocketMark_GetDutCol;
 
         //Slot模板坐标
         public float slot_rowCenter;
@@ -100,8 +95,35 @@ namespace VisionFlows
 
         public int PushBlock;
 
+        //新增tray粗定位基准点
+
+        public double tray_rough_posi_row;
+        public double tray_rough_posi_col;
+
+        //新增，socket判断有无料区域
+        public float []SocketDut_RoiRow;
+        public float []SocketDut_RoiCol;
+
         //搜索区域
-        public List<Rectangle> SearchROI;
+        public Rectangle SlotROI;
+        public Rectangle SlotDutROI;
+        public Rectangle DutBackROI;
+        public Rectangle DutBackDataCodeROI;
+        public Rectangle SocketMarkROI;
+        public Rectangle SocketBlockROI;
+        public Rectangle SocketDutROI;
+
+        //新增
+        public Rectangle TrayDutROI1;
+        public Rectangle TrayDutROI2;
+
+        public Rectangle[] SocketIsDutROI;
+
+
+
+        //取socket找两个圆搜索区域
+        public Rectangle[] RegionROI1;
+        public Rectangle[] RegionROI2;
         public ImagePara()
         {
             SlotScore = 0.1f;
@@ -111,6 +133,9 @@ namespace VisionFlows
             SocketMarkScore = 0.9f;
             SoketDut_minthreshold=new int[5];
             SoketDut_maxthreshold = new int[5];
+            RegionROI1 = new Rectangle[5];
+            RegionROI2 = new Rectangle[5];
+            SocketIsDutROI = new Rectangle[5];
             SoketDut_widthmin = 200;
             SoketDut_widthmax = 400;
             SoketDut_heightmin = 600;
@@ -122,159 +147,18 @@ namespace VisionFlows
             SocketMark_PutDutRow = 0;
             SocketMark_PutDutCol = 0;
 
-            SlotExposeTime = 8000;
-            SoketDutExposeTime = 8000;
-            DutExposeTime = 8000;
-            SoketMarkExposeTime = 8000;
-            DutBackExposeTime = 8000;
+            Exposure_LeftCamGetDUT = 8000;
+            Exposure_LeftCamPutSocket = 8000;
+            Exposure_LeftCamGetDUT = 8000;
+            Exposure_DownCamScan = 8000;
 
             SoketMark_minthreshold = 125;
             SoketMark_maxthreshold = 255;
-            SearchROI = new List<Rectangle>();
-            return;
-            SearchROI.Add(new Rectangle(268, 370, 2525, 3216));
-            SearchROI.Add(new Rectangle(268, 370, 2525, 3216));
-            SearchROI.Add(new Rectangle(268, 370, 2525, 3216));
-            SearchROI.Add(new Rectangle(268, 370, 2525, 3216));
-            SearchROI.Add(new Rectangle(268, 370, 2525, 3216));
-           
         }
-        public HRegion GetSerchROI(string ROIname)
+        public HRegion GetSerchROI(Rectangle rec)
         {
             HOperatorSet.SetSystem("clip_region", "false");
-            if (SearchROI.Count < 5)
-            {
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-            }
-            HRegion roi=new HRegion();
-            switch (ROIname)
-            {
-                case "SlotROI":
-                    roi.GenRectangle1( (HTuple)SearchROI[0].Y, SearchROI[0].X, 
-                        SearchROI[0].Height+ SearchROI[0].Y, SearchROI[0].Width + SearchROI[0].X);
-                    break;
-                case "SlotDutROI":
-                    roi.GenRectangle1((HTuple)SearchROI[1].Y, (HTuple)SearchROI[1].X,
-                        (HTuple)SearchROI[1].Height + (HTuple)SearchROI[1].Y, (HTuple)SearchROI[1].Width + (HTuple)SearchROI[1].X);
-                    break;
-                case "DutBackROI":
-                    roi.GenRectangle1( (HTuple)SearchROI[2].Y, SearchROI[2].X,
-                        SearchROI[2].Height + SearchROI[2].Y, SearchROI[2].Width + SearchROI[2].X);
-                    break;
-                case "SocketMarkROI":
-                    roi.GenRectangle1((HTuple)SearchROI[3].Y, SearchROI[3].X,
-                       SearchROI[3].Height + SearchROI[3].Y, SearchROI[3].Width + SearchROI[3].X);
-                    break;
-                case "SocketDutROI":
-                    roi.GenRectangle1((HTuple)SearchROI[4].Y, SearchROI[4].X,
-                        SearchROI[4].Height + SearchROI[4].Y, SearchROI[4].Width + SearchROI[4].X);
-                    break;
-                default:
-                    roi.GenRectangle1((HTuple)SearchROI[0].Y, SearchROI[0].X,
-                       SearchROI[0].Height + SearchROI[0].Y, SearchROI[0].Width + SearchROI[0].X);
-                    break;
-            }
-            if(roi.Area<2000000)
-            {
-                
-                roi.GenRectangle1((HTuple)268, 370, 3204, 2538);
-            }
-            return roi;
-        }
-        public void GetSerchROI(string ROIname, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2)
-        {
-            HOperatorSet.SetSystem("clip_region", "false");
-            if (SearchROI.Count < 5)
-            {
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-            }
-            HRegion roi = new HRegion();
-            switch (ROIname)
-            {
-                case "SlotROI":
-                    row1 = SearchROI[0].Y;
-                    col1= SearchROI[0].X;
-                    row2= SearchROI[0].Y+ SearchROI[0].Height;
-                    col2=SearchROI[0].X+ SearchROI[0].Width;
-                    break;
-                case "SlotDutROI":
-                    row1 = SearchROI[1].Y;
-                    col1 = SearchROI[1].X;
-                    row2 = SearchROI[1].Y + SearchROI[1].Height;
-                    col2 = SearchROI[1].X + SearchROI[1].Width;
-                    break;
-                case "DutBackROI":
-                    row1 = SearchROI[2].Y;
-                    col1 = SearchROI[2].X;
-                    row2 = SearchROI[2].Y + SearchROI[2].Height;
-                    col2 = SearchROI[2].X + SearchROI[2].Width;
-                    break;
-                case "SocketMarkROI":
-                    row1 = SearchROI[3].Y;
-                    col1 = SearchROI[3].X;
-                    row2 = SearchROI[3].Y + SearchROI[3].Height;
-                    col2 = SearchROI[3].X + SearchROI[3].Width;
-                    break;
-                case "SocketDutROI":
-                    row1 = SearchROI[4].Y;
-                    col1 = SearchROI[4].X;
-                    row2 = SearchROI[4].Y + SearchROI[4].Height;
-                    col2 = SearchROI[4].X + SearchROI[4].Width;
-                    break;
-                default:
-                    row1 = SearchROI[0].Y;
-                    col1 = SearchROI[0].X;
-                    row2 = SearchROI[0].Y + SearchROI[0].Height;
-                    col2 = SearchROI[0].X + SearchROI[0].Width;
-                    break;
-            }
-
-        }
-        public void SetSerchROI(string ROIname,float X1, float Y1, float X2, float Y2)
-        {
-            HOperatorSet.SetSystem("clip_region", "false");
-            if (SearchROI.Count>5)
-            {
-                SearchROI = SearchROI.GetRange(0, 5);
-            }
-            if(SearchROI.Count<5)
-            {
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-                SearchROI.Add(new Rectangle(268, 370, 3204, 2538));
-            }
-            switch (ROIname)
-            {
-                case "SlotROI":
-                    SearchROI[0]=new Rectangle((int)X1, (int)Y1, (int)(X2 -X1), (int)(Y2 - Y1));
-                    break;
-                case "SlotDutROI":
-                    SearchROI[1] = new Rectangle((int)X1, (int)Y1, (int)(X2 - X1), (int)(Y2 - Y1));
-                    break;
-                case "DutBackROI":
-                    SearchROI[2] = new Rectangle((int)X1, (int)Y1, (int)(X2 - X1), (int)(Y2 - Y1));
-                    break;
-                case "SocketMarkROI":
-                    SearchROI[3] = new Rectangle((int)X1, (int)Y1, (int)(X2 - X1), (int)(Y2 - Y1));
-                    break;
-                case "SocketDutROI":
-                    SearchROI[4] = new Rectangle((int)X1, (int)Y1, (int)(X2 - X1), (int)(Y2 - Y1));
-                    break;
-                default:
-                    SearchROI[0] = new Rectangle((int)X1, (int)Y1, (int)(X2 - X1), (int)(Y2 - Y1));
-                    break;
-            }
-
+            return new HRegion((HTuple)rec.Y, rec.X, rec.Y + rec.Height, rec.X + rec.Width);
         }
     }
    

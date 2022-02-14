@@ -19,7 +19,12 @@ namespace Poc2Auto.Database
             {
                 using (var context = new DragonContext())
                 {
-                    context.OnlineDuts.Add(new OnlineDut()
+                    var duts = context.OnlineDuts.Where(r => r.SocketID == socketID).ToList();
+                    foreach (var ondut in duts)
+                    {
+                        context.OnlineDuts.Remove(ondut);
+                    }
+                    context.OnlineDuts.Add(new OnlineDut() 
                     {
                         StationID = (int)StationName.Load,
                         Row = row,
@@ -41,7 +46,28 @@ namespace Poc2Auto.Database
             }
         }
 
-        public static void addBarcode(int socketID, string barcode)
+        public static void RemoveDut(int socketID)
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var duts = context.OnlineDuts.Where(r => r.SocketID == socketID).ToList();
+                    foreach (var ondut in duts)
+                    {
+                        context.OnlineDuts.Remove(ondut);
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                AlcSystem.Instance.Error(ex.Message + "\r\n" + ex.StackTrace, -1, AlcErrorLevel.WARN, "Database");
+            }
+        }
+
+        public static void AddBarcode(int socketID, string barcode)
         {
             try
             {
@@ -87,11 +113,21 @@ namespace Poc2Auto.Database
                     dut.LastUpdateTime = DateTime.Now;
                     if (load)
                     {
-                        dut.StationID = (int)StationName.Default;
+                        var onlineDut = context.OnlineDuts.Where(d => d.StationID == (int)StationName.PNP).ToList();
+                        foreach (var ondut in onlineDut)
+                        {
+                            context.OnlineDuts.Remove(ondut);
+                        }
+                        dut.StationID = (int)StationName.PNP;
                         dut.DefaultInTime = DateTime.Now;
                     }
                     else
                     {
+                        var onlineDut = context.OnlineDuts.Where(d => d.StationID == (int)StationName.Unload).ToList();
+                        foreach (var ondut in onlineDut)
+                        {
+                            context.OnlineDuts.Remove(ondut);
+                        }
                         dut.StationID = (int)StationName.Unload;
                         dut.UnloadTime = DateTime.Now;
                     }
@@ -128,16 +164,16 @@ namespace Poc2Auto.Database
                             dut.LastUpdateTime = DateTime.Now;
                             switch (station)
                             {
-                                case StationName.Default:
+                                case StationName.PNP:
                                     dut.DefaultOutTime = DateTime.Now;
                                     break;
                                 case StationName.Test1_LIVW:
                                     dut.Test1Time = DateTime.Now;
                                     break;
-                                case StationName.Test2_DTGT:
+                                case StationName.Test2_NFBP:
                                     dut.Test2Time = DateTime.Now;
                                     break;
-                                case StationName.Test3_Backup:
+                                case StationName.Test3_KYRL:
                                     dut.Test3Time = DateTime.Now;
                                     break;
                                 case StationName.Test4_BMPF:
@@ -249,6 +285,26 @@ namespace Poc2Auto.Database
             }
             catch (Exception ex)
             {
+                AlcSystem.Instance.Error(ex.Message + "\r\n" + ex.StackTrace, -1, AlcErrorLevel.WARN, "Database");
+            }
+        }
+
+        public static void LoadPutDutToTray(int socketID)
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var dut = context.OnlineDuts.FirstOrDefault(d => d.SocketID == socketID);
+                    if (dut == null)
+                        return;
+                    context.OnlineDuts.Remove(dut);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
                 AlcSystem.Instance.Error(ex.Message + "\r\n" + ex.StackTrace, -1, AlcErrorLevel.WARN, "Database");
             }
         }
@@ -500,6 +556,29 @@ namespace Poc2Auto.Database
             }
         }
 
+        public static void ClearBinRegion(int index)
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var regions = context.BinRegions.Where(d => d.TrayID == index).ToList();
+                    if (regions != null)
+                    {
+                        foreach (var region in regions)
+                        {
+                            context.BinRegions.Remove(region);
+                        }
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AlcSystem.Instance.Error(ex.Message + "\r\n" + ex.StackTrace, -1, AlcErrorLevel.WARN, "Database");
+            }
+        }
+
         public static void SetTotalBin(int bin)
         {
             try
@@ -617,7 +696,6 @@ namespace Poc2Auto.Database
 
         public static List<BinRegion> GetBinRegion(int TrayID)
         {
-            ushort[,] data = new ushort[Tray.ROW, Tray.COL];
             using (var context = new DragonContext())
             {
                 return context.BinRegions?.Where(r => r.TrayID == TrayID).ToList();
@@ -625,13 +703,191 @@ namespace Poc2Auto.Database
         }
         public static Color GetBinColor(int bin)
         {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    Color color = default;
+                    var binColors = context.BinColors.FirstOrDefault(r => r.Bin == bin);
+
+                    if(binColors == null)
+                    {
+                        color = Color.DarkOrange;
+                    }
+                    else
+                    {
+                        color = binColors.Color;
+                    }
+                    return color;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Color.DarkOrange;
+            }
+            
+        }
+
+        public static void SetBinColor(int bin, Color color, bool isUseColor)
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var binColor = context.BinColors.FirstOrDefault(d => d.Bin == bin);
+                    if (binColor == null)
+                    {
+                        context.BinColors.Add(
+                            new BinColor()
+                            {
+                                Bin = bin,
+                                Color = GetDefaultBinColor(bin)
+                            }
+                            );
+                    }
+                    else if (isUseColor)
+                        binColor.Color = color;
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public static Color GetDefaultBinColor(int bin)
+        {
+            Color color = Color.Blue;
+            switch (bin)
+            {
+                case 1: color = Color.Green; break;
+                case 2: color = Color.Blue; break;
+                case 3: color = Color.Brown; break;
+                case 4: color = Color.Red; break;
+                case 5: color = Color.Violet; break;
+
+                case 6: color = Color.LightSalmon; break;
+                case 7: color = Color.LightBlue; break;
+                case 8: color = Color.Red; break;
+                case 9: color = Color.LightSeaGreen; break;
+                case 10: color = Color.Yellow; break;
+
+                case 98: color = Color.DarkOrange; break;
+                case 99: color = Color.Orange; break;//启用MTCP获取bin信息失败
+                case 200: color = Color.DarkGray;break;
+                default:
+                    break;
+            }
+            return color;
+        }
+
+        public static void SetDutTotal(string lotID, string dutSN, int result, StationName name) 
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var stat = context.DUTTotal.FirstOrDefault(d => d.DUTSN == dutSN && d.LotID == lotID);
+                    if (stat == null)
+                    {
+                        stat = new DUTStationBinTotal
+                        {
+                            LotID = lotID,
+                            DUTSN = dutSN,
+                        };
+                        UpdateOrAddDutstat(result, name, stat);
+                        context.DUTTotal.Add(stat);
+                    }
+                    else
+                    {
+                        UpdateOrAddDutstat(result, name, stat);
+                    }
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private static void UpdateOrAddDutstat(int result, StationName name, DUTStationBinTotal total)
+        {
+            switch (name)
+            {
+                case StationName.Test1_LIVW:
+                    total.LIV_Result = result;
+                    break;
+                case StationName.Test2_NFBP:
+                    total.NFBP_Result = result;
+                    break;
+                case StationName.Test3_KYRL:
+                    total.KYRL_Result = result;
+                    break;
+                case StationName.Test4_BMPF:
+                    total.BP_Result = result;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void UpdateDutBin(string lotID, string sn, int bin)
+        {
+            try
+            {
+                using (var context = new DragonContext())
+                {
+                    var stat = context.DUTTotal.FirstOrDefault(d => d.DUTSN == sn && d.LotID == lotID);
+                    if (stat == null)
+                    {
+                        stat = new DUTStationBinTotal
+                        {
+                            LotID = lotID,
+                            DUTSN = sn,
+                            Bin = bin,
+                        };
+                        context.DUTTotal.Add(stat);
+                    }
+                    else
+                    {
+                        stat.Bin = bin;
+                    }
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public static List<DUTStationBinTotal> GetStationBinTotal()
+        {
             using (var context = new DragonContext())
             {
-                return context.BinColors.FirstOrDefault(r => r.Bin == bin).Color;
+                return context.DUTTotal.ToList();
+            }
+        }
+
+        public static void ClearOnlineDut()
+        {
+            using (var context = new DragonContext())
+            {
+                var onDut = context.OnlineDuts.ToList();
+
+                foreach (var dut in onDut)
+                {
+                    context.OnlineDuts.Remove(dut);
+                }
+                context.SaveChanges();
             }
         }
     }
-
+ 
     /// <summary>
     /// Socket,Bin,Station 良率统计
     /// </summary>

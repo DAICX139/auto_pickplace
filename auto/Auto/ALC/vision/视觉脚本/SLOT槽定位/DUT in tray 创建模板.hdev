@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<c> </c>
+<c></c>
+<c></c>
+<c as_id="image_acquisition" as_name="Image Acquisition 01" as_grp="[1,1]" as_ord="1">* 阈值处理*******************************************************************************************</c>
+<l>* dev_set_draw ('margin')</l>
+<l>* dev_update_off ()</l>
+<l as_id="image_acquisition" as_name="Image Acquisition 01" as_grp="[2,1]" as_ord="1">* read_image (Image, 'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/P2D新DUT.bmp')</l>
+<l>* mean_image (Image, ImageMean,600, 600)</l>
+<l>* dyn_threshold (Image, ImageMean, RegionDynThresh, 10, 'dark')</l>
+<l>* opening_circle (RegionDynThresh, RegionOpening, 11)</l>
+<l>* connection (RegionOpening, ConnectedRegions)</l>
+<l>* select_shape_std (ConnectedRegions, SelectedRegions, 'max_area', 70)</l>
+<l>* shape_trans (SelectedRegions, RegionTrans, 'convex')</l>
+<l>* difference (RegionTrans, SelectedRegions, RegionDifference)</l>
+<l>* opening_circle (RegionDifference, RegionOpening1, 11)</l>
+<l>* connection (RegionOpening1, ConnectedRegions1)</l>
+<l>* select_shape (ConnectedRegions1, SelectedRegions1, ['area','width','height'], 'and', [1.0e+006,1800,760], [1.55046e+006,2200,900])</l>
+<l>* count_obj (SelectedRegions1, Number)</l>
+<l>* if (Number!=1)</l>
+<l>*     return ()</l>
+<l>* endif</l>
+<l>* shape_trans (SelectedRegions1, RegionTrans1, 'rectangle2')</l>
+<l>* reduce_domain (Image, RegionTrans1, ImageReduced)</l>
+<l>* binary_threshold (ImageReduced, Region, 'max_separability', 'light', UsedThreshold)</l>
+<l>* opening_circle (Region, RegionOpening2, 11)</l>
+<l>* shape_trans (RegionOpening2, RegionTrans2, 'rectangle2')</l>
+<l>* dev_clear_window ()</l>
+<l>* dev_display (Image)</l>
+<l>* dev_display (RegionTrans2)</l>
+<c>*********************************************************************************************************</c>
+<c></c>
+<c>* 模板匹配</c>
+<l>dev_set_draw ('margin')</l>
+<l>dev_update_off ()</l>
+<l>read_image (Image, 'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/P2D新DUT.bmp')</l>
+<l>dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)</l>
+<c>*左凸台区域</c>
+<l>gen_rectangle1 (ROI_0, 986.2, 925.393, 1465.78, 1242.19)</l>
+<l>reduce_domain (Image, ROI_0, ImageReduced)</l>
+<c>*凸台边缘为模板</c>
+<l>edges_sub_pix (ImageReduced, Edges, 'canny', 4, 20, 40)</l>
+<l>select_shape_xld (Edges, SelectedXLD, 'contlength', 'and', 800, 99999)</l>
+<l>shape_trans_xld (SelectedXLD, XLDTrans, 'convex')</l>
+<l>create_shape_model_xld (XLDTrans, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID1)</l>
+<l>write_shape_model (ModelID1,'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/模板文件/P2D_tray_left_model')</l>
+<l>gen_region_contour_xld (XLDTrans, Region, 'filled')</l>
+<l>mirror_region (Region, RegionMirror, 'column', 2000)</l>
+<l>gen_contour_region_xld (RegionMirror, Contours, 'border')</l>
+<l>create_shape_model_xld (Contours, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID2)</l>
+<l>write_shape_model (ModelID2,'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/模板文件/P2D_tray_right_model')</l>
+<c></c>
+<c>*椭圆为模板</c>
+<l>* edges_sub_pix (ImageReduced, Edges1, 'canny', 6, 5, 40)</l>
+<l>* select_shape_xld (Edges1, SelectedXLD1, ['contlength','circularity'], 'and', [400,0.7], [750,1])</l>
+<l>* shape_trans_xld (SelectedXLD1, XLDTrans1, 'convex')</l>
+<l>* create_shape_model_xld (XLDTrans1, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID2)</l>
+<l>* write_shape_model (ModelID2,'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/模板文件/ellipse_model')</l>
+<c></c>
+<c></c>
+<l>read_image (Image1, 'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/P2D新tray.bmp')</l>
+<l>gen_rectangle1 (ROI_0, 775.698, 713.91, 1942.13, 3300.03)</l>
+<l>reduce_domain (Image1, ROI_0, ImageReduced)</l>
+<l>scale_image (ImageReduced, ImageScaled, 7.72727, -85)</l>
+<l>median_image (ImageScaled, ImageMedian, 'circle', 15, 'mirrored')</l>
+<l>edges_sub_pix (ImageMedian, Edges, 'canny', 3, 20, 40)</l>
+<l>select_shape_xld (Edges, SelectedXLD, 'contlength', 'and', 4963.3, 5935.78)</l>
+<c></c>
+<l>write_object (SelectedXLD,'C:/ALCvision/hobjects/P2D_tray_slot_obj')</l>
+<l>create_shape_model_xld (SelectedXLD, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID)</l>
+<l>write_shape_model (ModelID,'D:/Code/ALC/Auto/CYG7953Poc2Auto/ALC/vision/视觉脚本/SLOT槽定位/模板文件/slot_trapezpoid_model')</l>
+<c></c>
+<l>read_image (Image, 'C:/Users/Administrator.DESKTOP-KDKC337/Desktop/22222.bmp')</l>
+<l>find_shape_model (Image, ModelID, -0.39, 0.79, 0.3, 1, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score)</l>
+<l>dev_display_shape_matching_results (ModelID, 'red', Row, Column, Angle, 1, 1, 0)</l>
+<l>gen_contour_polygon_xld (ROI_0, [1229.05,1229.05,1556.22,1556.22,1229.05], [1720.5,2042.89,2042.89,1720.5,1720.5])</l>
+<l>create_shape_model_xld (ROI_0, 'auto',  -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 5, ModelID1)</l>
+<l>write_shape_model (ModelID1, 'C:/Users/Administrator.DESKTOP-KDKC337/Desktop/P2D_Inner_Slot_model')</l>
+<l>find_shape_model (Image, ModelID1,-0.39, 0.79, 0.5, 1, 0.5, 'least_squares', 0, 0.9, Row1, Column1, Angle1, Score1)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

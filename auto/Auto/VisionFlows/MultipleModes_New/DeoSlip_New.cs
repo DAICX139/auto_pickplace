@@ -27,11 +27,11 @@ namespace VisionFlows
             {
                 if (_serializableData == null)
                 {
-                    _serializableData = (SerializableData)Flow.XmlHelper.DeserializeFromXml(Utility.calib+"calib_up.xml", typeof(SerializableData));
-                    HOperatorSet.ReadTuple(Utility.calib+"calib_down1", out _serializableData.HomMat2D_down1);
-                    HOperatorSet.ReadTuple(Utility.calib+"calib_down2", out _serializableData.HomMat2D_down2);
-                    HOperatorSet.ReadTuple(Utility.calib+"calib_up1", out _serializableData.HomMat2D_up1);
-                    HOperatorSet.ReadTuple(Utility.calib+"calib_up2", out _serializableData.HomMat2D_up2);
+                    _serializableData = (SerializableData)Flow.XmlHelper.DeserializeFromXml(Utility.CalibFile+ "Calib.xml", typeof(SerializableData));
+                    HOperatorSet.ReadTuple(Utility.CalibFile+"calib_down1", out _serializableData.HomMat2D_down1);
+                    HOperatorSet.ReadTuple(Utility.CalibFile+"calib_down2", out _serializableData.HomMat2D_down2);
+                    HOperatorSet.ReadTuple(Utility.CalibFile+"calib_up1", out _serializableData.HomMat2D_up1);
+                    HOperatorSet.ReadTuple(Utility.CalibFile+"calib_up2", out _serializableData.HomMat2D_up2);
                 }
                 return _serializableData;
             }
@@ -208,23 +208,23 @@ namespace VisionFlows
             int CameraID = 0;
             try
             {
-                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.SlotExposeTime);
+                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.Exposure_LeftCamGetDUT);
                 if (image == null)
                 {
                     return;
                 }
                 //判断是否有料
-                HRegion roi = ImagePara.Instance.GetSerchROI("SlotDutROI");
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotDutROI);
                 InputPara para_temp = new InputPara(image, roi, null, ImagePara.Instance.DutScore);
                 if (!AutoNormal_New.ImageProcess.SlotDetect(para_temp, out HObject yy))
                 {
-                    Flow.FrmMain.Windlist[CameraID].image = image;
+                    Flow.Windlist[CameraID].image = image;
                     //无料
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无dut
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, false);//代表定位失败
 
-                    Flow.FrmMain.Windlist[CameraID].Message = "无料！";
+                    Flow.Windlist[CameraID].Message = "无料！";
                     Plc.SendMessage(handler, plcRecv);
                     image.Dispose();
                     return;
@@ -237,13 +237,13 @@ namespace VisionFlows
                 if (!locationResult.IsRunOk)
                 {
                     //匹配失败 显示拍照图片
-                    Flow.FrmMain.Windlist[CameraID].image = locationPara.image;
+                    Flow.Windlist[CameraID].image = locationPara.image;
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无dut
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, false); //定位失败
                     Plc.SendMessage(handler, plcRecv);
                     Flow.Log("TrayDutPos Location Failed");
-                    Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                    Flow.Windlist[CameraID].OKNGlable = false;
                     return;
                 }
 
@@ -252,7 +252,7 @@ namespace VisionFlows
                 #region 计算偏移和角度
 
                 double CurrentAngle = plcSend.RPos;
-                double cal_R = CurrentAngle - (locationResult.Angle - serializableData.UpCam_angle1);
+                double cal_R = CurrentAngle - (locationResult.Phi - serializableData.UpCam1_MatrixRad);
                 HOperatorSet.AffineTransPoint2d(serializableData.HomMat2D_up1, locationResult.findPoint.Column, locationResult.findPoint.Row, out HTuple transX, out HTuple transY);
                 double x_current = plcSend.XPos;
                 double y_current = plcSend.YPos;
@@ -261,29 +261,29 @@ namespace VisionFlows
                 double cal_X = transX.D + x_current - offx;
                 double cal_Y = transY.D + y_current - offy;
 
-                plcRecv.XPos = cal_X + SystemPrara_New.Instance.Nozzle1_TrayDUT_CompensateX;
-                plcRecv.YPos = cal_Y + SystemPrara_New.Instance.Nozzle1_TrayDUT_CompensateY;
-                plcRecv.RPos = cal_R + SystemPrara_New.Instance.Nozzle1_TrayDUT_CompensateR;
+                plcRecv.XPos = cal_X + SystemPrara.Instance.Nozzle1_TrayDUT_CompensateX;
+                plcRecv.YPos = cal_Y + SystemPrara.Instance.Nozzle1_TrayDUT_CompensateY;
+                plcRecv.RPos = cal_R + SystemPrara.Instance.Nozzle1_TrayDUT_CompensateR;
 
                 #endregion 计算偏移和角度
 
                 Flow.Log("TrayDutPos success");
                 Plc.SendMessage(handler, plcRecv);
                 HXLDCont Cross = new HXLDCont();
-                HOperatorSet.TupleRad(locationResult.Angle, out HTuple phi);
+                HOperatorSet.TupleRad(locationResult.Phi, out HTuple phi);
                 Cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 6000, phi);
 
                 //显示结果到FormMain
-                Flow.FrmMain.Windlist[CameraID].image = locationPara.image;
-                Flow.FrmMain.Windlist[CameraID].obj = Cross;
-                Flow.FrmMain.Windlist[CameraID].obj = locationResult.SmallestRec2Xld;
+                Flow.Windlist[CameraID].image = locationPara.image;
+                Flow.Windlist[CameraID].obj = Cross;
+                Flow.Windlist[CameraID].obj = locationResult.SmallestRec2Xld;
                 locationResult.Dispos();
                 image.Dispose();
                 return;
             }
             catch (Exception ex)
             {
-                Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                Flow.Windlist[CameraID].OKNGlable = false;
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无dut
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, false);//定位失败
@@ -306,13 +306,13 @@ namespace VisionFlows
             int CameraID = 0;
             try
             {
-                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.SlotExposeTime);
+                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.Exposure_LeftCamGetDUT);
                 if (image == null)
                 {
                     Flow.Log("采集的图片 null");
                     return;
                 }
-                HRegion roi = ImagePara.Instance.GetSerchROI("SlotROI");
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotROI);
                 //保存图像
                 if (Utility.GetBitValue(plcSend.Func, 3))
                 {
@@ -325,7 +325,7 @@ namespace VisionFlows
                         InputPara para_temp = new InputPara(image, roi, null, ImagePara.Instance.DutScore);
                         if (!AutoNormal_New.ImageProcess.SlotDetect(para_temp, out HObject yy))
                         {
-                            Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                            Flow.Windlist[CameraID].OKNGlable = false;
                             //有料 则返回失败
                             plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无dut
                             plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
@@ -341,7 +341,7 @@ namespace VisionFlows
 
                 if (!locationResult.IsRunOk)
                 {
-                    Flow.FrmMain.Windlist[CameraID].image = locationPara.image;
+                    Flow.Windlist[CameraID].image = locationPara.image;
                     plcRecv.RPos = plcSend.RPos;
                     plcRecv.XPos = plcSend.XPos;
                     plcRecv.YPos = plcSend.YPos;
@@ -350,7 +350,7 @@ namespace VisionFlows
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, true);//其它异常
                     Plc.SendMessage(handler, plcRecv);
                     Flow.Log("TrayPlaceDutPos(Slot) Location Failed");
-                    Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                    Flow.Windlist[CameraID].OKNGlable = false;
                     return;
                 }
 
@@ -361,7 +361,7 @@ namespace VisionFlows
                 //下相机角度偏差
                 double downcam_angle = down_angle - serializableData.mode_angle1;
                 //上相机角度偏差
-                double upcam_angle = locationResult.Angle - serializableData.UpCam_angle1;
+                double upcam_angle = locationResult.Phi - serializableData.UpCam1_MatrixRad;
                 //当前拍照角度加上偏差值
                 double offeR = upcam_angle - downcam_angle;
                 double cal_R = CurrentAngle - offeR;
@@ -388,9 +388,9 @@ namespace VisionFlows
                 double cal_X = transX_up.D + x_current - offx + offx_down;
                 double cal_Y = transY_up.D + y_current - offy + offy_down;
 
-                plcRecv.XPos = cal_X + SystemPrara_New.Instance.Nozzle1_Slot_CompensateX;
-                plcRecv.YPos = cal_Y + SystemPrara_New.Instance.Nozzle1_Slot_CompensateY;
-                plcRecv.RPos = cal_R + SystemPrara_New.Instance.Nozzle1_Slot_CompensateR;
+                plcRecv.XPos = cal_X + SystemPrara.Instance.Nozzle1_Slot_CompensateX;
+                plcRecv.YPos = cal_Y + SystemPrara.Instance.Nozzle1_Slot_CompensateY;
+                plcRecv.RPos = cal_R + SystemPrara.Instance.Nozzle1_Slot_CompensateR;
                 down_row = 0;
                 down_col = 0;
                 down_angle = 0;
@@ -400,16 +400,16 @@ namespace VisionFlows
                 Plc.SendMessage(handler, plcRecv);
                 //显示结果
 
-                Flow.FrmMain.Windlist[CameraID].image = image;
+                Flow.Windlist[CameraID].image = image;
                 HXLDCont cross = new HXLDCont();
-                cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 6000, locationResult.Angle);
-                Flow.FrmMain.Windlist[CameraID].obj = cross;
+                cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 6000, locationResult.Phi);
+                Flow.Windlist[CameraID].obj = cross;
                 locationResult.Dispos();
                 image.Dispose();
             }
             catch (Exception ex)
             {
-                Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                Flow.Windlist[CameraID].OKNGlable = false;
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果 视觉定位失败
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无dut
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, false);//定位失败
@@ -429,8 +429,8 @@ namespace VisionFlows
             int CameraID =2;
             try
             {
-                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.DutBackExposeTime);
-                HRegion roi = ImagePara.Instance.GetSerchROI("DutBackROI");
+                var image = ImageProcessBase.GrabImage(CameraID, ImagePara.Instance.Exposure_DownCamScan);
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.DutBackROI);
                 //保存图像
                 if (Utility.GetBitValue(plcSend.Func, 3))
                 {
@@ -445,11 +445,11 @@ namespace VisionFlows
                 InputPara locationPara = new InputPara(image, roi, AutoNormal_New.SecondDutBackMode, 0);
                 OutPutResult locationResult = new OutPutResult();
 
-                locationResult = AutoNormal_New.ImageProcess.SecondDutBack(locationPara, plcSend);
+                locationResult = AutoNormal_New.ImageProcess.SecondDutBack_Circle(locationPara, plcSend);
 
                 if (!locationResult.IsRunOk)
                 {
-                    Flow.FrmMain.Windlist[CameraID].image = locationPara.image;
+                    Flow.Windlist[CameraID].image = locationPara.image;
 
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
                     plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, true);//其它异常
@@ -467,7 +467,7 @@ namespace VisionFlows
                 //记录二次定位的物料位置和角度
                 down_row = locationResult.findPoint.Row;
                 down_col = locationResult.findPoint.Column;
-                down_angle = locationResult.Angle;
+                down_angle = locationResult.Phi;
 
                 #endregion 计算偏移和角度
 
@@ -508,18 +508,18 @@ namespace VisionFlows
                 Plc.SendMessage(handler, plcRecv);
                 //显示结果
 
-                Flow.FrmMain.Windlist[CameraID].image = image;
-                Flow.FrmMain.Windlist[CameraID].obj = locationResult.SmallestRec2Xld;
+                Flow.Windlist[CameraID].image = image;
+                Flow.Windlist[CameraID].obj = locationResult.SmallestRec2Xld;
                 HXLDCont CrossContour = new HXLDCont();
-                CrossContour.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 6000, locationResult.Angle);
-                Flow.FrmMain.Windlist[CameraID].obj = CrossContour;
-                Flow.FrmMain.Windlist[CameraID].Message = "二维码:" + Overall.ScanResult;
+                CrossContour.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 6000, locationResult.Phi);
+                Flow.Windlist[CameraID].obj = CrossContour;
+                Flow.Windlist[CameraID].Message = "二维码:" + Overall.ScanResult;
                 image.Dispose();
                 locationResult.Dispos();
             }
             catch (Exception ex)
             {
-                Flow.FrmMain.Windlist[CameraID].OKNGlable = false;
+                Flow.Windlist[CameraID].OKNGlable = false;
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 0, false);//总结果
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 1, false);//无料
                 plcRecv.Result = (ushort)Utility.SetBitValue(plcRecv.Result, 7, false);//定位失败

@@ -12,10 +12,10 @@
     {
         Load,
         Unload,
-        Default,
+        PNP,
         Test1_LIVW,
-        Test2_DTGT,
-        Test3_Backup,
+        Test2_NFBP,
+        Test3_KYRL,
         Test4_BMPF,
     }
 
@@ -29,6 +29,7 @@
         Rotating,
         RotateDone,
         SocketOpened,
+        SocketClosed,
         WaitUnload,
         WaitLoad,
         LoadDone,
@@ -45,11 +46,11 @@
     /// </summary>
     public enum TrayName
     {
-        LoadL = 1,
-        LoadR,
+        Load1 = 1,
+        Load2,
         NG,
-        UnloadL,
-        UnloadR,
+        Pass1,
+        Pass2,
     }
 
     /// <summary>
@@ -66,8 +67,16 @@
 
     public enum ErrorLevel
     {
-        Debug,
-        Warning,
-        Fatal,
+        DEBUG,
+        INFO,
+        WARNING,
+        FATAL,
+    }
+
+    public enum CtrlType
+    {
+        Both,
+        Handler,
+        Tester,
     }
 }

@@ -1,23 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Rules>
-    <Rule Order="1">
-      <Name>F_Bin</Name>
+    <Rule Order="0">
+      <Name>F_Bin8</Name>
       <ConditionGroup Type="And">
         <Conditions>
           <Condition Reverse="false">
-            <Name>ContainsAll</Name>
+            <Name>ContainsOne</Name>
             <Param>
-              <int>2</int>
-              <int>3</int>
+              <int>8</int>
             </Param>
           </Condition>
         </Conditions>
         <ConditionGroups />
       </ConditionGroup>
-      <Result>4</Result>
+      <Result>8</Result>
+    </Rule>
+    <Rule Order="1">
+      <Name>F_Bin10</Name>
+      <ConditionGroup Type="And">
+        <Conditions>
+          <Condition Reverse="false">
+            <Name>ContainsOne</Name>
+            <Param>
+              <int>10</int>
+            </Param>
+          </Condition>
+        </Conditions>
+        <ConditionGroups />
+      </ConditionGroup>
+      <Result>10</Result>
     </Rule>
     <Rule Order="2">
+      <Name>F_Bin5</Name>
+      <ConditionGroup Type="And">
+        <Conditions>
+          <Condition Reverse="false">
+            <Name>ContainsOne</Name>
+            <Param>
+              <int>5</int>
+            </Param>
+          </Condition>
+        </Conditions>
+        <ConditionGroups />
+      </ConditionGroup>
+      <Result>5</Result>
+    </Rule>
+    <Rule Order="4">
       <Name>P_Bin</Name>
       <ConditionGroup Type="And">
         <Conditions>
@@ -29,14 +58,16 @@
       </ConditionGroup>
       <Result>Max</Result>
     </Rule>
-    <Rule Order="0">
-      <Name>Fail_All</Name>
+    <Rule Order="3">
+      <Name>F_Bin4</Name>
       <ConditionGroup Type="And">
         <Conditions>
           <Condition Reverse="false">
-            <Name>ContainsOne</Name>
+            <Name>ContainsAll</Name>
             <Param>
-              <int>4</int>
+              <int>6</int>
+              <int>7</int>
+              <int>9</int>
             </Param>
           </Condition>
         </Conditions>

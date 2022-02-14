@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using VisionModules;
+using VisionSDK;
 
 namespace VisionFlows
 {
@@ -20,6 +20,7 @@ namespace VisionFlows
 
         }
         public static int CurrentSoket;
+        public static string CurrentSN;
         public static void Execute_New(MessageHandler handler, EnumCamera cameraID)
         {
             Flow.Log(RunModeMgr.RunMode.ToString());
@@ -32,10 +33,10 @@ namespace VisionFlows
         /// <param name="image"></param>
         /// <param name="ho_RegionTrans"></param>
         /// <returns></returns>
-        public virtual bool SocketDetect(HImage image, out HObject ho_RegionTrans)
+        public virtual int SocketDetect(HImage image,out HObject ho_RegionTrans)
         {
             HOperatorSet.GenEmptyObj(out ho_RegionTrans);
-            return true;
+            return 0;
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace VisionFlows
         {
             return new OutPutResult();
         }
-
+        
         /// <summary>
         /// 空Tary盘 slot 的 定位
         /// </summary>
@@ -106,7 +107,7 @@ namespace VisionFlows
             HOperatorSet.GenEmptyObj(out mark);
             return new OutPutResult();
         }
-
+       
         /// <summary>
         /// Socket 上面Mark点（两个圆的查找定位）
         /// </summary>
@@ -115,15 +116,35 @@ namespace VisionFlows
         /// <param name="hv_Column1"></param>
         /// <param name="hv_Phi"></param>
         /// <param name="mark"></param>
-       public virtual  void FindSocketMark(HObject ho_Image_white, out HTuple hv_Row1, out HTuple hv_Column1,
+        public virtual  void FindSocketMarkFirst(HObject ho_Image_white, out HTuple hv_Row1, out HTuple hv_Column1,
     out HTuple hv_Phi, out HObject mark)
         {
             hv_Row1 = 0;    hv_Column1 = 0;
             hv_Phi = 0;
             HOperatorSet.GenEmptyObj(out mark);
         }
-        
-
+        /// <summary>
+        /// Socket 上面Mark点（两个圆的查找定位）
+        /// </summary>
+        /// <param name="ho_Image_white"></param>
+        /// <param name="hv_Row1"></param>
+        /// <param name="hv_Column1"></param>
+        /// <param name="hv_Phi"></param>
+        /// <param name="mark"></param>
+        public virtual void FindSocketMarkSecond(HObject ho_Image_white, out HTuple hv_Row1, out HTuple hv_Column1,
+    out HTuple hv_Phi, out HObject mark)
+        {
+            hv_Row1 = 0; hv_Column1 = 0;
+            hv_Phi = 0;
+            HOperatorSet.GenEmptyObj(out mark);
+        }
+        public virtual void FindSocketMarkThird(HObject ho_Image_white, out HTuple hv_Row1, out HTuple hv_Column1,
+  out HTuple hv_Phi, out HObject mark)
+        {
+            hv_Row1 = 0; hv_Column1 = 0;
+            hv_Phi = 0;
+            HOperatorSet.GenEmptyObj(out mark);
+        }
         /// <summary>
         /// Socket 中 Dut mark点定位
         /// </summary>
@@ -140,11 +161,40 @@ namespace VisionFlows
         /// <param name="locationPara"></param>
         /// <param name="plcsend"></param>
         /// <returns></returns>
+        public virtual OutPutResult SecondDutBack_Circle(InputPara locationPara, PLCSend plcsend)
+        {
+            return new OutPutResult();
+        }
+        /// <summary>
+        /// 通过二维码识别找到
+        /// </summary>
+        /// <param name="locationPara"></param>
+        /// <param name="plcsend"></param>
+        /// <returns></returns>
         public virtual OutPutResult SecondDutBack(InputPara locationPara, PLCSend plcsend)
         {
             return new OutPutResult();
         }
 
+
+        /// <summary>
+        ///  挑料和正常模式下，产品放Tray 只要有料就判定为OK
+        /// （阈值处理判定）
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsTrayDutHaveOrNot_Normal(InputPara parameter, out HObject ho_RegionTrans)
+        {
+            HOperatorSet.GenEmptyObj(out ho_RegionTrans);
+            return true;
+        }
+
+        /// <summary>
+        /// GRR模式及same tray等测试模式下，歪斜判定为NG
+        /// </summary>
+        public virtual bool IsTrayDutHaveOrNot_Test()
+        {
+            return  true;
+        }
         /// <summary>
         /// 二维码句柄
         /// </summary>
@@ -164,7 +214,7 @@ namespace VisionFlows
                 RecCodeData = new HXLDCont();
                if (!hDataCode2D.IsInitialized())
                 {
-                    hDataCode2D.ReadDataCode2dModel(Utility.Model+"ecc200_trained_model.dcm");
+                    hDataCode2D.ReadDataCode2dModel(Utility.ModelFile+"ecc200_trained_model.dcm");
                 }
                 HTuple DataStrings="";
                 for (int i = -50; i < 50; i++)
@@ -229,48 +279,46 @@ namespace VisionFlows
         }
 
         /// <summary>
-        /// CameraId= 0（左上）,1（右上）, 2（下）  
+        /// CameraId=LeftTop 0（左上）,RightTop 1（右上）,Bottom 2（下）  
         /// </summary>
         /// <param name="CameraId"></param>
         /// <param name="ExposureTime"></param>
         /// <returns></returns>
         public static HImage GrabImage(int CameraId, double ExposureTime)
         {
-            int index = 0;
-            if (VisionModulesManager.CameraList[CameraId].Image != null)  // 在软触发拍照之前，判断图片又没有释放
+            try
             {
-                VisionModulesManager.CameraList[CameraId].Image.Dispose();
-            }
-            else
-            {
-                VisionModulesManager.CameraList[CameraId].Image = new HImage();
-            }                      
-            Plc.SetIO(CameraId + 1, true);  // 控制  光源IO点       ？？这需要设置一个延迟
-            VisionModulesManager.CameraList[CameraId].SetExposureTime(ExposureTime);
-            VisionModulesManager.CameraList[CameraId].CaptureImage();
-            resend:
-            if (!VisionModulesManager.CameraList[CameraId].CaptureSignal.WaitOne(1500))
-            {
-                index++;
-                if (index>4)
+                EnumCamera cameraid = (EnumCamera)Enum.ToObject(typeof(EnumCamera), CameraId);
+                int index = 0;
+                HOperatorSet.CountSeconds(out HTuple start);
+                CameraManager.CameraById(cameraid.ToString()).ShuterCur = (long)(ExposureTime);
+                resend:
+                HImage image = CameraManager.CameraById(cameraid.ToString()).GrabImage(2000);
+                if (image == null)
                 {
-                    Plc.SetIO(CameraId + 1, false);
-                    AlcSystem.Instance.ShowMsgBox("图像采集失败", "提示", icon: AlcMsgBoxIcon.Error);
-                    return null;
+                    index++;
+                    if (index > 4)
+                    {
+                        AlcSystem.Instance.ShowMsgBox("图像采集失败", "提示", icon: AlcMsgBoxIcon.Error);
+                        return null;
+                    }
+                    else
+                    {
+                        goto resend;
+                    }
                 }
-                else
-                {
-                    goto resend;
-                }              
+
+                HOperatorSet.CountSeconds(out HTuple end);
+                Flow.Log($"拍照时间{(end - start).D.ToString("f2")}");
+                return image;
+                // 返回图像的Copy
             }
-            Thread.Sleep(100);
-            Plc.SetIO(CameraId + 1, false);
-            if (VisionModulesManager.CameraList[CameraId].Image == null)
+            catch (Exception ex)
             {
-                return null;
+                return new HImage();
+                
             }
-            return VisionModulesManager.CameraList[CameraId].Image.CopyImage();
-            // 返回图像的Copy
+            
         }
 
 

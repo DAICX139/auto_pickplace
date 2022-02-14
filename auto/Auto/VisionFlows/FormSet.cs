@@ -16,21 +16,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisionControls;
-using VisionModules;
+using VisionSDK;
 
 namespace VisionFlows.VisionCalculate
 {
     public partial class FormLocationSet : Form
     {
-        /// <summary>
-        /// halcon 加载测试 图片
-        /// </summary>
-        private HImage image = new HImage();
-
-        /// <summary>
-        ///  定位 使用的模板
-        /// </summary>
-        private HShapeModel ShapeModel;
 
         /// <summary>
         /// 测试 批量处理图像时 图片序列
@@ -39,6 +30,24 @@ namespace VisionFlows.VisionCalculate
 
         ArrayList EditRoi =new ArrayList();
 
+        /// <summary>
+        /// 当前 实时的相机 编号
+        /// </summary>
+        private int LiveCameraIndex = 0;
+
+        /// <summary>
+        /// 相机实时 所开启的线程
+        /// </summary>
+        private Task TkCameraLive;
+
+        /// <summary>
+        /// 中止线程 所使用布尔量
+        /// </summary>
+        private bool IsLiveRun = true;
+
+        EnumCamera CurrentCameraUserID;
+
+        bool isLoad;
         public FormLocationSet()
         {
             InitializeComponent();
@@ -47,7 +56,6 @@ namespace VisionFlows.VisionCalculate
         private void FormLocationTest_Load(object sender, EventArgs e)
         {
             comboBox_socket.SelectedIndex = 0;
-            ShapeModel = new HShapeModel();
             this.numericUpDown_score_dutback.Value = Convert.ToDecimal(ImagePara.Instance.DutBackScore);
             this.numericUpDown_score_socktdut.Value = Convert.ToDecimal(ImagePara.Instance.SoketDutScore);
             this.numericUpDown_score_socktMark.Value = Convert.ToDecimal(ImagePara.Instance.SocketMarkScore);
@@ -57,45 +65,26 @@ namespace VisionFlows.VisionCalculate
             numericUpDown_socktdut_min.Value = ImagePara.Instance.SoketDut_minthreshold[0];
             numericUpDown_trayDut_min.Value = ImagePara.Instance.TrayDut_minthreshold;
             numericUpDown_trayDut_max.Value = ImagePara.Instance.TrayDut_maxthreshold;
-            numericUpDown_dut_widthmin.Value = ImagePara.Instance.SoketDut_widthmin;
-            numericUpDown_dut_heightmin.Value = ImagePara.Instance.SoketDut_heightmin;
-            numericUpDown_dut_widthmax.Value = ImagePara.Instance.SoketDut_widthmax;
+            numericUpDown_rad_min.Value = ImagePara.Instance.SoketDut_widthmin;
+            numericUpDown_distance_heightmin.Value = ImagePara.Instance.SoketDut_heightmin;
+            numericUpDown_rad_max.Value = ImagePara.Instance.SoketDut_widthmax;
             numericUpDown_dut_heightmax.Value = ImagePara.Instance.SoketDut_heightmax;
             numericUpDown_socktmark_min.Value = ImagePara.Instance.SoketMark_minthreshold;
             numericUpDown_socktmark_max.Value = ImagePara.Instance.SoketMark_maxthreshold;
-            numericUpDown_PushBlock.Value= ImagePara.Instance.PushBlock;
-            CBIsWriteStationImage.Checked = Utility.IsSaveImage;
-            this.superWind1.image = new HImage("byte", 100, 100);
+            numericUpDown_PushBlock.Value= ImagePara.Instance.PushBlock;           
+            this.superWind1.image = new HImage("byte", 500, 500);
             this.superWind1.roiController.addRec2(500, 500, "");
             EditRoi= (ArrayList)this.superWind1.roiController.RoiInfo.ROIList.Clone();
             this.superWind1.viewController.OnlyImage = true;
             this.superWind1.viewController.repaint();
+            this.text = "配方:" + Utility.TypeFile + ConfigMgr.Instance.CurrentImageType;
+            CBCameraSelect.SelectedIndex =0;
+            CurrentCameraUserID = EnumCamera.LeftTop;
+            Utility.IsSaveAllImage = true;
+            Utility.IsSaveNgImage = false;
+
+            isLoad = true;
         }
-
-        /// <summary>
-        /// 加载模型
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnLoadShapeModelDutFront_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                if (openFileDialog.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-
-                ShapeModel.ReadShapeModel(openFileDialog.FileName);
-                TBDutFrontModelPath.Text = openFileDialog.FileName;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         /// <summary>
         /// Dut正面定位
         /// </summary>
@@ -105,10 +94,10 @@ namespace VisionFlows.VisionCalculate
         {
             try
             {
+
                 OutPutResult result = new OutPutResult();
-                ShapeModel = new HShapeModel();
-                HRegion roi = ImagePara.Instance.GetSerchROI("SlotDutROI");
-                InputPara para = new InputPara(this.image, roi, this.ShapeModel, Convert.ToDouble(this.numericUpDown_score_Traydut.Value));
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotDutROI);
+                InputPara para = new InputPara(this.superWind1.image, roi, new HShapeModel(), Convert.ToDouble(this.numericUpDown_score_Traydut.Value));
                 result = AutoNormal_New.ImageProcess.TrayDutFront(para);
                 if (!result.IsRunOk)
                 {
@@ -116,14 +105,18 @@ namespace VisionFlows.VisionCalculate
                     MessageBox.Show("DutFront 定位失败");
                     return;
                 }
-                this.superWind1.image = this.image;
                 this.superWind1.obj = result.shapeModelContour;
                 HXLDCont Cross = new HXLDCont();
-                HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                 Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
+                this.superWind1.obj = result.region;
                 this.superWind1.obj = Cross;
                 this.superWind1.obj = result.SmallestRec2Xld;
                 this.superWind1.obj = roi;
+                HOperatorSet.DumpWindowImage(out HObject iimage, this.superWind1.hwind.HalconWindow);
+                ///AutoNormal_New.SaveOriginalImage("111", this.superWind1.image);
+                //AutoNormal_New.SaveDumpImage("222", iimage);
+
             }
             catch (Exception ex)
             {
@@ -140,23 +133,21 @@ namespace VisionFlows.VisionCalculate
         {
             try
             {
-                HRegion roi = ImagePara.Instance.GetSerchROI("DutBackROI");
-                ShapeModel.ReadShapeModel(Utility.Model + "SecondDutBack.sbm");
-                InputPara locationPara = new InputPara(image, roi, this.ShapeModel, Convert.ToDouble(this.numericUpDown_score_dutback.Value));
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.DutBackROI);
+                InputPara locationPara = new InputPara(superWind1.image, roi, new HShapeModel(), Convert.ToDouble(this.numericUpDown_score_dutback.Value));
                 OutPutResult locationResult = new OutPutResult();
                
                 locationResult = AutoNormal_New.ImageProcess.SecondDutBack(locationPara, new PLCSend() { Func = 1 });
                 if (locationResult.IsRunOk == false)
                 {
-                    this.superWind1.image = locationPara.image;
                     MessageBox.Show("Dut Back 定位失败");
                     return;
                 }
                 HXLDCont hXLDCont = new HXLDCont();
-                hXLDCont.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 300, locationResult.Angle);
-                this.superWind1.image = locationPara.image;
+                hXLDCont.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 300, locationResult.Phi);
                 this.superWind1.obj = hXLDCont;
                 this.superWind1.obj = locationResult.shapeModelContour;
+                this.superWind1.obj = locationResult.region;
                 this.superWind1.obj = locationResult.SmallestRec2Xld;
                 this.superWind1.obj = roi;
 
@@ -176,13 +167,12 @@ namespace VisionFlows.VisionCalculate
         private void BtnRunFunctionSocketMark_Click(object sender, EventArgs e)
         {
             OutPutResult locationResult = new OutPutResult();
-            HRegion roi = ImagePara.Instance.GetSerchROI("SocketMarkROI");
-            InputPara locationPara = new InputPara(image, roi, this.ShapeModel, Convert.ToDouble(this.numericUpDown_score_socktMark.Value));
+            HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketMarkROI);
+            InputPara locationPara = new InputPara(superWind1.image, roi,new HShapeModel(), Convert.ToDouble(this.numericUpDown_score_socktMark.Value));
 
             locationResult = AutoNormal_New.ImageProcess.SocketMark(locationPara, out HObject mark);
             if (locationResult.IsRunOk == false)
             {
-                this.superWind1.image = locationPara.image;
                 MessageBox.Show("Socket Mark 定位失败");
                 return;
             }
@@ -190,38 +180,12 @@ namespace VisionFlows.VisionCalculate
             mark.Dispose();
 
             HXLDCont hXLDCont = new HXLDCont();
-            hXLDCont.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 300, locationResult.Angle);
+            hXLDCont.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 300, locationResult.Phi);
 
             this.superWind1.ObjColor = "green";
             this.superWind1.obj = hXLDCont;
             this.superWind1.obj = roi;
         }
-
-        /// <summary>
-        /// 加载图像
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnLoadImage_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-
-            if (openFileDialog.FileName == "")
-            {
-                return;
-            }
-            try
-            {
-                this.image = new HImage(openFileDialog.FileName);
-                this.superWind1.image = new HImage(openFileDialog.FileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         /// <summary>
         /// slot定位
         /// </summary>
@@ -231,12 +195,10 @@ namespace VisionFlows.VisionCalculate
         private void BtnRunTraySlot_Click(object sender, EventArgs e)
         {
             OutPutResult locationResult = new OutPutResult();
-            ShapeModel.ReadShapeModel(Utility.Model + "TraySlot.sbm");
-            HRegion roi = ImagePara.Instance.GetSerchROI("SlotROI");
-            InputPara locationPara = new InputPara(image, roi, this.ShapeModel, Convert.ToDouble(this.numericUpDown_score_slot.Value));
+            HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotROI);
+            InputPara locationPara = new InputPara(superWind1.image, roi,new HShapeModel(), Convert.ToDouble(this.numericUpDown_score_slot.Value));
             //
             locationResult = AutoNormal_New.ImageProcess.ShotSlot(locationPara);
-            this.superWind1.image = locationPara.image;
             if (!locationResult.IsRunOk)
             {
                 MessageBox.Show("TraySlot定位失败");
@@ -245,21 +207,21 @@ namespace VisionFlows.VisionCalculate
             //模板匹配结果及其外接矩形轮廓显示
             this.superWind1.obj = locationResult.SmallestRec2Xld;
             HXLDCont cross = new HXLDCont();
-            cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 200, locationResult.Angle);
+            cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 200, locationResult.Phi);
             this.superWind1.obj = cross;
             this.superWind1.obj = locationResult.SmallestRec2Xld;
             //按照自定义的取料中心仿射变换
             HHomMat2D hv_HomMat2D = new HHomMat2D();
-            if (locationResult.Angle < -0.79)
+            if (locationResult.Phi < -0.79)
             {
-                locationResult.Angle = 3.14159 + locationResult.Angle;
+                locationResult.Phi = 3.14159 + locationResult.Phi;
             }
             hv_HomMat2D.VectorAngleToRigid(ImagePara.Instance.slot_rowCenter, ImagePara.Instance.slot_colCenter,
-                ImagePara.Instance.slot_angleCenter, locationResult.findPoint.Row, locationResult.findPoint.Column, locationResult.Angle);
+                ImagePara.Instance.slot_angleCenter, locationResult.findPoint.Row, locationResult.findPoint.Column, locationResult.Phi);
             HTuple findrow = hv_HomMat2D.AffineTransPoint2d(ImagePara.Instance.slot_offe_rowCenter, ImagePara.Instance.slot_offe_colCenter, out HTuple findcol);
             locationResult.findPoint.Row = findrow;//最后取料中心
             locationResult.findPoint.Column = findcol;
-            cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 200, locationResult.Angle);
+            cross.GenCrossContourXld(locationResult.findPoint.Row, locationResult.findPoint.Column, 200, locationResult.Phi);
             this.superWind1.ObjColor = "red";
             this.superWind1.obj = cross;
             this.superWind1.obj = roi;
@@ -295,20 +257,7 @@ namespace VisionFlows.VisionCalculate
             }
         }
 
-        /// <summary>
-        /// 当前 实时的相机 编号
-        /// </summary>
-        private int LiveCameraIndex = 0;
-
-        /// <summary>
-        /// 相机实时 所开启的线程
-        /// </summary>
-        private Task TkCameraLive;
-
-        /// <summary>
-        /// 中止线程 所使用布尔量
-        /// </summary>
-        private bool IsLiveRun = true;
+      
 
         private void BtnCameraLive_Click(object sender, EventArgs e)
         {
@@ -328,7 +277,7 @@ namespace VisionFlows.VisionCalculate
                 LiveCameraIndex = CBCameraSelect.SelectedIndex;
                 IsLiveRun = true;
                 TkCameraLive = new Task(FunctionTkCameraLive);
-                VisionModulesManager.CameraList[LiveCameraIndex].SetExposureTime(Convert.ToDouble(this.numericUpDown_Expose.Value));
+                CameraManager.CameraById(CurrentCameraUserID.ToString()).ShuterCur=(long)(this.numericUpDown_Expose.Value);
                 TkCameraLive.Start();
             }
             else
@@ -347,17 +296,7 @@ namespace VisionFlows.VisionCalculate
             while (true)
             {
                 GC.Collect();
-
-                VisionModulesManager.CameraList[LiveCameraIndex].CaptureImage();
-                VisionModulesManager.CameraList[LiveCameraIndex].CaptureSignal.WaitOne(Utility.CaptureDelayTime);
-
-                this.image = VisionModulesManager.CameraList[LiveCameraIndex].Image;
-                this.Invoke(new Action(() =>
-                {
-                    HOperatorSet.GetImageSize(image, out HTuple width, out HTuple height);
-                    this.superWind1.image = image;
-                }));
-
+                superWind1.image = CameraManager.CameraById(CurrentCameraUserID.ToString()).GrabImage(Utility.CaptureDelayTime);
                 if (!IsLiveRun)
                 {
                     return;
@@ -374,174 +313,61 @@ namespace VisionFlows.VisionCalculate
                     MessageBox.Show("开启失败");
                     return;
                 }
-                VisionModulesManager.CameraList[LiveCameraIndex].SetExposureTime(Convert.ToDouble(this.numericUpDown_Expose.Value));
+                CameraManager.CameraById(CurrentCameraUserID.ToString()).ShuterCur = (long)(Convert.ToDouble(this.numericUpDown_Expose.Value));
                 LiveCameraIndex = CBCameraSelect.SelectedIndex;
                 Plc.SetIO(this.CBCameraSelect.SelectedIndex + 1, true);
-                VisionModulesManager.CameraList[LiveCameraIndex].CaptureImage();
-                VisionModulesManager.CameraList[LiveCameraIndex].CaptureSignal.WaitOne(Utility.CaptureDelayTime);
-
-                this.image = VisionModulesManager.CameraList[LiveCameraIndex].Image;
-                this.Invoke(new Action(() =>
-                {
-                    this.superWind1.image = image;
-                }));
+                superWind1.image = CameraManager.CameraById(CurrentCameraUserID.ToString()).GrabImage(Utility.CaptureDelayTime);
+                Plc.SetIO(this.CBCameraSelect.SelectedIndex + 1, false);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("相机 实时 失败");
-            }
-        }
-
-        private void BtnSetExpose_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                LiveCameraIndex = CBCameraSelect.SelectedIndex;
-
-                switch (tabControl1.SelectedIndex)
-                {
-                    case 0:
-                        ImagePara.Instance.DutExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                        break;
-
-                    case 1:
-                        ImagePara.Instance.DutBackExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                        break;
-
-                    case 2:
-                        ImagePara.Instance.SlotExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                        break;
-
-                    case 3:
-                        ImagePara.Instance.SoketMarkExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                        break;
-
-                    case 4:
-                        ImagePara.Instance.SoketDutExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                        break;
-
-                    default:
-                        break;
-                }
-                double ExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-                VisionModulesManager.CameraList[LiveCameraIndex].SetExposureTime(ExposeTime);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "曝光设置失败");
-            }
-        }
-
-        private void TBExpose_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    LiveCameraIndex = CBCameraSelect.SelectedIndex;
-
-                    double ExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
-
-                    VisionModulesManager.CameraList[LiveCameraIndex].SetExposureTime(ExposeTime);
-                    MessageBox.Show("Set");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "曝光设置失败");
-                }
+                Plc.SetIO(this.CBCameraSelect.SelectedIndex + 1, false);
             }
         }
 
      
-     
-
-        private void FormLocationTest_FormClosed(object sender, FormClosedEventArgs e)
-        {
-        }
-
         private void FormLocationTest_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //Utility.IsSaveImage = CBIsWriteStationImage.Checked;
             this.IsLiveRun = false;
-            try
-            {             
-                XmlHelper.Instance().SerializeToXml(Utility.type + ConfigMgr.Instance.CurrentImageType, ImagePara.Instance);
-            }
-            catch (Exception ee)
-            {
-                AlcUtility.AlcSystem.Instance.ShowMsgBox("更新视觉配方失败", "提示", AlcUtility.AlcMsgBoxButtons.OK, AlcUtility.AlcMsgBoxIcon.Error);
-            }
+            HalconAPI.CancelDraw();
         }
- 
-
         private void CBIsWriteStationImage_CheckedChanged(object sender, EventArgs e)
         {
-            if (CBIsWriteStationImage.Checked)
-            {
-                Utility.IsSaveImage = true;
-                CBIsWriteStationImage.BackColor = Color.Fuchsia;
-            }
-            else
-            {
-                Utility.IsSaveImage = false;
-                CBIsWriteStationImage.BackColor = Color.WhiteSmoke;
-            }
+             //Utility.IsSaveImage = CBIsWriteStationImage.Checked;
         }
-
+        /// <summary>
+        /// 取Sockt  dut料产品定位
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnLocationSocketDutTest_Click(object sender, EventArgs e)
         {
             
             OutPutResult locationResult = new OutPutResult();
-            HRegion roi = ImagePara.Instance.GetSerchROI("SocketDutROI");
-            InputPara locationPara = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
-
+            HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketDutROI);
+            InputPara locationPara = new InputPara(superWind1.image, superWind1.image.GetDomain(), null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
             locationResult = AutoNormal_New.ImageProcess.SocketDutFront(locationPara);
-            this.superWind1.image = image;
             if (locationResult.IsRunOk == false)
             {
                 MessageBox.Show(locationResult.ErrString);
                 return;
             }
-            HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row, locationResult.findPoint.Column, 100, locationResult.Angle);
+            HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row, locationResult.findPoint.Column, 100, locationResult.Phi);
             //按照自定义的取料中心仿射变换
-            HHomMat2D hv_HomMat2D = new HHomMat2D();
-            if (locationResult.Angle < -0.79)
+            if (locationResult.Phi < -0.79)
             {
-                locationResult.Angle = 3.14159 + locationResult.Angle;
+                locationResult.Phi = 3.14159 + locationResult.Phi;
             }
-            hv_HomMat2D.VectorAngleToRigid(ImagePara.Instance.DutMode_rowCenter[comboBox_socket.SelectedIndex], ImagePara.Instance.DutMode_colCenter[comboBox_socket.SelectedIndex],
-                ImagePara.Instance.DutMode_angleCenter[comboBox_socket.SelectedIndex], locationResult.findPoint.Row, locationResult.findPoint.Column, locationResult.Angle);
-            HTuple findrow = hv_HomMat2D.AffineTransPoint2d(ImagePara.Instance.SocketMark_GetDutRow[comboBox_socket.SelectedIndex], ImagePara.Instance.SocketMark_GetDutCol[comboBox_socket.SelectedIndex], out HTuple findcol);
-            locationResult.findPoint.Row = findrow;
-            locationResult.findPoint.Column = findcol;
             locationResult.IsRunOk = true;
             this.superWind1.obj = locationResult.region;
             this.superWind1.obj = locationResult.SmallestRec2Xld;
             this.superWind1.obj = locationResult.shapeModelContour;
             this.superWind1.obj = roi;
-            this.superWind1.Message = string.Format("宽：{0} 高{1}", locationResult.Dutwidth, locationResult.Dutheight);
             HOperatorSet.SetColor(superWind1.viewController.viewPort.HalconWindow, "red");
-            HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row, locationResult.findPoint.Column, 100, locationResult.Angle);
+            HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row, locationResult.findPoint.Column, 100, locationResult.Phi);
         }
-
-        private void 置于最上层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.TopMost = !this.TopMost;
-        }
-
-        private void 收缩ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.Width == 900)
-            {
-                this.Width = 1381;
-                panelRight.Dock = DockStyle.Right;
-            }
-            else
-            {
-                panelRight.Dock = DockStyle.None;
-                this.Width = 900;
-            }
-        }
-
         /// <summary>
         /// 槽有无dut测试
         /// </summary>
@@ -549,9 +375,8 @@ namespace VisionFlows.VisionCalculate
         /// <param name="e"></param>
         private void button_isdut_Click(object sender, EventArgs e)
         {
-            ShapeModel.ReadShapeModel(Utility.Model + "TraySlot.sbm");
-            HRegion roi = ImagePara.Instance.GetSerchROI("SlotDutROI");
-            InputPara para = new InputPara(this.image, roi, this.ShapeModel, Convert.ToDouble(this.numericUpDown_score_Traydut.Value));
+            HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotROI);
+            InputPara para = new InputPara(superWind1.image, roi, new HShapeModel(), Convert.ToDouble(this.numericUpDown_score_Traydut.Value));
             //判断是否有料
             if (!AutoNormal_New.ImageProcess.SlotDetect(para, out HObject yy))
             {
@@ -561,16 +386,6 @@ namespace VisionFlows.VisionCalculate
             }
             this.superWind1.obj = yy;
             MessageBox.Show("有料");
-        }
-
-        /// <summary>
-        /// socket 有无dut测试
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void button_issocket_Click(object sender, EventArgs e)
-        {
         }
 
         private void numericUpDown_socktdut_min_ValueChanged(object sender, EventArgs e)
@@ -593,17 +408,17 @@ namespace VisionFlows.VisionCalculate
 
         private void numericUpDown_dut_width_ValueChanged(object sender, EventArgs e)
         {
-            ImagePara.Instance.SoketDut_widthmin = (HTuple)numericUpDown_dut_widthmin.Value;
+            ImagePara.Instance.SoketDut_widthmin = (HTuple)numericUpDown_rad_min.Value;
         }
 
         private void numericUpDown_dut_height_ValueChanged(object sender, EventArgs e)
         {
-            ImagePara.Instance.SoketDut_heightmin = (HTuple)numericUpDown_dut_heightmin.Value;
+            ImagePara.Instance.SoketDut_heightmin = (HTuple)numericUpDown_distance_heightmin.Value;
         }
 
         private void numericUpDown_dut_widthmax_ValueChanged(object sender, EventArgs e)
         {
-            ImagePara.Instance.SoketDut_widthmax = (HTuple)numericUpDown_dut_widthmax.Value;
+            ImagePara.Instance.SoketDut_widthmax = (HTuple)numericUpDown_rad_max.Value;
         }
 
         private void numericUpDown_dut_heightmax_ValueChanged(object sender, EventArgs e)
@@ -635,173 +450,120 @@ namespace VisionFlows.VisionCalculate
         {
             ImagePara.Instance.SoketDutScore = Convert.ToSingle(numericUpDown_score_socktdut.Value);
         }
-
+        /// <summary>
+        ///编辑放料到Socket中心
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_edit_putcenter_Click(object sender, EventArgs e)
         {
             if (button_edit_putcenter.Text == "编辑放料中心")
             {
                 if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
+                    HOperatorSet.CreateDrawingObjectRectangle2(ImagePara.Instance.SocketMark_PutDutRow, ImagePara.Instance.SocketMark_PutDutCol, 0, 100, 100, out DrawID);
+                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
+                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
                     button_edit_putcenter.BackColor = Color.Red;
-                    this.superWind1.viewController.OnlyImage = false;
                     button_edit_putcenter.Text = "结束编辑";
-                    this.superWind1.viewController.repaint();
                 }
             }
             else
             {
                 button_edit_putcenter.Text = "编辑放料中心";
                 button_edit_putcenter.BackColor = Color.WhiteSmoke;
-                this.superWind1.viewController.OnlyImage = true;
-                this.superWind1.viewController.repaint();
-                AutoNormal_New.ImageProcess.FindSocketMark(superWind1.image, out HTuple row_center, out HTuple col_center, out HTuple phi, out HObject mark);
+                AutoNormal_New.ImageProcess.FindSocketMarkFirst(superWind1.image, out HTuple row_center, out HTuple col_center, out HTuple phi, out HObject mark);
+                if(row_center.Length<=0)
+                {
+                    AutoNormal_New.ImageProcess.FindSocketMarkSecond(superWind1.image, out  row_center, out  col_center, out  phi, out  mark);
+                    if(row_center.Length<=0)
+                    {
+                        AutoNormal_New.ImageProcess.FindSocketMarkThird(superWind1.image, out row_center, out col_center, out phi, out mark);
+                    }
+                }
                 HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, row_center, col_center, 100, phi);
-
                 //mark点模板坐标
                 ImagePara.Instance.SocketMark_rowCenter = Convert.ToSingle(row_center.D);
                 ImagePara.Instance.SocketMark_colCenter = Convert.ToSingle(col_center.D);
                 ImagePara.Instance.SocketMark_angleCenter = Convert.ToSingle(phi.D);
 
-                //放料点模板坐标((ROIRectangle1)(superWind1.roiController.RoiInfo.ROIList[0])).getRegion();
-                ImagePara.Instance.SocketMark_PutDutRow = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midR);
-                ImagePara.Instance.SocketMark_PutDutCol = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midC);
+                HOperatorSet.GetDrawingObjectParams(DrawID, "row", out HTuple row1);
+                HOperatorSet.GetDrawingObjectParams(DrawID, "column", out HTuple col1);
+                ImagePara.Instance.SocketMark_PutDutRow = (float)row1.D;
+                ImagePara.Instance.SocketMark_PutDutCol = (float)col1.D;
                 HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, ImagePara.Instance.SocketMark_PutDutRow,
                     ImagePara.Instance.SocketMark_PutDutCol, 100, phi);
+                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
+                HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile+"SocketMarkImage");
             }
         }
-
-        private void button_editget_Click(object sender, EventArgs e)
-        {
-            if (button_editget.Text == "2.编辑取料中心")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    button_editget.BackColor = Color.Red;
-                    this.superWind1.viewController.OnlyImage = false;
-                    button_editget.Text = "结束编辑";
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                button_editget.Text = "2.编辑取料中心";
-                button_editget.BackColor = Color.WhiteSmoke;
-                this.superWind1.viewController.OnlyImage = true;
-                this.superWind1.viewController.repaint();
-                OutPutResult locationResult = new OutPutResult();
-                HRegion roi = ImagePara.Instance.GetSerchROI("SocketDutROI");
-                InputPara locationPara = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
-
-                locationResult = AutoNormal_New.ImageProcess.SocketDutFront(locationPara);
-                this.superWind1.image = image;
-                if (locationResult.IsRunOk == false)
-                {
-                    MessageBox.Show("定位失败");
-                    return;
-                }
-                if (locationResult.Angle < -0.79)
-                {
-                    locationResult.Angle = 3.14159 + locationResult.Angle;
-                }
-                HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row,
-                        locationResult.findPoint.Column, 100, locationResult.Angle);
-
-                //料中心模板坐标
-                ImagePara.Instance.DutMode_rowCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(locationResult.findPoint.Row);
-                ImagePara.Instance.DutMode_colCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(locationResult.findPoint.Column);
-                ImagePara.Instance.DutMode_angleCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(locationResult.Angle);
-
-                //放料点模板坐标((ROIRectangle1)(superWind1.roiController.RoiInfo.ROIList[0])).getRegion();
-                ImagePara.Instance.SocketMark_GetDutRow[comboBox_socket.SelectedIndex] = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midR);
-                ImagePara.Instance.SocketMark_GetDutCol[comboBox_socket.SelectedIndex] = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midC);
-                //新取料中心
-                HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, ImagePara.Instance.SocketMark_GetDutRow[comboBox_socket.SelectedIndex],
-                    ImagePara.Instance.SocketMark_GetDutCol[comboBox_socket.SelectedIndex], 100, locationResult.Angle);
-                this.superWind1.obj = locationResult.region;
-                this.superWind1.obj = locationResult.SmallestRec2Xld;
-                this.superWind1.obj = locationResult.shapeModelContour;
-                this.superWind1.obj = roi;
-            }
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            if (this.FileDetect.Checked)
-            {
-                // 表示进行连续测试
-
-                FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
-                openFolderDialog.Description = "D:\\SaveImage";
-                if (openFolderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    ImageProcess_Poc2.list_image_files(openFolderDialog.SelectedPath, "default", new HTuple(), out HTuple hv_ImageFiles);
-                    HImage image = new HImage();
-                    for (int i = 0; i < hv_ImageFiles.Length - 1; i++)
-                    {
-                        image.Dispose();
-                        image = new HImage(hv_ImageFiles[i].S);
-
-                        bool result1 = AutoNormal_New.ImageProcess.SocketDetect(image.CopyImage(), out HObject obj1);
-                        this.superWind1.image = image;
-                        this.superWind1.obj = obj1;
-                        if (result1)
-                        {
-                            MessageBox.Show("有料");
-                        }
-                        else
-                        {
-                            MessageBox.Show("无料");
-                        }
-
-                    }
-
-                }
-            }
-
-            bool result = AutoNormal_New.ImageProcess.SocketDetect(image.CopyImage(), out HObject obj); ;
-            this.superWind1.image = image;
-            this.superWind1.obj = obj;
-            if (result)
+            int  result1 = AutoNormal_New.ImageProcess.SocketDetect(this.superWind1.image, out HObject obj1);
+            this.superWind1.obj = obj1;
+            if (result1==3)
             {
                 MessageBox.Show("有料");
             }
-            else
+            else if (result1 == 0)
             {
                 MessageBox.Show("无料");
+            }
+            else
+            {
+                MessageBox.Show("有料，但歪斜，请确认！");
             }
         }
 
         private void button_serch_Click(object sender, EventArgs e)
         {
-            if (button_serch.Text == "1.编辑搜索区域")
+            SetROI(sender as Button, ref ImagePara.Instance.RegionROI1[comboBox_socket.SelectedIndex]);
+            if(button_serch.Text!="结束")
             {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                AutoNormal_New.ImageProcess.FindSocketMarkFirst(superWind1.image, out HTuple Row_mark, out HTuple Column_mark, out HTuple Phi_mark, out HObject mark);
+                if (Row_mark.Length <= 0)
                 {
-                    button_serch.BackColor = Color.Red;
-                    // this.superWind1.viewController.OnlyImage = false;
-                    button_serch.Text = "结束编辑";
-                    this.superWind1.viewController.repaint();
-                    this.superWind1.roiController.obj = new HRegion();
-                    this.superWind1.isDrawUserRegion = true;
-                    this.superWind1.roiController.m_pen = 41;
+                    AutoNormal_New.ImageProcess.FindSocketMarkSecond(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                    if (Row_mark.Length <= 0)
+                    {
+                        AutoNormal_New.ImageProcess.FindSocketMarkThird(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                    }
                 }
+                //mark点中心
+                if (Column_mark.Length>0)
+                {
+                    ImagePara.Instance.SocketGet_rowCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Row_mark.D);
+                    ImagePara.Instance.SocketGet_colCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Column_mark.D);
+                    ImagePara.Instance.SocketGet_angleCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Phi_mark.D);
+                }
+               
+                HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0,Utility.ImageFile+ "SocketDutImage" + (comboBox_socket.SelectedIndex + 1).ToString());
             }
-            else
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SetROI(sender as Button, ref ImagePara.Instance.RegionROI2[comboBox_socket.SelectedIndex]);
+            if (button_serch.Text != "结束")
             {
-                AutoNormal_New.ImageProcess.FindSocketMark(image, out HTuple Row_mark, out HTuple Column_mark, out HTuple Phi_mark, out HObject mark);
+                AutoNormal_New.ImageProcess.FindSocketMarkFirst(superWind1.image, out HTuple Row_mark, out HTuple Column_mark, out HTuple Phi_mark, out HObject mark);
+                if (Row_mark.Length <= 0)
+                {
+                    AutoNormal_New.ImageProcess.FindSocketMarkSecond(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                    if (Row_mark.Length <= 0)
+                    {
+                        AutoNormal_New.ImageProcess.FindSocketMarkThird(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                    }
+                }
+                if (Column_mark.Length!=1)
+                {
+                    MessageBox.Show("mark识别失败");
+                    return;
+                }
                 //mark点中心
                 ImagePara.Instance.SocketGet_rowCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Row_mark.D);
                 ImagePara.Instance.SocketGet_colCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Column_mark.D);
                 ImagePara.Instance.SocketGet_angleCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Phi_mark.D);
-
-                button_serch.Text = "1.编辑搜索区域";
-                button_serch.BackColor = Color.WhiteSmoke;
-                this.superWind1.isDrawUserRegion = false;
-                string socketName = "SerchROI{0}.hobj";
-                HOperatorSet.WriteObject(((ROI)(superWind1.roiController.RoiInfo.ROIList[1])).getRegion(),
-                    Utility.Model + string.Format(socketName,(comboBox_socket.SelectedIndex).ToString()));
-                superWind1.roiController.RoiInfo.ROIList.RemoveAt(1);
-                superWind1.roiController.RoiInfo.RemarksList.RemoveAt(1);
+                HOperatorSet.WriteImage(this.superWind1.image,"bmp",0,"SocketDutImage"+ (comboBox_socket.SelectedIndex+1).ToString());
             }
         }
 
@@ -811,47 +573,48 @@ namespace VisionFlows.VisionCalculate
             {
                 if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
+                    HOperatorSet.CreateDrawingObjectRectangle2(ImagePara.Instance.slot_offe_rowCenter, ImagePara.Instance.slot_offe_colCenter, 0, 100, 100, out DrawID);
+                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
+                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
                     button_editSlot.BackColor = Color.Red;
-                    this.superWind1.viewController.OnlyImage = false;
                     button_editSlot.Text = "结束编辑";
-                    this.superWind1.viewController.repaint();
                 }
             }
             else
             {
                 button_editSlot.Text = "编辑放料中心";
                 button_editSlot.BackColor = Color.WhiteSmoke;
-                this.superWind1.viewController.OnlyImage = true;
-                this.superWind1.viewController.repaint();
                 OutPutResult locationResult = new OutPutResult();
-                HRegion roi = ImagePara.Instance.GetSerchROI("SlotROI");
-                InputPara locationPara = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
-
+                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotROI);
+                InputPara locationPara = new InputPara(superWind1.image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
                 locationResult = AutoNormal_New.ImageProcess.ShotSlot(locationPara);
-                this.superWind1.image = image;
                 if (locationResult.IsRunOk == false)
                 {
                     MessageBox.Show("定位失败");
                     return;
                 }
                 HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, locationResult.findPoint.Row,
-                    locationResult.findPoint.Column, 100, locationResult.Angle);
+                    locationResult.findPoint.Column, 100, locationResult.Phi);
 
                 //料中心模板坐标
                 ImagePara.Instance.slot_rowCenter = Convert.ToSingle(locationResult.findPoint.Row);
                 ImagePara.Instance.slot_colCenter = Convert.ToSingle(locationResult.findPoint.Column);
-                ImagePara.Instance.slot_angleCenter = Convert.ToSingle(locationResult.Angle);
+                ImagePara.Instance.slot_angleCenter = Convert.ToSingle(locationResult.Phi);
 
+                HOperatorSet.GetDrawingObjectParams(DrawID, "row", out HTuple row1);
+                HOperatorSet.GetDrawingObjectParams(DrawID, "column", out HTuple col1);
+                ImagePara.Instance.slot_offe_rowCenter = (float)row1.D;
+                ImagePara.Instance.slot_offe_colCenter = (float)col1.D;
+                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
                 //放料点模板坐标((ROIRectangle1)(superWind1.roiController.RoiInfo.ROIList[0])).getRegion();
-                ImagePara.Instance.slot_offe_rowCenter = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midR);
-                ImagePara.Instance.slot_offe_colCenter = Convert.ToSingle(((ROIRectangle2)(superWind1.roiController.RoiInfo.ROIList[0])).midC);
                 //新取料中心
                 HOperatorSet.DispCross(superWind1.viewController.viewPort.HalconWindow, ImagePara.Instance.slot_offe_rowCenter,
-                    ImagePara.Instance.slot_offe_colCenter, 100, locationResult.Angle);
+                    ImagePara.Instance.slot_offe_colCenter, 100, locationResult.Phi);
                 this.superWind1.obj = locationResult.region;
                 this.superWind1.obj = locationResult.SmallestRec2Xld;
                 this.superWind1.obj = locationResult.shapeModelContour;
                 this.superWind1.obj = roi;
+                HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile+"SlotImage");
             }
         }
 
@@ -859,7 +622,7 @@ namespace VisionFlows.VisionCalculate
         {
             this.superWind1.Message = "请画出要测量的长度!";
             superWind1.viewController.viewPort.ContextMenuStrip = null;
-            HOperatorSet.GetImageSize(image, out HTuple width, out HTuple height);
+            HOperatorSet.GetImageSize(superWind1.image, out HTuple width, out HTuple height);
             HOperatorSet.DrawLine(this.superWind1.viewController.viewPort.HalconWindow, out HTuple row1, out HTuple col1,
                 out HTuple row2, out HTuple col2);
             HOperatorSet.DistancePp(row1, col1, row2, col2, out HTuple distance_pix);
@@ -904,27 +667,37 @@ namespace VisionFlows.VisionCalculate
             {
                 case 0:
                     CBCameraSelect.SelectedIndex = 0;
-                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.DutExposeTime);
+                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.Exposure_LeftCamGetDUT);
+                    if(File.Exists(Utility.ImageFile+ "DutImage.bmp"))
+                       this.superWind1.image = new HImage(Utility.ImageFile + "DutImage.bmp");
                     break;
 
                 case 1:
                     CBCameraSelect.SelectedIndex = 2;
-                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.DutBackExposeTime);
+                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.Exposure_DownCamScan);
+                    if (File.Exists(Utility.ImageFile + "DutbackImage.bmp"))
+                        this.superWind1.image = new HImage(Utility.ImageFile + "DutbackImage.bmp");
                     break;
 
                 case 2:
                     CBCameraSelect.SelectedIndex = 0;
-                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.SlotExposeTime);
+                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.Exposure_LeftCamGetDUT);
+                    if (File.Exists(Utility.ImageFile + "SlotImage.bmp"))
+                        this.superWind1.image = new HImage(Utility.ImageFile + "SlotImage.bmp");
                     break;
 
                 case 3:
                     CBCameraSelect.SelectedIndex = 1;
-                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.SoketMarkExposeTime);
+                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.Exposure_RightCamGetSocket);
+                    if (File.Exists(Utility.ImageFile + "SocketMarkImage.bmp"))
+                        this.superWind1.image = new HImage(Utility.ImageFile + "SocketMarkImage.bmp");
                     break;
 
                 case 4:
                     CBCameraSelect.SelectedIndex = 1;
-                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.SoketDutExposeTime);
+                    numericUpDown_Expose.Value = Convert.ToDecimal(ImagePara.Instance.Exposure_LeftCamPutSocket);
+                    if (File.Exists(Utility.ImageFile + "SocketDutImage1.bmp"))
+                        this.superWind1.image = new HImage(Utility.ImageFile + "SocketDutImage1.bmp");
                     break;
 
                 default:
@@ -951,27 +724,7 @@ namespace VisionFlows.VisionCalculate
             ImagePara.Instance.SoketMark_maxthreshold = (HTuple)numericUpDown_socktmark_max.Value;
         }
 
-        private void button_save_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                String name = Interaction.InputBox("输入配方名称", "新建配方", "", -1, -1);
-                if (name == "")
-                    return;
-                if (System.IO.File.Exists(Utility.type + name))
-                {
-                    if (MessageBox.Show("替换已存在配方？", "提示", MessageBoxButtons.YesNo) == DialogResult.No)
-                        return;
-                }
-                XmlHelper.Instance().SerializeToXml(Utility.type + name + ".xml", ImagePara.Instance);
-                MessageBox.Show("新增成功:" + Utility.type + name, "提示", MessageBoxButtons.OK);
-                ConfigMgr.Instance.CurrentImageType = name + ".xml";
-            }
-            catch (Exception ee)
-            {
-                AlcUtility.AlcSystem.Instance.ShowMsgBox("更新失败" + ee.Message, "提示", AlcUtility.AlcMsgBoxButtons.OK, AlcUtility.AlcMsgBoxIcon.Error);
-            }
-        }
+      
 
         private bool isrun;
 
@@ -1005,7 +758,7 @@ namespace VisionFlows.VisionCalculate
 
                                 HImage image = new HImage(hv_ImageFiles.TupleSelect(hv_Index));
                                 OutPutResult result = new OutPutResult();
-                                HRegion roi = ImagePara.Instance.GetSerchROI("SlotDutROI");
+                                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SlotDutROI);
                                 InputPara para = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_Traydut.Value));
                                 result = AutoNormal_New.ImageProcess.TrayDutFront(para);
                                 this.superWind1.image = image;
@@ -1014,7 +767,7 @@ namespace VisionFlows.VisionCalculate
                                 {
                                     this.superWind1.obj = result.shapeModelContour;
                                     HXLDCont Cross = new HXLDCont();
-                                    HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                                    HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                                     Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
                                     this.superWind1.obj = Cross;
                                     this.superWind1.obj = result.SmallestRec2Xld;
@@ -1069,16 +822,16 @@ namespace VisionFlows.VisionCalculate
                                 System.Threading.Thread.Sleep(1000);
                                 HImage Image = new HImage(hv_ImageFiles.TupleSelect(hv_Index));
                                 OutPutResult result = new OutPutResult();
-                                HRegion roi = ImagePara.Instance.GetSerchROI("DutBackROI");
+                                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.DutBackROI);
                                 InputPara para = new InputPara(Image, roi,null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
-                                result = AutoNormal_New.ImageProcess.SecondDutBack(para, new PLCSend() { Func = 1 });
-                                this.superWind1.image = image;
-                                image.Dispose();
+                                result = AutoNormal_New.ImageProcess.SecondDutBack_Circle(para, new PLCSend() { Func = 1 });
+                                this.superWind1.image = Image;
+                                Image.Dispose();
                                 if (result.IsRunOk)
                                 {
                                     this.superWind1.obj = result.shapeModelContour;
                                     HXLDCont Cross = new HXLDCont();
-                                    HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                                    HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                                     Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
                                     this.superWind1.obj = Cross;
                                     this.superWind1.obj = result.SmallestRec2Xld;
@@ -1133,16 +886,16 @@ namespace VisionFlows.VisionCalculate
                                 System.Threading.Thread.Sleep(1000);
                                 HImage Image = new HImage(hv_ImageFiles.TupleSelect(hv_Index));
                                 OutPutResult result = new OutPutResult();
-                                HRegion roi = ImagePara.Instance.GetSerchROI("SocketMarkROI");
+                                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketDutROI);
                                 InputPara para = new InputPara(Image,roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
-                                result = AutoNormal_New.ImageProcess.SocketMark(para,out HObject mark);
-                                this.superWind1.image = image;
-                                image.Dispose();
+                                result = AutoNormal_New.ImageProcess.ShotSlot(para);
+                                this.superWind1.image = Image;
+                                Image.Dispose();
                                 if (result.IsRunOk)
                                 {
                                     this.superWind1.obj = result.shapeModelContour;
                                     HXLDCont Cross = new HXLDCont();
-                                    HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                                    HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                                     Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
                                     this.superWind1.obj = Cross;
                                     this.superWind1.obj = result.SmallestRec2Xld;
@@ -1197,16 +950,16 @@ namespace VisionFlows.VisionCalculate
                                 System.Threading.Thread.Sleep(500);
                                 HImage Image = new HImage(hv_ImageFiles.TupleSelect(hv_Index));
                                 OutPutResult result = new OutPutResult();
-                                HRegion roi = ImagePara.Instance.GetSerchROI("SocketMarkROI");
+                                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketMarkROI);
                                 InputPara para = new InputPara(Image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
                                 result = AutoNormal_New.ImageProcess.SocketMark(para, out HObject mark);
-                                this.superWind1.image = image;
-                                image.Dispose();
+                                this.superWind1.image = Image;
+                                Image.Dispose();
                                 if (result.IsRunOk)
                                 {
                                     this.superWind1.obj = result.shapeModelContour;
                                     HXLDCont Cross = new HXLDCont();
-                                    HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                                    HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                                     Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
                                     this.superWind1.obj = Cross;
                                     this.superWind1.obj = result.SmallestRec2Xld;
@@ -1261,8 +1014,8 @@ namespace VisionFlows.VisionCalculate
                                 System.Threading.Thread.Sleep(1000);
                                 HImage image = new HImage(hv_ImageFiles.TupleSelect(hv_Index));
                                 OutPutResult result = new OutPutResult();
-                                HRegion roi = ImagePara.Instance.GetSerchROI("SocketDutROI");
-                                InputPara para = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
+                                HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketDutROI);
+                                InputPara para = new InputPara(image, image.GetDomain(), null, Convert.ToDouble(this.numericUpDown_score_socktdut.Value));
                                 result = AutoNormal_New.ImageProcess.SocketDutFront(para);
                                 this.superWind1.image = image;
                                 image.Dispose();
@@ -1272,7 +1025,7 @@ namespace VisionFlows.VisionCalculate
                                     this.superWind1.obj = result.shapeModelContour;
                                     this.superWind1.Message = string.Format("宽：{0} 高{1}", result.Dutwidth, result.Dutheight);
                                     HXLDCont Cross = new HXLDCont();
-                                    HOperatorSet.TupleRad(result.Angle, out HTuple rad);
+                                    HOperatorSet.TupleRad(result.Phi, out HTuple rad);
                                     Cross.GenCrossContourXld(result.findPoint.Row, result.findPoint.Column, 200, rad);
                                     this.superWind1.obj = Cross;
                                     this.superWind1.obj = result.SmallestRec2Xld;
@@ -1297,153 +1050,105 @@ namespace VisionFlows.VisionCalculate
                 isrun = false;
             }
         }
-
-        private void tabPage5_Click(object sender, EventArgs e)
+      
+        string text;
+        private void SetROI(Button button, ref System.Drawing.Rectangle rec)
         {
+            if (button.Text != "结束")
+            {
+                text = button.Text;
+                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    if (rec == null)
+                        rec = new Rectangle();
+                    HOperatorSet.CreateDrawingObjectRectangle1(rec.Y, rec.X, rec.Y + rec.Height + 10, rec.X + rec.Width + 10, out DrawID);
+                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
+                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
+                    button.BackColor = Color.Red;
+                    button.Text = "结束";
+                }
+            }
+            else
+            {
+                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
+                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
+                rec = new System.Drawing.Rectangle(col1, row1, col2 - col1, row2 - row1);
+                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
+                button.Text = text;
+                button.BackColor = Color.WhiteSmoke;
+            }
         }
+ 
         HTuple DrawID;
+        /// <summary>
+        /// 上料DUT搜索区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_dutRoi_Click(object sender, EventArgs e)
         {
-            if (button_dutRoi.Text == "编辑搜索区域")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ImagePara.Instance.GetSerchROI("SlotDutROI",out HTuple row1,out HTuple col1,out HTuple row2,out HTuple col2);
-                    HOperatorSet.CreateDrawingObjectRectangle1(row1, col1, row2, col2, out DrawID);
-                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
-                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow,DrawID);
-                    button_dutRoi.BackColor = Color.Red;
-                    button_dutRoi.Text = "结束编辑";
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
-                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                ImagePara.Instance.SetSerchROI("SlotDutROI", col1,row1,   col2 ,row2 );
-                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                button_dutRoi.Text = "编辑搜索区域";
-                button_dutRoi.BackColor = Color.WhiteSmoke;
-            }
-        }
 
+            SetROI(button_dutRoi, ref ImagePara.Instance.SlotDutROI);
+            
+            HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile+"DutImage");
+        }
+        /// <summary>
+        /// DUT背面搜索区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_dutbackROI_Click(object sender, EventArgs e)
         {
-            if (button_dutbackROI.Text == "编辑搜索区域")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ImagePara.Instance.GetSerchROI("DutBackROI", out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                    HOperatorSet.CreateDrawingObjectRectangle1(row1, col1, row2, col2, out DrawID);
-                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
-                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                    button_dutbackROI.Text = "结束编辑";
-                    button_dutbackROI.BackColor = Color.Red;
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
-                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                ImagePara.Instance.SetSerchROI("DutBackROI", col1,row1,   col2,row2);
-                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                button_dutbackROI.Text = "编辑搜索区域";
-                button_dutbackROI.BackColor = Color.WhiteSmoke;
-            }
+            SetROI(button_dutbackROI, ref ImagePara.Instance.DutBackROI);
+            HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile+"DutbackImage");
         }
-
+        /// <summary>
+        /// slot搜索区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_slotROI_Click(object sender, EventArgs e)
         {
-            if (button_slotROI.Text == "编辑搜索区域")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ImagePara.Instance.GetSerchROI("SlotROI", out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                    HOperatorSet.CreateDrawingObjectRectangle1(row1, col1, row2, col2, out DrawID);
-                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
-                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                    button_slotROI.Text = "结束编辑";
-                    button_slotROI.BackColor = Color.Red;
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
-                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                ImagePara.Instance.SetSerchROI("SlotROI", col1,row1,  col2,row2);
-                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                button_slotROI.Text = "编辑搜索区域";
-                button_slotROI.BackColor = Color.WhiteSmoke;
-            }
+            SetROI(button_slotROI, ref ImagePara.Instance.SlotROI);
         }
-
+        /// <summary>
+        /// Socket  Mark搜索区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_SocketRoi_Click(object sender, EventArgs e)
         {
-            if (button_SocketRoi.Text == "编辑搜索区域")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ImagePara.Instance.GetSerchROI("SocketMarkROI", out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                    HOperatorSet.CreateDrawingObjectRectangle1(row1, col1, row2, col2, out DrawID);
-                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
-                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                    button_SocketRoi.Text = "结束编辑";
-                    button_SocketRoi.BackColor = Color.Red;
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
-                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                ImagePara.Instance.SetSerchROI("SocketMarkROI", col1, row1,  col2,row2);
-                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                button_SocketRoi.Text = "编辑搜索区域";
-                button_SocketRoi.BackColor = Color.WhiteSmoke;
-            }
+            SetROI(button_SocketRoi, ref ImagePara.Instance.SocketDutROI);
         }
-
+        /// <summary>
+        /// soket dut搜索区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_SocketDutRoi_Click(object sender, EventArgs e)
         {
-            if (button_SocketDutRoi.Text == "编辑搜索区域")
-            {
-                if (MessageBox.Show("确定进入更新设置", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ImagePara.Instance.GetSerchROI("SocketDutROI", out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                    HOperatorSet.CreateDrawingObjectRectangle1(row1, col1, row2, col2, out DrawID);
-                    HOperatorSet.SetDrawingObjectParams(DrawID, "color", "red");
-                    HOperatorSet.AttachDrawingObjectToWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                    button_SocketDutRoi.Text = "结束编辑";
-                    button_SocketDutRoi.BackColor = Color.Red;
-                    this.superWind1.viewController.repaint();
-                }
-            }
-            else
-            {
-                HOperatorSet.GetDrawingObjectIconic(out HObject obj, DrawID);
-                HOperatorSet.SmallestRectangle1(obj, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2);
-                ImagePara.Instance.SetSerchROI("SocketDutROI", col1,row1,  col2,row2);
-                HOperatorSet.DetachDrawingObjectFromWindow(this.superWind1.viewController.viewPort.HalconWindow, DrawID);
-                button_SocketDutRoi.Text = "编辑搜索区域";
-                button_SocketDutRoi.BackColor = Color.WhiteSmoke;
-            }
+            SetROI(button_SocketDutRoi, ref ImagePara.Instance.SocketMarkROI);
         }
 
         private void comboBox_socket_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!isLoad)
+                return;
             ImageProcess_Poc2.CurrentSoket = comboBox_socket.SelectedIndex;
             numericUpDown_socktdut_min.Value = ImagePara.Instance.SoketDut_minthreshold[ImageProcess_Poc2.CurrentSoket];
             numericUpDown_socktdut_max.Value = ImagePara.Instance.SoketDut_maxthreshold[ImageProcess_Poc2.CurrentSoket];
+            var path = Utility.ImageFile + "SocketDutImage" + (comboBox_socket.SelectedIndex + 1).ToString()+".bmp";
+            if (File.Exists(path))
+            {
+                this.superWind1.image = new HImage(path);
+            }
         }
 
         private void btn_DutDetect_Click(object sender, EventArgs e)
         {
             try
             {
-                if (AutoNormal_New.DutBackgroundDetect(this.image))
+                if (AutoNormal_New.DutBackgroundDetect(superWind1.image))
                 {
                     MessageBox.Show("有料");
                 }
@@ -1457,22 +1162,28 @@ namespace VisionFlows.VisionCalculate
             
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void numericUpDown_PushBlock_ValueChanged(object sender, EventArgs e)
         {
             ImagePara.Instance.PushBlock = (HTuple)numericUpDown_PushBlock.Value;
         }
-
+        /// <summary>
+        /// 检查推块
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_checkBlock_Click(object sender, EventArgs e)
         {
-            this.superWind1.image = image;
-            HRegion roi = ImagePara.Instance.GetSerchROI("SocketMarkROI");
-            InputPara locationPara = new InputPara(image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktMark.Value));
-            AutoNormal_New.ImageProcess.FindSocketMark(locationPara.image, out HTuple row1, out HTuple col1,out HTuple phi,out HObject mark) ;
+            HRegion roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketMarkROI);
+            InputPara locationPara = new InputPara(superWind1.image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktMark.Value));
+            AutoNormal_New.ImageProcess.FindSocketMarkFirst(locationPara.image, out HTuple row1, out HTuple col1,out HTuple phi,out HObject mark) ;
+            if (row1.Length <= 0)
+            {
+                AutoNormal_New.ImageProcess.FindSocketMarkSecond(superWind1.image, out row1, out col1, out phi, out mark);
+                if (row1.Length <= 0)
+                {
+                    AutoNormal_New.ImageProcess.FindSocketMarkThird(superWind1.image, out row1, out col1, out phi, out mark);
+                }
+            }
             if (row1.Length <=0 )
             {
                 
@@ -1481,12 +1192,293 @@ namespace VisionFlows.VisionCalculate
             }
             this.superWind1.obj = mark;
             mark.Dispose();
+            roi = ImagePara.Instance.GetSerchROI(ImagePara.Instance.SocketBlockROI);
+            locationPara = new InputPara(superWind1.image, roi, null, Convert.ToDouble(this.numericUpDown_score_socktMark.Value));
             bool result=  AutoNormal_New.ImageProcess.BlockDetect(row1, col1, locationPara, out int distance,out HObject arrow);
             this.superWind1.obj = arrow;
             this.superWind1.Message = "推块距离:" + distance.ToString();
             if(!result)
             {
                 MessageBox.Show("推块位置太短！");
+            }
+        }
+        /// <summary>
+        /// 新增配方
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateRecipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String name = Interaction.InputBox("输入配方名称", "新建配方", "", -1, -1);
+                if (name == "")
+                    return;
+                if (System.IO.File.Exists(Utility.TypeFile + name))
+                {
+                    if (MessageBox.Show("替换已存在配方？", "提示", MessageBoxButtons.YesNo) == DialogResult.No)
+                        return;
+                }
+                XmlHelper.Instance().SerializeToXml(Utility.TypeFile + name + ".xml", ImagePara.Instance);
+                MessageBox.Show("新增成功:" + Utility.TypeFile + name, "提示", MessageBoxButtons.OK);
+                ConfigMgr.Instance.CurrentImageType = name + ".xml";
+            }
+            catch (Exception ee)
+            {
+                AlcUtility.AlcSystem.Instance.ShowMsgBox("更新失败" + ee.Message, "提示", AlcUtility.AlcMsgBoxButtons.OK, AlcUtility.AlcMsgBoxIcon.Error);
+            }
+        }
+        /// <summary>
+        /// 保存配方
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveRecipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                XmlHelper.Instance().SerializeToXml(Utility.TypeFile + ConfigMgr.Instance.CurrentImageType, ImagePara.Instance);
+                MessageBox.Show("保存OK");
+            }
+            catch (Exception ee)
+            {
+                AlcUtility.AlcSystem.Instance.ShowMsgBox("更新视觉配方失败", "提示", AlcUtility.AlcMsgBoxButtons.OK, AlcUtility.AlcMsgBoxIcon.Error);
+            }
+        }
+
+        private void CompensateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormOffset form = new FormOffset();
+            form.Show();
+            form.TopMost = true;
+        }
+
+        private void button_DutbackDataCodeRoi_Click(object sender, EventArgs e)
+        {
+            SetROI(sender as Button, ref ImagePara.Instance.DutBackDataCodeROI);
+            HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile + "DutbackImage");
+        }
+        /// <summary>
+        /// 相机选择更改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CBCameraSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!isLoad)
+                return;
+            this.CurrentCameraUserID =(EnumCamera)Enum.Parse(typeof(EnumCamera) , CBCameraSelect.SelectedIndex.ToString()) ;
+            if(CameraManager.CameraById(CurrentCameraUserID.ToString()) !=null)
+            {
+                this.numericUpDown_Expose.Value = CameraManager.CameraById(CurrentCameraUserID.ToString()).ShuterCur;
+                this.numericUpDown_Expose.Enabled = true;
+            }
+            else
+            {
+                this.numericUpDown_Expose.Enabled = false;
+            }
+        }
+        /// <summary>
+        /// 设置曝光
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numericUpDown_Expose_ValueChanged(object sender, EventArgs e)
+        {
+            if (!isLoad)
+                return;
+                double ExposeTime = Convert.ToDouble(numericUpDown_Expose.Value);
+                CameraManager.CameraById(CurrentCameraUserID.ToString()).ShuterCur = (long)(ExposeTime);
+        }
+
+        private void button_BlockROI_Click(object sender, EventArgs e)
+        {
+            SetROI(button_BlockROI, ref ImagePara.Instance.SocketBlockROI);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            SetROI(sender as Button, ref ImagePara.Instance.TrayDutROI1);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SetROI(button7, ref ImagePara.Instance.TrayDutROI2);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            HObject ho_Region, ho_RegionOpening;
+            HObject ho_RegionFillUp, ho_RegionDifference, ho_ConnectedRegions;
+            HObject ho_SelectedRegions, ho_RegionTrans, ho_Cross;
+            HTuple hv_Area = new HTuple(), hv_Row = new HTuple();
+            HTuple hv_Column = new HTuple(), hv_row = new HTuple();
+            HTuple hv_col = new HTuple();
+            // Initialize local and output iconic variables 
+            HOperatorSet.GenEmptyObj(out ho_Region);
+            HOperatorSet.GenEmptyObj(out ho_RegionOpening);
+            HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
+            HOperatorSet.GenEmptyObj(out ho_RegionDifference);
+            HOperatorSet.GenEmptyObj(out ho_ConnectedRegions);
+            HOperatorSet.GenEmptyObj(out ho_SelectedRegions);
+            HOperatorSet.GenEmptyObj(out ho_RegionTrans);
+            HOperatorSet.GenEmptyObj(out ho_Cross);
+
+
+            ho_Region.Dispose();
+            HOperatorSet.Threshold(this.superWind1.image, out ho_Region, 0, 50);
+            ho_RegionOpening.Dispose();
+            HOperatorSet.OpeningCircle(ho_Region, out ho_RegionOpening, 21);
+            ho_RegionFillUp.Dispose();
+            HOperatorSet.FillUp(ho_RegionOpening, out ho_RegionFillUp);
+            ho_RegionDifference.Dispose();
+            HOperatorSet.Difference(ho_RegionFillUp, ho_RegionOpening, out ho_RegionDifference
+                );
+            ho_ConnectedRegions.Dispose();
+            HOperatorSet.Connection(ho_RegionDifference, out ho_ConnectedRegions);
+            ho_SelectedRegions.Dispose();
+            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area",
+                "and", 120000, 200000);
+
+            HObject ExpTmpOutVar_0;
+            HOperatorSet.SelectShape(ho_SelectedRegions, out ExpTmpOutVar_0, "rectangularity",
+                "and", 0.7, 1);
+
+
+            HOperatorSet.CountObj(ExpTmpOutVar_0, out HTuple number);
+            if (number != 2)
+            {
+                return;
+
+            }
+            ho_RegionTrans.Dispose();
+            HOperatorSet.ShapeTrans(ho_SelectedRegions, out ho_RegionTrans, "rectangle2");
+            hv_Area.Dispose(); hv_Row.Dispose(); hv_Column.Dispose();
+            HOperatorSet.AreaCenter(ho_RegionTrans, out hv_Area, out hv_Row, out hv_Column);
+            hv_row.Dispose();
+            //粗定位mark点
+            hv_row = ((hv_Row.TupleSelect(
+                0)) + (hv_Row.TupleSelect(1))) / 2;
+            hv_col = ((hv_Column.TupleSelect(
+                0)) + (hv_Column.TupleSelect(1))) / 2;
+            ImagePara.Instance.tray_rough_posi_row = hv_row;
+            ImagePara.Instance.tray_rough_posi_col = hv_col;
+            HOperatorSet.GenCrossContourXld(out HObject cross, hv_row, hv_col, 200, 0);
+            this.superWind1.obj = cross;
+
+
+
+        }
+
+        private void btn_HaveOrNotRoi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetROI(sender as Button, ref ImagePara.Instance.SocketIsDutROI[comboBox_socket.SelectedIndex]);
+                if (button_serch.Text != "结束")
+                {
+                    AutoNormal_New.ImageProcess.FindSocketMarkFirst(superWind1.image, out HTuple Row_mark, out HTuple Column_mark, out HTuple Phi_mark, out HObject mark);
+                    if (Row_mark.Length <= 0)
+                    {
+                        AutoNormal_New.ImageProcess.FindSocketMarkSecond(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                        if (Row_mark.Length <= 0)
+                        {
+                            AutoNormal_New.ImageProcess.FindSocketMarkThird(superWind1.image, out Row_mark, out Column_mark, out Phi_mark, out mark);
+                        }
+                    }
+                    //mark点中心
+                    if (Column_mark.Length > 0)
+                    {
+                        ImagePara.Instance.SocketDut_RoiRow[comboBox_socket.SelectedIndex] = Convert.ToSingle(Row_mark.D);
+                        ImagePara.Instance.SocketDut_RoiCol[comboBox_socket.SelectedIndex] = Convert.ToSingle(Column_mark.D);
+                        //ImagePara.Instance.SocketGet_angleCenter[comboBox_socket.SelectedIndex] = Convert.ToSingle(Phi_mark.D);
+                    }
+
+                    //HOperatorSet.WriteImage(this.superWind1.image, "bmp", 0, Utility.ImageFile + "SocketDutImage" + (comboBox_socket.SelectedIndex + 1).ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+            
+        }
+
+        private void button_RangeArea_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                HOperatorSet.Threshold(this.superWind1.image, out HObject region, ImagePara.Instance.TrayDut_minthreshold, ImagePara.Instance.TrayDut_maxthreshold);
+                HOperatorSet.AreaCenter(region, out HTuple area, out HTuple row, out HTuple col);
+                this.superWind1.ObjColor = "red";
+                this.superWind1.obj = region;
+                MessageBox.Show("阈值范围内的面积为" + area.ToString());
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
+        private void ExposureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FormExposure formExposure = new FormExposure();
+                formExposure.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool flag = Utility.IsSaveAllImage;
+                bool flag1 = Utility.IsSaveNgImage;
+                AutoNormal_New.SaveImage("Nozzle1_Socket",this.superWind1.image);
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                AutoNormal_New.SaveOriginalImage("", "Get TrayDut", this.superWind1.image, false);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                HOperatorSet.Threshold(this.superWind1.image, out HObject region, 200, 255);
+                HOperatorSet.DispObj(region, this.superWind1.hwind.HalconWindow);
+                HOperatorSet.DumpWindowImage(out HObject image1, this.superWind1.hwind.HalconWindow);
+                AutoNormal_New.SaveDumpImage("FNL123555", "PUT socket", image1, true);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
     }

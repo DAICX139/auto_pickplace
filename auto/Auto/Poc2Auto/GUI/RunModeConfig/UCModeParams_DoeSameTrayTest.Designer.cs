@@ -45,8 +45,8 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(350, 512);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(430, 637);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // uC_GridviewTray1
@@ -57,20 +57,20 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.uC_GridviewTray1.Margin = new System.Windows.Forms.Padding(0);
             this.uC_GridviewTray1.Name = "uC_GridviewTray1";
             this.uC_GridviewTray1.ShowCoordinate = null;
-            this.uC_GridviewTray1.Size = new System.Drawing.Size(350, 512);
+            this.uC_GridviewTray1.Size = new System.Drawing.Size(430, 637);
             this.uC_GridviewTray1.TabIndex = 0;
             this.uC_GridviewTray1.Title = "Tray";
-            this.uC_GridviewTray1.TrayCol = 14;
-            this.uC_GridviewTray1.TrayRow = 32;
+            this.uC_GridviewTray1.TrayCol = 8;
+            this.uC_GridviewTray1.TrayRow = 20;
             // 
             // UCModeParams_DoeSameTrayTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "UCModeParams_DoeSameTrayTest";
-            this.Size = new System.Drawing.Size(350, 512);
+            this.Size = new System.Drawing.Size(430, 637);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

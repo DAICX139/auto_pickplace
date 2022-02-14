@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VisionFlows</RootNamespace>
     <AssemblyName>VisionFlows</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -43,6 +43,10 @@
       <HintPath>..\ALC\bin\AlcUtility.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AmpLanguage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\AmpLanguage.dll</HintPath>
+    </Reference>
     <Reference Include="halcondotnet, Version=19.11.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ALC\bin\halcondotnet.dll</HintPath>
@@ -50,11 +54,6 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NetAndEvent">
       <HintPath>..\ALC\bin\NetAndEvent.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Poc2Auto, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ALC\plugins\Poc2Auto.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -68,43 +67,38 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="VisionCamera.Basler">
-      <HintPath>..\ALC\bin\VisionCamera.Basler.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VisionControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ALC\bin\VisionControls.dll</HintPath>
-    </Reference>
-    <Reference Include="VisionDemo">
-      <HintPath>..\ALC\bin\VisionDemo.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VisionModules">
-      <HintPath>..\ALC\bin\VisionModules.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="VisionUtility">
-      <HintPath>..\ALC\bin\VisionUtility.dll</HintPath>
-      <Private>False</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
       <HintPath>..\ALC\bin\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015">
+      <HintPath>..\ALC\bin\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcqPosi.cs" />
     <Compile Include="Algorithm.cs" />
-    <Compile Include="Form_offset.cs">
+    <Compile Include="DeviceCamera.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_offset.Designer.cs">
-      <DependentUpon>Form_offset.cs</DependentUpon>
+    <Compile Include="DeviceCamera.Designer.cs">
+      <DependentUpon>DeviceCamera.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormExposure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormExposure.Designer.cs">
+      <DependentUpon>FormExposure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormOffset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOffset.Designer.cs">
+      <DependentUpon>FormOffset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="ImagePara.cs" />
     <Compile Include="ImageProcessBase.cs" />
+    <Compile Include="ImageProcess_P2D.cs" />
     <Compile Include="MultipleModes_New\AutoNormal_New.cs" />
     <Compile Include="MultipleModes_New\AutoSelect_New.cs" />
     <Compile Include="MultipleModes_New\DeoSlip_New.cs" />
@@ -115,27 +109,9 @@
     <Compile Include="NewCalib\FormNewCalib.Designer.cs">
       <DependentUpon>FormNewCalib.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParameterSetting\FrmAutoSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ParameterSetting\FrmAutoSelect.Designer.cs">
-      <DependentUpon>FrmAutoSelect.cs</DependentUpon>
-    </Compile>
     <Compile Include="NewCalib\StaticCameraCalib.cs" />
     <Compile Include="PLC\Plc.cs" />
     <Compile Include="ImageProcess_Poc2.cs" />
-    <Compile Include="ParameterSetting\FrmAutoNormal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ParameterSetting\FrmAutoNormal.Designer.cs">
-      <DependentUpon>FrmAutoNormal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PLC\FrmPlc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PLC\FrmPlc.Designer.cs">
-      <DependentUpon>FrmPlc.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmVisionUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,20 +133,17 @@
     <Compile Include="VisionCalculate\VisionLocation.cs" />
     <Compile Include="Helper\VisionPlugin.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
-    <EmbeddedResource Include="Form_offset.resx">
-      <DependentUpon>Form_offset.cs</DependentUpon>
+    <EmbeddedResource Include="DeviceCamera.resx">
+      <DependentUpon>DeviceCamera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormExposure.resx">
+      <DependentUpon>FormExposure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOffset.resx">
+      <DependentUpon>FormOffset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewCalib\FormNewCalib.resx">
       <DependentUpon>FormNewCalib.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterSetting\FrmAutoNormal.resx">
-      <DependentUpon>FrmAutoNormal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParameterSetting\FrmAutoSelect.resx">
-      <DependentUpon>FrmAutoSelect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PLC\FrmPlc.resx">
-      <DependentUpon>FrmPlc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmVisionUI.resx">
       <DependentUpon>FrmVisionUI.cs</DependentUpon>
@@ -220,6 +193,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rotatePath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Poc2Auto\Poc2Auto.csproj">
+      <Project>{e6817e8f-4fd8-4f09-ac7f-314f4807f5ab}</Project>
+      <Name>Poc2Auto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisionControls\VisionControls.csproj">
+      <Project>{814f34ce-e403-4ded-b784-eef17f3e6e23}</Project>
+      <Name>VisionControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisionSDK\VisionSDK.csproj">
+      <Project>{25288bbb-892a-43c9-bc0c-fea0eb6b7c80}</Project>
+      <Name>VisionSDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

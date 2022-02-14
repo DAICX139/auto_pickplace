@@ -26,14 +26,15 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Both))
                  {
                      if (RunModeMgr.TakeOffTest(_client, ucModeParams_DoeTakeOffTest1.TakeOffParam, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.DoeTakeOff;
                          RunModeMgr.Running = false;
+                         RunModeMgr.OriginValue = false;
                          AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {

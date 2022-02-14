@@ -19,7 +19,7 @@ namespace Poc2Auto.GUI.FormMode
             _client = client;
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void btnOK_Click_1(object sender, EventArgs e)
         {
             if (_client == null)
                 return;
@@ -27,14 +27,14 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Both))
                  {
                      if (RunModeMgr.SockeTest(_client, ucModeParams_SocketTest1.ParamData, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.DoeSocketUniformityTest;
                          RunModeMgr.Running = false;
                          AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {
@@ -65,6 +65,11 @@ namespace Poc2Auto.GUI.FormMode
         private void btnContinueTest_Click(object sender, EventArgs e)
         {
             EventCenter.SocketTestContinue?.Invoke();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

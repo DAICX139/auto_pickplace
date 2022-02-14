@@ -34,7 +34,7 @@ namespace Poc2Auto.GUI.RunModeConfig
                 {
                     LoadNum = UCMain.Instance.ucTrays1.LoadLRegionNumber,
                     LoadRegion = UCMain.Instance.ucTrays1.LoadLTrayData,
-                    LoadTaryID = (int)TrayName.LoadL,
+                    LoadTaryID = (int)TrayName.Load1,
                     DutSnList = snList
                 };
             }
@@ -162,9 +162,12 @@ namespace Poc2Auto.GUI.RunModeConfig
         private void ckbxOnlyScan_CheckedChanged(object sender, EventArgs e)
         {
             RunModeMgr.IsOnlyScanMode = ckbxOnlyScan.Checked;
-
+            EventCenter.ScanMode?.Invoke();
             btnImport.Enabled = !ckbxOnlyScan.Checked;
             buttonAddSnList.Enabled = !ckbxOnlyScan.Checked;
+            textBoxInput.Enabled = !ckbxOnlyScan.Checked; 
+            ckbxAllSelect.Enabled = !ckbxOnlyScan.Checked;
+            listBoxSNs.Enabled = !ckbxOnlyScan.Checked; 
         }
 
         private void btnImport_Click(object sender, EventArgs e)

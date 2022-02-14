@@ -44,14 +44,15 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Handler))
                  {
                      if (RunModeMgr.DifferentTrayTest(_client, ucModeParams_DoeDifferentTrayTest1.DifferentTrayParam, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.DoeDifferentTray;
                          RunModeMgr.Running = false;
+                         RunModeMgr.OriginValue = false;
                          AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using CYGKit.AdsProtocol;
 using Poc2Auto.Model;
 using System;
-using AlcUtility;
 using Poc2Auto.Database;
-using System.IO;
 using LogLib.Managers;
+using System.IO;
+using System.Text;
+using AlcUtility;
 
 namespace Poc2Auto.Common
 {
@@ -17,10 +18,21 @@ namespace Poc2Auto.Common
         public static Action YieldDutChanged;
         public static Action FailDutChanged;
         public static Action CurrentSocketIDChanged;
+        public static Action TesterStateChanged;
+        public static Action HandlerStateChanged;
+        public static Action<bool> LoadVacuumChanged;
+        public static Action<bool> UnloadVacuumChanged;
+        public static Action<uint> EventClassChanged;
+        public static Action<bool> CompleteFlagChanged;
+        public static Action LoadTraySizeChanged;
+        public static Action NGTraySizeChanged;
+        public static Action UnloadTraySizeChanged;
 
-        /// <summary>
-        /// 当前运行模式
-        /// </summary>
+        private static CustomMode _customMode;
+        public static event Action CustomModeChanged;
+        private static AdsDriverClient testerClient = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Tester.ToString()) as AdsDriverClient;
+        private static AdsDriverClient HandlerClient = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Handler.ToString()) as AdsDriverClient;
+
         public static RunMode RunMode
         {
             get => _runMode;
@@ -32,10 +44,6 @@ namespace Poc2Auto.Common
                 RunModeChanged?.Invoke();
             }
         }
-
-        private static CustomMode _customMode;
-        public static event Action CustomModeChanged;
-        private static AdsDriverClient testerClient = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Tester.ToString()) as AdsDriverClient;
 
         public static CustomMode CustomMode
         {
@@ -49,161 +57,514 @@ namespace Poc2Auto.Common
             }
         }
 
+        public static SocketStatus SocketStatus { set; get; }
+
         private static ushort _socketID;
 
         public static ushort SocketID
         {
             get { return _socketID; }
-            set 
-            { 
+            set
+            {
                 _socketID = value;
                 CurrentSocketIDChanged?.Invoke();
             }
         }
+        private static bool _CompleteFlag;
+
+        public static bool CompleteFlag
+        {
+            get { return _CompleteFlag; }
+            set
+            {
+                if (value == _CompleteFlag)
+                    return;
+                _CompleteFlag = value;
+                CompleteFlagChanged?.Invoke(value);
+            }
+        }
+
+        private static bool _handlerAllAxisHomed;
+
+        public static bool HandlerAllAxisHomed
+        {
+            get { return _handlerAllAxisHomed; }
+            set { _handlerAllAxisHomed = value; }
+        }
+
+        private static bool _testerAllAxisHomed;
+
+        public static bool TesterAllAxisHomed
+        {
+            get { return _testerAllAxisHomed; }
+            set { _testerAllAxisHomed = value; }
+        }
+
+        private static uint _testerCurrentState;
+
+        public static uint TesterCurrentState
+        {
+            get { return _testerCurrentState; }
+            set
+            {
+                if (value == _testerCurrentState) return;
+                _testerCurrentState = value;
+                TesterStateChanged?.Invoke();
+            }
+        }
+
+        private static uint _handlerCurrentState;
+
+        public static uint HandlerCurrentState
+        {
+            get { return _handlerCurrentState; }
+            set
+            {
+                if (value == _handlerCurrentState) return;
+                _handlerCurrentState = value;
+                TesterStateChanged?.Invoke();
+            }
+        }
+
+        private static bool _lightControl;
+
+        /// <summary>
+        /// 普通照明灯
+        /// </summary>
+        public static bool LightControl
+        {
+            get { return _lightControl; }
+            set { _lightControl = value; }
+        }
+
+        private static bool _maintenanceLamp;
+
+        /// <summary>
+        /// 检修照明灯
+        /// </summary>
+        public static bool MaintenanceLamp
+        {
+            get { return _maintenanceLamp; }
+            set { _maintenanceLamp = value; }
+        }
+
         public static string IsMatchDutSN;
 
-        private static int _yieldDut;
+        private static bool _lampYellow;
 
-        public static int YieldDut
+        /// <summary>
+        /// 三色灯-黄色
+        /// </summary>
+        public static bool LampYellow
         {
-            get { return _yieldDut; }
-            set 
-            { 
-                _yieldDut = value;
-                YieldDutChanged?.Invoke();
+            get { return _lampYellow; }
+            set
+            {
+                _lampYellow = value;
+                HandlerClient?.WriteObject(Name_TricolorLampYellow, value);
             }
         }
 
-        private static int _failDut;
+        private static bool _lampGreen;
 
-        public static int FailDut
+        /// <summary>
+        /// 三色灯-绿色
+        /// </summary>
+        public static bool LampGreen
         {
-            get { return _failDut; }
-            set 
-            { 
-                _failDut = value;
-                FailDutChanged?.Invoke();
+            get { return _lampGreen; }
+            set
+            {
+                _lampGreen = value;
+                HandlerClient?.WriteObject(Name_TricolorLampGreen, value);
             }
         }
 
-        public static int UnloadTotal;
+        private static bool _lampRed;
+
+        /// <summary>
+        /// 三色灯-红色
+        /// </summary>
+        public static bool LampRed
+        {
+            get { return _lampRed; }
+            set
+            {
+                _lampRed = value;
+                HandlerClient?.WriteObject(Name_TricolorLampRed, value);
+            }
+        }
+
+        private static bool _buzzer;
+        /// <summary>
+        /// 蜂鸣器控制
+        /// </summary>
+        public static bool Buzzer
+        {
+            get { return _buzzer; }
+            set
+            {
+                _buzzer = value;
+                HandlerClient?.WriteObject(Name_Buzzer, value);
+            }
+        }
+
+        private static bool _socketSafetySignal;
+        /// <summary>
+        /// Socket 安全信号状态
+        /// </summary>
+        public static bool SocketSafetySignal
+        {
+            get { return _socketSafetySignal; }
+            set { _socketSafetySignal = value; }
+        }
+
+        /// <summary>
+        /// Socket安全检测信号控制
+        /// </summary>
+        public static bool SetSocketSignal
+        {
+            set
+            {
+                testerClient?.WriteObject(Name_SocketSafetySignal, value);
+            }
+        }
+
+        /// <summary>
+        /// 当前运行模式
+        /// </summary>
+        public static RunMode LastMode { get; set; }
+
+        private static bool _loadVacuum;
+
+        public static bool LoadVacuum
+        {
+            get { return _loadVacuum; }
+            set
+            {
+                if (value == _loadVacuum)
+                    return;
+                _loadVacuum = value;
+                LoadVacuumChanged?.Invoke(value);
+            }
+        }
+
+        private static bool _unloadVacuum;
+
+        public static bool UnloadVacuum
+        {
+            get { return _unloadVacuum; }
+            set
+            {
+
+                if (value == _unloadVacuum)
+                    return;
+                _unloadVacuum = value;
+                UnloadVacuumChanged?.Invoke(value);
+            }
+        }
+
+        private static uint _eventClass;
+
+        public static uint EventClass
+        {
+            get { return _eventClass; }
+            set
+            {
+                _eventClass = value;
+                EventClassChanged?.Invoke(value);
+            }
+        }
+        private static bool _isLoadBigTray;
+
+        public static bool IsLoadBigTray
+        {
+            get { return _isLoadBigTray; }
+            set
+            {
+                //if (value == _isBigTray)
+                //    return;
+                _isLoadBigTray = value;
+                LoadTraySizeChanged?.Invoke();
+            }
+        }
+
+        private static bool _isNGBigTray = true;
+
+        public static bool IsNGBigTray
+        {
+            get { return _isNGBigTray; }
+            set
+            {
+                _isNGBigTray = value;
+                NGTraySizeChanged?.Invoke();
+            }
+        }
+
+        private static bool _isUnloadBigTray = true;
+
+        public static bool IsUnloadBigTray
+        {
+            get { return _isUnloadBigTray; }
+            set
+            {
+                _isUnloadBigTray = value;
+                UnloadTraySizeChanged?.Invoke();
+            }
+        }
+
+        private static bool _ionFanContrl;
+
+        public static bool IonFanContrl
+        {
+            get { return _ionFanContrl; }
+            set { _ionFanContrl = value; }
+        }
+
+        private static uint _testerSubMode;
+
+        public static uint TesterSubMode
+        {
+            get { return _testerSubMode; }
+            set { _testerSubMode = value; }
+        }
+
+        private static uint _handlerSubMode;
+
+        public static uint HandlerSubMode
+        {
+            get { return _handlerSubMode; }
+            set { _handlerSubMode = value; }
+        }
+
+        private static uint _testerMode;
+
+        public static uint TesterMode
+        {
+            get { return _testerMode; ; }
+            set { _testerMode = value; }
+        }
+
+        private static uint _handlerMode;
+
+        public static uint HandlerMode
+        {
+            get { return _handlerMode; }
+            set { _handlerMode = value; }
+        }
+
+        private static bool _tMRetest;
+
+        public static bool TMRetest
+        {
+            get { return _tMRetest; }
+            set { _tMRetest = value; }
+        }
 
         public static void Init()
         {
             RunMode = ConfigMgr.Instance.RunMode;
+            if (RunMode == RunMode.AutoAudit)
+            {
+                string path;
+                if (!File.Exists(ConfigMgr.Instance.AuditFile))
+                {
+                    path = AuditFile;
+                }
+                else
+                {
+                    path = ConfigMgr.Instance.AuditFile;
+                }
+                CSVToDic(path);
+            }
             CustomMode = ConfigMgr.Instance.CustomMode;
+            SocketStatus = ConfigMgr.Instance.SocketStatus;
         }
 
         #region PLCData
 
-        public const int Manual = 1;
+        //模式
         public const int Auto = 2;
-        public const int DryRun = 3;
-        public const int Doe = 7;
 
-        public const int Auto_Normal = 1;
-        public const int Auto_SelectDUT = 2;
-        public const int Auto_Mark = 3;
-        public const int Auto_GoldenDut = 4;
-        public const int Doe_SlipTest = 1;
-        public const int Doe_SameTrayTest = 2;
-        public const int Doe_DifferentTrayTest = 3;
-        public const int Doe_TakeoffTest = 4;
-        //新增：Socket一致性测试模式
-        public const int Doe_SocketUniformityTest = 5;
-        //新增：转盘的Debug模式（开Socket盖子， 关闭Socket盖子等等）
-        public const int Doe_TesterDebug = 6;
-        //新增转盘模式：当只有Handler有动作而Teater没有动作时（如挑料、扫码模式），给Tester写入当前模式(该模式下不做任何动作)，确保两边状态统一
-        public const int Doe_TesterStateSyncMode = 10;
+        //功能码
+        public const int Func_Reset = 1;                    //回原点
+        public const int Func_AutoNormal = 2;               //生产流程
+        public const int Func_AutoGoldenDut = 3;            //GRR流程
+        public const int Func_AutoSelectDUT = 4;            //挑料流程
+        public const int Func_AutoMark = 5;                 //Tray标定
+        public const int Func_DoeSameTrayTest = 6;          //DOE-相同盘测试
+        public const int Func_DoeDifferentTrayTest = 7;     //DOE-不同盘测试
+        public const int Func_DoeSlipTest = 8;              //DOE-滑移测试
+        public const int Func_DoeTakeoffTest = 9;           //DOE-TakeOff测试
+        public const int Func_DryRun = 10;                  //DrayRun
+        public const int Func_SemiAuto = 11;                //Handler 半自动(Tray取料、Tray放料、扫码、Socket取料、Socket放料) //Tester  半自动（转盘转动1个工位、Socket开盖、Socket关盖）
+        //public const int Func_Script = 12;                  //脚本运行功能码
+        public const int Func_Audit = 12;                   //Audit模式
 
-        public static string Name_SelectLoadtrayID = "GVL_MachineCom.SelectLoadtrayID";
-        public static string Name_SelectUnLoadtrayID = "GVL_MachineCom.SelectUnLoadtrayID";
-        public static string Name_SelectDUTnumber = "GVL_MachineCom.SelectDUTnumber";
-        public static string Name_SelectLoadBinID = "GVL_MachineCom.SelectLoadBinID";
-        public static string Name_SelectUnLoadBinID = "GVL_MachineCom.SelectUnLoadBinID";
+        #region PLC变量名
+
+        public readonly static string Name_SelectLoadtrayID = "GVL_MachineCom.SelectLoadtrayID";
+        public readonly static string Name_SelectUnLoadtrayID = "GVL_MachineCom.SelectUnLoadtrayID";
+        public readonly static string Name_SelectDUTnumber = "GVL_MachineCom.SelectDUTnumber";
+        public readonly static string Name_SelectLoadBinID = "GVL_MachineCom.SelectLoadBinID";
+        public readonly static string Name_SelectUnLoadBinID = "GVL_MachineCom.SelectUnLoadBinID";
         //挑SN和单独扫码模式切换变量
-        public static string Name_SelectSnMode = "GVL_MachineCom.SelectSnMode";
+        public readonly static string Name_SelectSnMode = "GVL_MachineCom.SelectSnMode";
 
         //Old GRR params
-        //public static string Name_GRRTrayID = "GVL_MachineCom.GoldenDutLoadtrayID";
-        //public static string Name_GRRDutCount = "GVL_MachineCom.GoldenDutNumber";
+        //public readonly static string Name_GRRTrayID = "GVL_MachineCom.GoldenDutLoadtrayID";
+        //public readonly static string Name_GRRDutCount = "GVL_MachineCom.GoldenDutNumber";
 
+        public readonly static string Name_GRRTrayID = "GVL_MachineCom.GoldenDutLoadtrayID";
+        public readonly static string Name_GRRDutNumber = "GVL_MachineCom.GRRDutNumber";
+        public readonly static string Name_GRRTestRow = "GVL_MachineCom.GRRRow";
+        public readonly static string Name_GRRTestCol = "GVL_MachineCom.GRRCol";
         //New GRR params
-        public static string Name_GRRTrayID = "GVL_MachineCom.GoldenDutLoadtrayID";
-        public static string Name_GRRDutNumber = "GVL_MachineCom.GRRDutNumber";
-        public static string Name_GRRTestNumbert = "GVL_MachineCom.GRRTMTestNumber";
-        public static string Name_GRRTestRow = "GVL_MachineCom.GRRRow";
-        public static string Name_GRRTestCol= "GVL_MachineCom.GRRCol";
+        public readonly static string Name_GRRTestNumbert = "GVL_MachineCom.GRRTMTestNumber"; //GRR 模式下测试的次数
+        public readonly static string Name_GRRCoute = "GVL_MachineCom.GRRCoute"; //PLC GRR模式下已经执行的次数
 
+        public readonly static string Name_SlipTesttrayID = "GVL_MachineCom.SlipTesttrayID";
+        public readonly static string Name_SlipTestSuction = "GVL_MachineCom.SlipTestSuction";
+        public readonly static string Name_SlipTestRow = "GVL_MachineCom.SlipTestRow";
+        public readonly static string Name_SlipTestCol = "GVL_MachineCom.SlipTestCol";
+        public readonly static string Name_SlipTestApos = "GVL_MachineCom.ATestPosition";
+        public readonly static string Name_SlipTestBpos = "GVL_MachineCom.BTestPosition";
+        public readonly static string Name_SlipTestNumber = "GVL_MachineCom.SlipTestNumber";
+        //滑移测试已执行的次数
+        public readonly static string Name_SlipTestExecutionTimes = "GVL_MachineCom.SlipTestCoute";
 
-        public static string Name_SlipTesttrayID = "GVL_MachineCom.SlipTesttrayID";
-        public static string Name_SlipTestSuction = "GVL_MachineCom.SlipTestSuction";
-        public static string Name_SlipTestRow = "GVL_MachineCom.SlipTestRow";
-        public static string Name_SlipTestCol = "GVL_MachineCom.SlipTestCol";
-        public static string Name_SlipTestApos = "GVL_MachineCom.ATestPosition";
-        public static string Name_SlipTestBpos = "GVL_MachineCom.BTestPosition";
-        public static string Name_SlipTestNumber = "GVL_MachineCom.SlipTestNumber";
+        public readonly static string Name_SameTrayID = "GVL_MachineCom.SameTrayLoadtrayID";
+        public readonly static string Name_SameTrayBinID = "GVL_MachineCom.SameTrayLoadBinID";
+        public readonly static string Name_SameTrayStartRow = "GVL_MachineCom.SameTrayStartRow";
+        public readonly static string Name_SameTrayStartCol = "GVL_MachineCom.SameTrayStartCol";
 
-        public static string Name_SameTrayID = "GVL_MachineCom.SameTrayLoadtrayID";
-        public static string Name_SameTrayBinID = "GVL_MachineCom.SameTrayLoadBinID";
-        public static string Name_SameTrayStartRow = "GVL_MachineCom.SameTrayStartRow";
-        public static string Name_SameTrayStartCol = "GVL_MachineCom.SameTrayStartCol";
+        public readonly static string Name_DifferenttTrayLoadTrayID = "GVL_MachineCom.DifferentTrayLoadtrayID";
+        public readonly static string Name_DifferenttTrayUnLoadTrayID = "GVL_MachineCom.DifferentTrayUnLoadtrayID";
 
-        public static string Name_DifferenttTrayLoadTrayID = "GVL_MachineCom.DifferentTrayLoadtrayID";
-        public static string Name_DifferenttTrayUnLoadTrayID = "GVL_MachineCom.DifferentTrayUnLoadtrayID";
+        public readonly static string Name_TakeOffTestTrayID = "GVL_MachineCom.Take_offTestTrayID";
+        public readonly static string Name_TakeOffTestRow = "GVL_MachineCom.Take_offTestRow";
+        public readonly static string Name_TakeOffTestCol = "GVL_MachineCom.Take_offTestCol";
+        public readonly static string Name_TakeOffTestTimes = "GVL_MachineCom.Take_offTestNumber";
+        public readonly static string Name_TakeOffIsCloseCap = "GVL_MachineCom.Take_offTestChoose";
+        public readonly static string Name_Take_offSocketID = "GVL_MachineCom.Take_offSocketID";
 
-        public static string Name_TakeOffTestTrayID = "GVL_MachineCom.Take_offTestTrayID";
-        public static string Name_TakeOffTestRow = "GVL_MachineCom.Take_offTestRow";
-        public static string Name_TakeOffTestCol = "GVL_MachineCom.Take_offTestCol";
-        public static string Name_TakeOffTestTimes = "GVL_MachineCom.Take_offTestNumber";
-        public static string Name_TakeOffIsCloseCap = "GVL_MachineCom.Take_offTestChoose";
-        public static string Name_Take_offSocketID = "GVL_MachineCom.Take_offSocketID";
+        public readonly static string Name_MarkMode = "GVL_MachineCom.MarkMode";
+        public readonly static string Name_MarkTrayChoose = "GVL_MachineCom.MarkTrayChoose";
+        public readonly static string Name_MarkTrayID = "GVL_MachineCom.MarkTrayID";
 
-        public static string Name_MarkMode = "GVL_MachineCom.MarkMode";
-        public static string Name_MarkTrayChoose = "GVL_MachineCom.MarkTrayChoose";
-        public static string Name_MarkTrayID = "GVL_MachineCom.MarkTrayID";
+        public readonly static string Name_EnableBuzzer = "GVL_MachineDevice.bSilencer";
 
-        public static string Name_EnableBuzzer = "GVL_MachineDevice.bSilencer";
+        //Handler 半自动用的变量
+        public readonly static string Name_Nozzle1TrayLoad = "GVL_MachineCom.Nozzle1TrayLoad";
+        public readonly static string Name_Nozzle1Scan = "GVL_MachineCom.Nozzle1Scan";
+        public readonly static string Name_Nozzle1SocketPut = "GVL_MachineCom.Nozzle1SocketPut";
+        public readonly static string Name_Nozzle2SocketPick = "GVL_MachineCom.Nozzle2SocketPick";
+        public readonly static string Name_Nozzle1TrayUload = "GVL_MachineCom.Nozzle1TrayUload";
+        public readonly static string Name_Nozzle2TrayUload = "GVL_MachineCom.Nozzle2TrayUload";
 
-        //调试用
-        public static string Name_DryRunTesterRotation = "GVL_MachineCom.DrayStart";
-        public static string Name_DryRunChoose = "GVL_MachineCom.DrayRunChoose";
-
-        //Handler Debug用的变量
-        public static string Name_DebugNozzle1TrayLoad = "GVL_MachineCom.Nozzle1TrayLoad";
-        public static string Name_DebugNozzle1Scan = "GVL_MachineCom.Nozzle1Scan";
-        public static string Name_DebugNozzle1SocketPut	= "GVL_MachineCom.Nozzle1SocketPut";
-        public static string Name_DebugNozzle2SocketPick = "GVL_MachineCom.Nozzle2SocketPick";
-        public static string Name_DebugNozzle1TrayUload = "GVL_MachineCom.Nozzle1TrayUload";
-        public static string Name_DebugNozzle2TrayUload = "GVL_MachineCom.Nozzle2TrayUload";
-
-        //Tester Debug用的变量
-        public static string Name_DebugOpenSocket = "GVL_MachineCom.bOpenSocket";
-        public static string Name_DebugCloseSocket = "GVL_MachineCom.bCloseSocket";
-        public static string Name_DebugZAxisUp = "GVL_MachineCom.bZUp";
-        public static string Name_DebugZAxisDown = "GVL_MachineCom.bZdn";
-        public static string Name_DebugPushPutter= "GVL_MachineCom.bPushPutter";
-        public static string Name_DebugPullPutter = "GVL_MachineCom.bPullPutter";
-        public static string Name_SocketID = "GVL_MachineCom.nSocketID";
+        //Tester 半自动用的变量
+        public readonly static string Name_OpenSocket = "GVL_MachineCom.bOpenSocket";
+        public readonly static string Name_CloseSocket = "GVL_MachineCom.bCloseSocket";
+        public readonly static string Name_TesterRotation = "GVL_MachineCom.bRotateTurntable";
+        public readonly static string Name_SocketID = "GVL_MachineCom.nSocketID";
+        public readonly static string Name_TurntableCyliderWork = "GVL_MachineDevice.TurntableCyliderWork";  //转盘气缸顶升
+        public readonly static string Name_TurntableCyliderBase = "GVL_MachineDevice.TurntableCyliderBase";  //转盘气缸收回
 
         //Socket一致性测试PLC变量
-        public static string Name_TMContinueTest = "GVL_MachineCom.TMContinueTest";
-        public static string Name_TMTestSocketID = "GVL_MachineCom.TMTestSocketID";
-        public static string Name_TMTestStationID = "GVL_MachineCom.TMTestStationID";
-        public static string Name_TMTestTrayID = "GVL_MachineCom.TMTestTrayID";
-        public static string Name_TMTestRow = "GVL_MachineCom.TMTestRow";
-        public static string Name_TMTestCol = "GVL_MachineCom.TMTestCol";
-        public static string Name_TMTestTimes = "GVL_MachineCom.TMTestNumber";
+        public readonly static string Name_TMContinueTest = "GVL_MachineCom.TMContinueTest";
+        public readonly static string Name_TMTestSocketID = "GVL_MachineCom.TMTestSocketID";
+        public readonly static string Name_TMTestStationID = "GVL_MachineCom.TMTestStationID";
+        public readonly static string Name_TMTestTrayID = "GVL_MachineCom.TMTestTrayID";
+        public readonly static string Name_TMTestRow = "GVL_MachineCom.TMTestRow";
+        public readonly static string Name_TMTestCol = "GVL_MachineCom.TMTestCol";
+        public readonly static string Name_TMTestTimes = "GVL_MachineCom.TMTestNumber";
 
         //Tester变量：控制手动推拉pin针气缸
-        public static string Name_TesterScoketPullCylider = "GVL_MachineCom.bAutoPullCylider";
-        public static string Name_TesterScoketReleaseCylider = "GVL_MachineCom.bAutoReleaseCylider";
+        public readonly static string Name_TesterScoketPullCylider = "GVL_MachineCom.bAutoPullCylider";
+        public readonly static string Name_TesterScoketReleaseCylider = "GVL_MachineCom.bAutoReleaseCylider";
+
+        //清料标志,表示正在清料中
+        public readonly static string Name_CompleteFlag = "GVL_MachineCom.CompelteFlag";
+        //清料完成
+        public readonly static string Name_CompleteFinish = "GVL_MachineCom.CompelteFalish";
+        //GRR测试完成
+        public readonly static string Name_GRRFinish = "GVL_MachineCom.GRRFalish";
+        //Audit测试完成
+        public readonly static string Name_AuditFinish = "GVL_MachineCom.AuditFinish";
+        //Socket禁用
+        public readonly static string Name_DisableSocket = "GVL_MachineCom.DisableSocket";
+
+        //系统命令，报警清除
+        public readonly static string Name_SysCmdClearAlarm = "GVL_MachineInterface.MachineCmd.bClearAlarm";
+        // 清除活跃事件
+        public readonly static string Name_SysCmdClearActiveEvent = "GVL_MachineEvent.ActiveEvent.bClearEvent";
+
+        //所有轴回原标志
+        public readonly static string Name_AxisAllHomed = "GVL_MachineDevice.bAllAxisHome";
+        //PLC当前状态
+        public readonly static string Name_CurrentState = "GVL_MachineInterface.MachineStatus.nCurrentState";
+        //PLC系统命令
+        public readonly static string Name_StateCmd = "GVL_MachineInterface.MachineCmd.nStateCmd";
+        //空跑模式切换
+        public readonly static string Name_DryRunComad = "GVL_MachineDevice.DryRunComad";
+        //检修灯控制
+        public readonly static string Name_MachineLight = "GVL_MachineDevice.MachineLight";
+        //三色灯：黄灯
+        public readonly static string Name_TricolorLampYellow = "GVL_MachineDevice.LampContrl.YellowLight";
+        //三色灯：绿灯
+        public readonly static string Name_TricolorLampGreen = "GVL_MachineDevice.LampContrl.GreenLight";
+        //三色灯：红灯
+        public readonly static string Name_TricolorLampRed = "GVL_MachineDevice.LampContrl.RedLight";
+        //蜂鸣器
+        public readonly static string Name_Buzzer = "GVL_MachineDevice.LampContrl.Buzzer";
+        //视觉标定,True 不做轴运动限制
+        public readonly static string Name_VisionCalibration = "GVL_MachineDevice.VisionCalibration";
+        //TM报警后给PLC写报警变量，PLC做三色灯提醒
+        public readonly static string Name_TMError = "GVL_MachineEvent.bTMError";
+        //Socket下降到位信号
+        public readonly static string Name_SocketSafetySignal = "GVL_MachineDevice.OutputCtrl[1]";
+        //EL1889结构体
+        public readonly static string Name_DigitalIO_LoadVacuum = "GVL_MachineDevice.DigitalIO_HW.EL1889[3,11]";
+        public readonly static string Name_DigitalIO_UnloadVacuum = "GVL_MachineDevice.DigitalIO_HW.EL1889[3,12]";
+        //重测勾选框  True：启用 False：不启用
+        public readonly static string Name_Retest = "GVL_MachineCom.CheckResurvey";
+        //报警等级
+        public readonly static string Name_ActiveEventClass = "GVL_MachineEvent.ActiveEvent.nClass";
+        //离子风扇控制
+        public readonly static string Name_IonFanContrl = "GVL_MachineDevice.IonFanContrl";
+        //门锁有效 False ：无效 ,True：有效
+        public readonly static string Name_DoorLockControl = "GVL_MachineDevice.bDoorLockValid";
+
+        public readonly static string Name_nMode = "GVL_MachineInterface.MachineCmd.nMode";
+
+        public readonly static string Name_nAutoSubMode = "GVL_MachineInterface.MachineCmd.nAutoSubMode";
+
+        //清除当前状态Socket状态
+        public readonly static string Name_ClearSokcetStatus = "GVL_MachineCom.ClearSokcetStatus";
+        //清除过程数据
+        public readonly static string Name_ClearData = "GVL_MachineCom.ClearData";
+        //PLC软件版本号
+        public readonly static string Name_PlcProgramVer = "GVL_MachineCom.PlcProgramVer";
+
+        // TrayInfo全路径名称
+        public readonly static string Name_TrayInfo = "GVL_MachineDevice.stTrayInfo";
+
+        // RegionNum相对于TrayInfo的路径名称
+        public readonly static string Name_RegionNum = "nRegion_Num";
+
+        public static string Name_RegionValue = "aRegion_Value";
+
+        public readonly static string Name_TrayRanks = "stTrayData.aTray_Ranks";
+
+        public readonly static string Name_RegionMax = "GVL_MachineDevice.nRegion_Max";
+
+
+        #endregion PLC变量名
 
         public static string TrayInfoIsEmpty(int index)
         {
             return $"GVL_MachineDevice.stTrayInfo[{index}].bEmpty";
         }
-
         public static string TrayInfoIsFull(int index)
         {
             return $"GVL_MachineDevice.stTrayInfo[{index}].bFull";
@@ -211,7 +572,59 @@ namespace Poc2Auto.Common
 
         public static string STLoadTrayPoint(int index)
         {
-           return $"GVL_MachineParam.stLoadTrayPoint[{index}].TrayXYRanks";
+            return $"GVL_MachineParam.stLoadTrayPoint[{index}].TrayXYRanks";
+        }
+        /// <summary>
+        /// Socket屏蔽控制变量
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static string DisableSocket(int index)
+        {
+            return $"GVL_MachineCom.DisableSocket[{index}]";
+        }
+        /// <summary>
+        /// 照明灯控制变量
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static string MachineLight(int index)
+        {
+            return $"GVL_MachineDevice.MachineLight[{index}]";
+        }
+        /// <summary>
+        /// 大小Tray切换变量: False：大Tray  True：小Tray
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static string TraySwitch(int index)
+        {
+            return $"GVL_MachineDevice.stTraySwitch[{index}]";
+        }
+        /// <summary>
+        /// 获取光源对应的IO变量名
+        /// </summary>
+        /// <param name="indx"></param>
+        /// <returns></returns>
+        public static string GetIOVarName(int indx)
+        {
+            return $"GVL_MachineDevice.OutputCtrl[{indx}]";
+        }
+        public static string EL1889Struct(int moduleId, int indexId)
+        {
+            return $"GVL_MachineDevice.DigitalIO_HW.EL1889[{moduleId},{indexId}]";
+        }
+
+        public static string TrayInfoRegionValue(int trayId)
+        {
+            return $"{Name_TrayInfo}[{trayId}].{Name_RegionValue}";
+        }
+
+        //CYG7953SA.CYG7953SA_Handler.GVL_MachineDevice.stTrayInfo[3].stTrayRegion
+
+        public static string TrayInfoStTrayRegion(int trayId)
+        {
+            return $"{Name_TrayInfo}[{trayId}].{Name_TrayRanks}";
         }
 
         #endregion PLCData
@@ -225,30 +638,52 @@ namespace Poc2Auto.Common
         public static int LoadCount;
         public static int UnloadCount;
         public static List<int> TestedSockets = new List<int>();
-        public const int TMTestTimeOut = 180;
+        //var iniPosX = Convert.ToDouble(Plc.PlcDriver.CfgParamsConfig.GetParamsModule("LoadX_RecipePos").KeyValues["LoadUpTakePhotosPosX"].Value);
+        public static int TMTestTimeOut =>Convert.ToInt32(testerClient.CfgParamsConfig.GetParamsModule("ParameterSet").KeyValues["RequestTimeOut"].Value);
         public static bool IsOnlyScanMode;
-        public static bool IsLoadLTray;
+        public static ushort SelectSNTray;
         public static ushort PickRow;
         public static ushort PickCol;
         public static string SelectSNSavePath;
+        public static int GRRTestTimes;
 
-        public static bool ManualMode(AdsDriverClient client, out string message)
+        public static bool OriginValue = false;
+
+        public static bool IsRotate = false;
+
+        public static readonly string AuditFile = @"C:\data\audit.csv";
+
+        public static bool Reset(AdsDriverClient client, out string message)
         {
-            if (testerClient == null || client == null)
+            if (client == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
-            var result = client.GetSysInfoCtrl.ModeCtrl(Manual);
-            if (result != 0)
+            var ret1 = client?.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client?.GetSysInfoCtrl.SubModeCtrl(Auto, Func_Reset);
+            if (ret1 + ret2 != 0)
             {
-                message = "Handler 手段模式切换失败!";
+                message = "复位功能切换失败";
                 return false;
             }
-            result = testerClient.GetSysInfoCtrl.ModeCtrl(Manual);
-            if (result != 0)
+
+            message = "OK";
+            return true;
+        }
+
+        public static bool SemiAutoMode(AdsDriverClient client, out string message)
+        {
+            if (client == null)
             {
-                message = "Tester 手段模式切换失败!";
+                message = "ALC与机台未连接成功!";
+                return false;
+            }
+            var ret1 = client?.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client?.GetSysInfoCtrl.SubModeCtrl(Auto, Func_SemiAuto);
+            if (ret1 + ret2 != 0)
+            {
+                message = "单步运行功能切换失败";
                 return false;
             }
 
@@ -260,13 +695,15 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null || client == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_Normal);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoNormal);
             var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Auto);
-            if (ret1 + ret2 + ret3 != 0)
+            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoNormal);
+
+            if (ret1 + ret2 + ret3 + ret4 != 0)
             {
                 message = "生产模式切换失败!";
                 return false;
@@ -278,66 +715,95 @@ namespace Poc2Auto.Common
 
         public static bool AutoSelectSn(AdsDriverClient client, AutoSelectSnParam param, out string message)
         {
+
+            var a = TMTestTimeOut;
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
-            if (param.LoadNum == 0)
+            if (!IsOnlyScanMode)
             {
-                message = @"上料盘LoadL数据为空，请重新选择!";
-                return false;
-            }
-            if (param.LoadNum < param.DutSnList.Count)
-            {
-                message = @"上料盘LoadL数据个数小于挑选SN个数，请重新选择!";
-                return false;
+                if (param.LoadNum == 0)
+                {
+                    message = @"上料盘Load1数据为空，请重新选择!";
+                    return false;
+                }
+                if (param.LoadNum < param.DutSnList.Count)
+                {
+                    message = @"上料盘Load1挑选产品个数小于SN个数，请重新选择!";
+                    return false;
+                }
             }
 
             var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_SelectDUT);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoSelectDUT);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
-                message = "挑选SN模式切换失败!";
+                message = "挑选SN功能切换失败!";
                 return false;
             }
-            //var ret = client.WriteObject(Name_SelectLoadtrayID, (ushort)param.LoadTaryID, out message);
-            //if (ret != 0) return false;
-            //ret = client.WriteObject(Name_SelectDUTnumber, (ushort)param.DutSnList.Count, out message);
-            //if (ret != 0) return false;
 
             var ret = client.WriteObject(Name_SelectSnMode, (ushort)(IsOnlyScanMode ? 2 : 1), out message);
             if (ret != 0) return false;
+            if (IsOnlyScanMode)
+            {
+                var ret3 = client.WriteObject(Name_SelectLoadtrayID, SelectSNTray);
+                if (ret3 != 0) return false;
+            }
+            else
+            {
+                int[,] load2Data = new int[Tray.ROW, Tray.COL];
 
-            //var result = client.WriteBinRegion(param.LoadTaryID, param.LoadRegion, out message);
-            //if (!result) return false;
-            //var result = client.WriteTrayData(param.LoadTaryID, param.LoadRegion, out message);
-            //if (!result) return false;
+                if (IsLoadBigTray)
+                {
+                    for (int i = 0; i < Tray.ROW; i++)
+                    {
+                        for (int j = 0; j < Tray.COL; j++)
+                        {
+                            if (i >= 2 && i <= 30 && j >= 2 && j <= 11)
+                            {
+                                load2Data[i, j] = 0;
+                            }
+                            else
+                                load2Data[i, j] = 2;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Tray.S_ROW; i++)
+                    {
+                        for (int j = 0; j < Tray.S_Col; j++)
+                        {
+                            if (i >= 2 && i <= 18 && j >= 2 && j <= 6)
+                            {
+                                load2Data[i, j] = 0;
+                            }
+                            else
+                                load2Data[i, j] = 2;
+                        }
+                    }
+                }
 
+                var ret3 = client.WriteObject(Name_SelectLoadtrayID, SelectSNTray);
+                if (ret3 != 0) return false;
 
-            //DragonDbHelper.ClearTrayData((int)(TrayName)param.LoadTaryID);
-            //TrayManager.Trays[(TrayName)param.LoadTaryID].SetData(param.LoadRegion);
+                ////清空数据库中上料2盘的数据
+                //var result = client.WriteTrayData((int)TrayName.Load2, load2Data, out message);
+                //if (!result) return false;
+                //DragonDbHelper.ClearTrayData((int)TrayName.Load2);
+                //TrayManager.Trays[TrayName.Load2].SetData(new int[Tray.ROW, Tray.COL]);
 
-            //result = client.WriteBinRegion(param.UnloadTrayID, param.UnloadRegion, out message);
-            //if (!result) return false;
+                //清空数据库中NG盘的数据
+                var result = client.WriteTrayData((int)TrayName.NG, new int[Tray.ROW, Tray.COL], out message);
+                if (!result) return false;
+                DragonDbHelper.ClearTrayData((int)TrayName.NG);
+                TrayManager.Trays[TrayName.NG].SetData(new int[Tray.ROW, Tray.COL]);
 
-            var result = client.WriteTrayData((int)TrayName.LoadR, new int[Tray.ROW, Tray.COL], out message);
-            if (!result) return false;
-            result = client.WriteTrayData((int)TrayName.NG, new int[Tray.ROW, Tray.COL], out message);
-            if (!result) return false;
-
-            //清空数据库中上料2盘的数据
-            DragonDbHelper.ClearTrayData((int)TrayName.LoadR);
-            TrayManager.Trays[TrayName.LoadR].SetData(new int[Tray.ROW, Tray.COL]);
-
-            //清空数据库中NG盘的数据
-            DragonDbHelper.ClearTrayData((int)TrayName.NG);
-            TrayManager.Trays[TrayName.NG].SetData(new int[Tray.ROW, Tray.COL]);
-
-            Overall.SelectionList = new List<string>(param.DutSnList);
+                Overall.SelectionList = new List<string>(param.DutSnList);
+            }
 
             return true;
         }
@@ -346,7 +812,7 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             if (param.LoadNum == 0)
@@ -360,11 +826,9 @@ namespace Poc2Auto.Common
                 return false;
             }
             var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_SelectDUT);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoSelectDUT);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
                 message = "挑选Bin模式切换失败!";
                 return false;
@@ -399,13 +863,14 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_GoldenDut);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoGoldenDut);
             var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Auto);
-            if (ret1 + ret2 + ret3 != 0)
+            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoNormal);
+            if (ret1 + ret2 + ret3 + ret4 != 0)
             {
                 message = "GRR模式模式切换失败!";
                 return false;
@@ -416,8 +881,11 @@ namespace Poc2Auto.Common
             result = client.WriteObject(Name_GRRDutCount, (ushort)param.DutCount, out message);
             if (result != 0) return false;
 #endif
-            var result = client.WriteObject(Name_GRRTestNumbert, (ushort)param.TestTimes, out message);
-            if (result != 0) return false;
+            var ret5 = client.WriteObject(Name_GRRTestNumbert, (ushort)param.TestTimes, out message);
+            if (ret5 != 0) return false;
+            var ret6 = client.WriteObject(Name_GRRCoute, (ushort)0, out message);
+            if (ret6 != 0) return false;
+            
             //var ret = client.WriteTrayData((int)TrayName.NG, param.Region, out message);
             //if (!ret) return false;
 
@@ -431,23 +899,18 @@ namespace Poc2Auto.Common
             return true;
         }
 
-        public static bool Audit(AdsDriverClient client, GRRParam param, out string message)
+        public static bool Audit(AdsDriverClient client, out string message)
         {
             client.GetSysInfoCtrl.ModeCtrl(Auto);
-            client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_GoldenDut);
-            testerClient.GetSysInfoCtrl.ModeCtrl(Auto);
-
-            var result = client.WriteObject(Name_GRRTrayID, (ushort)param.TrayID, out message);
-            if (result != 0) return false;
-            //result = client.WriteObject(Name_GRRDutCount, (ushort)param.DutCount, out message);
-            //if (result != 0) return false;
+            client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_Audit);
 
             Running = false;
-            TestTimes = param.TestTimes;
+            //TestTimes = param.TestTimes;
             LoadCount = 0;
             UnloadCount = 0;
             TestedSockets = new List<int>();
 
+            message = "OK";
             return true;
         }
 
@@ -455,15 +918,13 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
-            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_SlipTest);
+            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DoeSlipTest);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
                 message = "滑移测试模式切换失败!";
                 return false;
@@ -472,15 +933,13 @@ namespace Poc2Auto.Common
             if (result != 0) return false;
             result = client.WriteObject(Name_SlipTestSuction, param.TestNozzle, out message);
             if (result != 0) return false;
-            result = client.WriteObject(Name_SlipTestRow, param.TestRow, out message);
-            if (result != 0) return false;
-            result = client.WriteObject(Name_SlipTestCol, param.TestCol, out message);
-            if (result != 0) return false;
             result = client.WriteObject(Name_SlipTestApos, param.ATestPos, out message);
             if (result != 0) return false;
             result = client.WriteObject(Name_SlipTestBpos, param.BTestPos, out message);
             if (result != 0) return false;
             result = client.WriteObject(Name_SlipTestNumber, param.TestNumber, out message);
+            if (result != 0) return false;
+            result = client.WriteObject(Name_SlipTestExecutionTimes, (ushort)0, out message);
             if (result != 0) return false;
 
             return true;
@@ -490,7 +949,7 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             if (param.StartRow == 0 || param.StartCol == 0)
@@ -498,25 +957,33 @@ namespace Poc2Auto.Common
                 message = @"请选择Dut！";
                 return false;
             }
-            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_SameTrayTest);
+            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DoeSameTrayTest);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
                 message = "同Tray验证模式切换失败!";
                 return false;
             }
             var result = client.WriteObject(Name_SameTrayID, (ushort)param.TaryID, out message);
             if (result != 0) return false;
-            result = client.WriteObject(Name_SameTrayStartRow, param.StartRow, out message);
-            if (result != 0) return false;
-            result = client.WriteObject(Name_SameTrayStartCol, param.StartCol, out message);
-            if (result != 0) return false;
 
+            var sTrayData = param.TrayRegion;
+            int[,] bTraydata = new int[Tray.ROW, Tray.COL];
+            for (int i = 0; i < sTrayData.GetLength(0); i++)
+            {
+                for (int j = 0; j < sTrayData.GetLength(1); j++)
+                {
+                    bTraydata[i, j] = sTrayData[i, j];
+                }
+            }
+
+
+            //写入选择的Tray数据
+            var ret = client.WriteTrayData((ushort)param.TaryID, bTraydata, out message);
+            if (!ret) return false;
             DragonDbHelper.ClearTrayData((int)(TrayName)param.TaryID);
-            TrayManager.Trays[(TrayName)param.TaryID].SetData(param.TrayRegion);
+            TrayManager.Trays[(TrayName)param.TaryID].SetData(bTraydata);
 
             return true;
         }
@@ -525,15 +992,13 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
-            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_DifferentTrayTest);
+            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DoeDifferentTrayTest);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
                 message = "不同Tray模式切换失败!";
                 return false;
@@ -545,10 +1010,20 @@ namespace Poc2Auto.Common
             result = client.WriteObject(Name_DifferenttTrayUnLoadTrayID, (ushort)TrayName.NG, out message);
             if (result != 0) return false;
 
-            var ret = client.WriteTrayData(param.LoadTaryID, param.LoadRegion, out message);
+            var sTrayData = param.LoadRegion;
+            int[,] bTraydata = new int[Tray.ROW, Tray.COL];
+            for (int i = 0; i < sTrayData.GetLength(0); i++)
+            {
+                for (int j = 0; j < sTrayData.GetLength(1); j++)
+                {
+                    bTraydata[i, j] = sTrayData[i, j];
+                }
+            }
+
+            var ret = client.WriteTrayData(param.LoadTaryID, bTraydata, out message);
             if (!ret) return false;
             DragonDbHelper.ClearTrayData((int)(TrayName)param.LoadTaryID);
-            TrayManager.Trays[(TrayName)param.LoadTaryID].SetData(param.LoadRegion);
+            TrayManager.Trays[(TrayName)param.LoadTaryID].SetData(bTraydata);
 
             return true;
         }
@@ -557,13 +1032,13 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
-            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TakeoffTest);
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TakeoffTest);
+            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DoeTakeoffTest);
+            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DoeTakeoffTest);
             if (ret1 + ret2 + ret3 + ret4 != 0)
             {
                 message = "三伤验证模式切换失败!";
@@ -593,17 +1068,15 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Auto_Mark);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_AutoMark);
 
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_TesterStateSyncMode);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
+            if (ret1 + ret2 != 0)
             {
-                message = "自动标定模式q切换失败";
+                message = "自动标定模式切换失败";
                 return false;
             }
 
@@ -628,9 +1101,17 @@ namespace Poc2Auto.Common
             return true;
         }
 
-        public static bool DryRun1(out string message)
+        public static bool DryRun1(AdsDriverClient client, out string message)
         {
-            testerClient.GetSysInfoCtrl.ModeCtrl(DryRun);
+            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_DryRun);
+            var ret3 = 0;
+
+            if (ret1 + ret2 + ret3 != 0)
+            {
+                message = "空跑功能切换失败";
+                return false;
+            }
             message = "ok";
 
             return true;
@@ -640,21 +1121,21 @@ namespace Poc2Auto.Common
         {
             if (testerClient == null)
             {
-                message = "Tester 未连接成功!";
+                message = "ALC与机台未连接成功!";
                 return false;
             }
             //Handler切换模式
-            var ret1 = client.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_SocketUniformityTest);
-
-            //Tester切换模式
-            var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Doe);
-            var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Doe, Doe_SocketUniformityTest);
-            if (ret1 + ret2 + ret3 + ret4 != 0)
-            {
-                message = "Socket 一致性模式切换失败";
-                return false;
-            }
+            //var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            //var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Doe_SocketUniformityTest);
+            //
+            ////Tester切换模式
+            //var ret3 = testerClient.GetSysInfoCtrl.ModeCtrl(Auto);
+            //var ret4 = testerClient.GetSysInfoCtrl.SubModeCtrl(Auto, Doe_SocketUniformityTest);
+            //if (ret1 + ret2 + ret3 + ret4 != 0)
+            //{
+            //    message = "Socket 一致性模式切换失败";
+            //    return false;
+            //}
 
             //变量写入
             var result = client.WriteObject(Name_TMTestTrayID, (ushort)param.TrayID, out message);
@@ -673,6 +1154,26 @@ namespace Poc2Auto.Common
             return true;
         }
 
+        public static bool Script(AdsDriverClient client, out string message)
+        {
+            //var ret1 = client.GetSysInfoCtrl.ModeCtrl(Auto);
+            //var ret2 = client.GetSysInfoCtrl.SubModeCtrl(Auto, Func_Script);
+            //
+            //if (client.Name == ModuleTypes.Handler.ToString())
+            //{
+            //    client.WriteObject(Name_DryRunComad, false);
+            //}
+            //
+            //if (ret1 + ret2 != 0)
+            //{
+            //    message = "脚本功能切换失败";
+            //    return false;
+            //}
+            message = "该功能还在完善中...";
+
+            return false;
+        }
+
         public static ushort[,] IntArrayToUshortArray(int[,] data)
         {
             if (data.Length == 0 || data == null)
@@ -685,26 +1186,74 @@ namespace Poc2Auto.Common
                     result[i, j] = (ushort)data[i, j];
             return result;
         }
-
-        public static void SaveDutSN(string name, string sN)
-        {
-            //string path = "C:\\Users\\Administrator.DESKTOP-KDKC337\\Desktop\\";
-            //string file = $"{path}{name}";
-            FileStream fs = new FileStream(name, FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8);
-
-            sw.WriteLine(sN);
-
-            sw.Flush();
-            sw.Close();
-            fs.Close();
-        }
-
+ 
         public static void SaveDutSN(string sn, int row, int col)
         {
             string head = string.Format(@"{0},{1},{2},{3}", "Row", "Column", "DutSn","Reslut");
             string text = string.Format(@"{0},{1},{2},{3}", row, col, sn, IsMatchDutSN);
             Log4netMgr.Instance.SaveSCVForFullPath(SelectSNSavePath, text, head);
+        }
+
+        /// <summary>
+        /// 将指定格式的CSV文件转换成对应字典 Path：C:\Users\86139\Desktop\audit1.csv
+        /// </summary>
+        /// <param name="filePath">CSV文件的全路径名（包含文件名）</param>
+        public static void CSVToDic(string filePath)
+        {
+            try
+            {
+                Encoding encoding = Encoding.Default;
+                string strLine = "";
+                using (StreamReader reader = new StreamReader(filePath, encoding))
+                {
+                    while ((strLine = reader.ReadLine()) != null)
+                    {
+                       var data = strLine.Split(',');
+                        if (data.Length >= 2)
+                        {
+                            if (double.TryParse(System.Text.RegularExpressions.Regex.Replace(data[1], @"[^0-9]+", ""), out double result))
+                            {
+                                Overall.AuditSN[data[0]] = result;
+                            } 
+                        }
+                        
+                    }
+                     
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                AlcSystem.Instance.ShowMsgBox($"{ex.Message}", "Error", icon: AlcMsgBoxIcon.Error);
+            }
+        }
+
+        public static int GetActualSocketID(int id)
+        {
+            int socetID = 1;
+            switch (id)
+            {
+                case 2:
+                    socetID = 1;
+                    break;
+                case 6:
+                    socetID = 2;
+                    break;
+                case 5:
+                    socetID = 3;
+                    break;
+                case 4:
+                    socetID = 4;
+                    break;
+                case 3:
+                    socetID = 5;
+                    break;
+                default:
+                    break;
+            }
+
+            return socetID;
         }
     }
 
@@ -724,6 +1273,10 @@ namespace Poc2Auto.Common
         DoeTakeOff,
         DoeSocketUniformityTest,
         DoeSingleDebug,
+        HandlerSemiAuto,
+        TesterSemiAuto,
+        ResetMode,
+        Script,
     }
 
     /// <summary>
@@ -735,6 +1288,17 @@ namespace Poc2Auto.Common
         None = 0,
         NoSn = 1 << 0,
         AllBinOk = 1 << 1
+    }
+    
+    /// <summary>
+    /// 当前Socket状态枚举
+    /// </summary>
+    public enum SocketStatus
+    {
+        Idle,
+        SocketOpened,
+        SocketClosed,
+        SocketClosing,
     }
 
     public class AutoSelectSnParam
@@ -769,8 +1333,6 @@ namespace Poc2Auto.Common
     {
         public ushort TestNumber { get; set; }
         public ushort TaryID { get; set; }
-        public ushort TestRow { get; set; }
-        public ushort TestCol { get; set; }
         public double[,] ATestPos { get; set; }
         public double[,] BTestPos { get; set; }
         public ushort TestNozzle { get; set; }

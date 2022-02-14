@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace VisionFlows
 {
-    #region Enums
+ 
 
     /// <summary>
     /// 相机枚举
@@ -22,25 +22,9 @@ namespace VisionFlows
     /// </summary>
     public enum EnumLight
     {
-        LeftTop = 0,
-        RightTop = 1,
-        Bottom = 2
-    }
-
-    /// <summary>
-    /// 吸嘴枚举
-    /// </summary>
-    public enum EnumNozzle
-    {
-        Left = 1,
-        Right
-    }
-
-    public enum EnumNozzleCalibWork
-    {
-        CalibFront = 0,
-        CalibBack,
-        NozzleMark
+        LeftTop = 1,
+        RightTop = 2,
+        Bottom = 3
     }
 
     /// <summary>
@@ -48,49 +32,12 @@ namespace VisionFlows
     /// </summary>
     public enum EnumAxis
     {
-        XAxis = 1,         //X轴
-        YAxis = 1,             //Y轴
-        LeftZAxis = 2,         //Load升降轴
-        LeftRAxis = 3,         //Load旋转轴
-        RightZAxis = 4,        //Unload升降轴
-        RightRAxis = 5        //Unload旋转轴
-    }
-
-    /// <summary>
-    /// IO枚举
-    /// </summary>
-    public enum EnumCylinder
-    {
-        Tray1Cyl = 1,        //Load左侧Tray盘气缸
-        Tray2Cyl,            //Load右侧Tray盘气缸
-        Tray3Cyl,            //NGTray盘气缸
-        Tray4Cyl,            //OKTray盘左侧气缸
-        Tray5Cyl,            //OKTray盘右侧气缸
-        LeftNozzleVacuum,    //上料真空阀
-        RightNozzleVacuum,   //下料真空阀
-        PreciseVacuum        //二次定位真空阀
-    }
-
-    /// <summary>
-    /// 功能码枚举
-    /// </summary>
-    public enum EnumFunction
-    {
-        IsDUT = 0,      //有无产品
-        IsReadSN = 1,   //是否读SN码
-        IsLocation = 2, //是否产品定位
-        IsSave          //是否保存图像
-    }
-
-    /// <summary>
-    /// 视觉检测结果枚举
-    /// </summary>
-    public enum EnumResult
-    {
-        AllResult = 0,  //总结果
-        NoDUT = 1,      //有无DUT
-        NoSN = 2,       //有无SN码
-        Abnormal = 7    //其它异常
+        X = 1,
+        Y = 2,
+        Z1 = 3,
+        R1=4,
+        Z2=5,
+        R2=6
     }
 
     public enum EnumPLCSend
@@ -140,9 +87,9 @@ namespace VisionFlows
         TrayMark = 9
     }
 
-    #endregion Enums
+  
 
-    #region Structs
+   
 
     /// <summary>
     /// 用于存储接收数据的结构体
@@ -168,6 +115,7 @@ namespace VisionFlows
         public double RPos;
         public int Result;//bit0:总结果,bit1:有无DUT,bit2:有无SN码,bit3:挑选结果,bit7:其他异常
         public int BinValue;
+        public double RecvSocketID;//(Audit模式)
     }
 
     /// <summary>
@@ -185,95 +133,182 @@ namespace VisionFlows
         public double ActVel;
     }
 
-    #endregion Structs
+ 
 
     public class Utility
     {
-        #region Path
+ 
 
         //应用程序启动视觉相关文件根目录
-        public static string Vision { get { return Application.StartupPath + @"\vision\"; } }
+        public static string Vision
+        {
+            get 
+            { 
+                var path = @"c:\ALCvision\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            } 
+        }
 
         //应用程序配置文件路径
-        public static string Config { get { return Vision + @"configs\"; } }
+        public static string ConfigFile
+        { 
+            get
+            { 
+                var path= Vision + @"configs\";
+                if(!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
 
         //应用程序图像文件路径
-        public static string Image { get { return Vision + @"images\"; } }
+        public static string ImageFile 
+        { 
+            get 
+            {
+                var path = Vision + @"images\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            } 
+        }
         //标定文件
-        public static string calib { get { return Vision + @"calib\"; } }
+        public static string CalibFile
+        {
+            get 
+            {
+                var path = Vision + @"calib\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            } 
+        }
 
 
         //应用程序配方路径
-        public static string type { get { return Vision + @"type\"; } }
+        public static string TypeFile 
+        { 
+            get 
+            { 
+                var path = Vision + @"type\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
 
 
         //应用程序模板文件路径
-        public static string Model { get { return Vision + @"models\"; } }
-
-
-        #endregion Path
-
-        #region TempVar
-
-        //
-        public static int LightDelayTime = 1000;
-
-        public static int CaptureDelayTime = 1500;
-        public static bool OriginValue = false;
-
-        //
-        //public static Dictionary<string, HShapeModel> ShapeModel = new Dictionary<string, HShapeModel>();
-
-        //public static Dictionary<string, HMetrologyModel> MetrologyModel = new Dictionary<string, HMetrologyModel>();
-       // public static Dictionary<string, HHomMat2D> HomMat2D = new Dictionary<string, HHomMat2D>();
-        //
-
-        public static double SecondX = 0.0;
-        public static double SecondY = 0.0;
-
-        /***************************************************************/
-
-        /*******************************************************/
-
-        /// <summary>
-        /// 本地测试时 图片从本地读取 实际运行时 图片从相机抓取
-        /// </summary>
-        public static GrabImageMode grabImageMode = GrabImageMode.FromCamera;
-
-        public enum GrabImageMode
-        {
-            FromCamera,
-            FromDisk,
+        public static string ModelFile 
+        { 
+            get 
+            { 
+                var path = Vision + @"models\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            } 
         }
 
+        /// <summary>
+        /// Hobject对象文件
+        /// </summary>
+
+        public static string HobjectFile
+        {
+            get
+            {
+                var path = Vision + @"hobjects\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
+
+        public static string CalibImageFile
+        {
+            get 
+            {
+                var path =  ImageFile + @"calibimagefile\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
+        public static string TopLeftCalibImageFile
+        {
+            get
+            {
+                var path = CalibImageFile + @"TopLeftCalib\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
+        public static string TopRightCalibImageFile
+        {
+            get
+            {
+                var path = CalibImageFile + @"TopRightCalib\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
+
+        public static string BottomCalibImageFile
+        {
+            get
+            {
+                var path = CalibImageFile + @"BottomCalib\";
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+                return path;
+            }
+        }
+
+
+
+        public static int CaptureDelayTime = 3000;
+        public static double SecondX = 0.0;
+        public static double SecondY = 0.0;
         /// <summary>
         /// 保存每个工位的拍照图片用于后面离线 测试图像定位算法
         /// </summary>
-        public static bool IsSaveImage = true;
+        public static bool IsSaveAllImage = false;
+        public static bool IsSaveNgImage = false;
 
-        /*******************************************************/
+ 
 
-        #endregion TempVar
-
-        #region GetBit
-
-        /// <summary>
-        /// 根据Int类型的值，返回用1或0(对应True或Flase)填充的数组
-        /// <remarks>从右侧开始向左索引(0~31)</remarks>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static IEnumerable<bool> GetBitList(int value)
-        {
-            var list = new List<bool>(32);
-            for (var i = 0; i < 16; i++)
-            {
-                var val = 1 << i;
-                list.Add((value & val) == val);
-            }
-            return list;
-        }
-
+ 
         /// <summary>
         /// 返回Int数据中某一位是否为1
         /// </summary>
@@ -300,7 +335,6 @@ namespace VisionFlows
             var val = 1 << index;
             return bitValue ? (value | val) : (value & ~val);
         }
-
-        #endregion GetBit
+ 
     }
 }

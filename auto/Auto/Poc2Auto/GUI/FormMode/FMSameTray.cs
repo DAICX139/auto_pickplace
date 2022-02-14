@@ -26,14 +26,15 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Handler))
                  {
                      if (RunModeMgr.SameTrayTest(_client, ucModeParams_DoeSameTrayTest1.SameTrayParam, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.DoeSameTray;
                          RunModeMgr.Running = false;
-                         AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         RunModeMgr.OriginValue = false;
+                         //AlcSystem.Instance.ShowMsgBox("OK", "Information");
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {

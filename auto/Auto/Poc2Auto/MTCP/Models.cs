@@ -40,6 +40,9 @@ namespace Poc2Auto.MTCP
 
         [CsvFixedValue(12, "LOTS", "#TESTER_PLC_SW_VER")]
         public string TesterPLCSwVer { get; set; }
+
+        [CsvFixedValue(13, "LOTS", "#HOST_MODE")]
+        public string HostMode { get; set; }
     }
 
     [CsvHeadNameOfMember(StructSendData.Head_value)]
@@ -90,7 +93,7 @@ namespace Poc2Auto.MTCP
     public class Unload
     {
         [CsvFixedValue(1, "TSCR", "#STATION_TYPE")]
-        public int StationType { get; } = 0;
+        public int StationType { get; } = 255;
 
         [CsvFixedValue(2, "TSCR", "#STATION_SN")]
         public string StationSn { get; } = "IA7953-UNLOAD";

@@ -131,11 +131,6 @@ namespace Poc2Auto.GUI
             }
         }
 
-        private void btnSocketOpen_Click(object sender, EventArgs e)
-        {
-            EventCenter.LoadOrUnload?.Invoke();
-        }
-
         private void cbxEnableMTCP_CheckedChanged(object sender, EventArgs e)
         {
             ConfigMgr.Instance.EnableClientMTCP = ckbxEnableMTCP.Checked;

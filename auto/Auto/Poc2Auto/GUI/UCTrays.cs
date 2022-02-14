@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using Poc2Auto.Model;
 using CYGKit.AdsProtocol;
 using CYGKit.Factory.TableView;
+using System.Linq;
+using CYGKit.GUI;
 
 namespace Poc2Auto.GUI
 {
@@ -28,9 +30,24 @@ namespace Poc2Auto.GUI
             uC_Tray3.BindDataBase<DragonContext>();
             uC_Tray4.BindDataBase<DragonContext>();
             uC_Tray5.BindDataBase<DragonContext>();
+
+            //Tray盘上加载Bin值以及对应的Bincolor
+            SetBinRegionTextAndColor(uC_Tray3.TrayID, uC_Tray3);
+            SetBinRegionTextAndColor(uC_Tray4.TrayID, uC_Tray4);
+            SetBinRegionTextAndColor(uC_Tray5.TrayID, uC_Tray5);
+
             plcDriver = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Handler.ToString()) as AdsDriverClient;
-            if (plcDriver != null) 
-                plcDriver.OnInitOk += () => { TraysStatusJuageMent(); };
+            if (plcDriver != null)
+            {
+                if (plcDriver.IsInitOk)
+                {
+                    TraysStatusJuageMent();
+                }
+                else
+                {
+                    plcDriver.OnInitOk += () => { TraysStatusJuageMent(); };
+                }
+            }
 
             uC_Tray1.cells.MouseDown += Cells_Tray1MouseDown;
             uC_Tray1.cells.MouseUp += Cells_Tray1MouseUp;
@@ -46,15 +63,41 @@ namespace Poc2Auto.GUI
 
             uC_Tray5.cells.MouseDown += Cells_Tray5MouseDown;
             uC_Tray5.cells.MouseUp += Cells_Tray5MouseUp;
+
+            EventCenter.OK2TrayBinSet += OK2TrayBinSet;
+            EventCenter.NGTrayBinSet += NGTrayBinSet;
+            EventCenter.OK1TrayBinSet += OK1TrayBinSet;
+            RunModeMgr.LoadTraySizeChanged += LoadTraySizeChanged;
+            RunModeMgr.NGTraySizeChanged += NGTraySizeChanged;
+            RunModeMgr.UnloadTraySizeChanged += UnloadTraySizeChanged;
+        }
+
+        private void OK2TrayBinSet()
+        {
+            SetBinRegionTextAndColor(uC_Tray5.TrayID, uC_Tray5); 
+        }
+
+        private void NGTrayBinSet()
+        {
+            SetBinRegionTextAndColor(uC_Tray3.TrayID, uC_Tray3);
+        }
+
+        private void OK1TrayBinSet()
+        {
+            SetBinRegionTextAndColor(uC_Tray4.TrayID, uC_Tray4);
         }
 
         private void Cells_Tray5MouseUp(object sender, MouseEventArgs e)
         {
             if (plcDriver == null) return;
             uC_Tray5.Selectable = false;
-            if (AlcSystem.Instance.ShowMsgBox($"确定清空Pass2盘当前选择的数据吗？", "Question", icon: AlcMsgBoxIcon.Question, buttons: AlcMsgBoxButtons.YesNo) == AlcMsgBoxResult.No)
-                return;
-            var result = plcDriver.WriteTrayData(uC_Tray5.TrayID, ULoadRData, out string message);
+            //if (AlcSystem.Instance.ShowMsgBox($"确定清空Pass2盘当前选择的数据吗？", "Question", icon: AlcMsgBoxIcon.Question, buttons: AlcMsgBoxButtons.YesNo) == AlcMsgBoxResult.No)
+            //    return;
+            //var result = plcDriver.WriteTrayData(uC_Tray5.TrayID, ULoadRData, out string message);
+
+            var data = SetTrayData(uC_Tray5, false);
+
+            var result = plcDriver.WriteTrayData(uC_Tray5.TrayID, data, out string message);
             if (!result)
             {
                 AlcSystem.Instance.ShowMsgBox($"{(TrayName)uC_Tray5.TrayID} Tray盘数据下发失败: \r\n\r\n{message}", "Error", icon: AlcMsgBoxIcon.Error);
@@ -62,7 +105,7 @@ namespace Poc2Auto.GUI
             else
             {
                 DragonDbHelper.ClearTrayData((int)(TrayName)uC_Tray5.TrayID);
-                TrayManager.Trays[(TrayName)uC_Tray5.TrayID].SetData(ULoadRData);
+                TrayManager.Trays[(TrayName)uC_Tray5.TrayID].SetData(data);
                 //AlcSystem.Instance.ShowMsgBox($"{(TrayName)uC_Tray3.TrayID} Tray盘数据下发成功!", "Information", icon: AlcMsgBoxIcon.Information);
             }
             uC_Tray5.EnableUpdate = true;
@@ -80,9 +123,13 @@ namespace Poc2Auto.GUI
         {
             if (plcDriver == null) return;
             uC_Tray4.Selectable = false;
-            if (AlcSystem.Instance.ShowMsgBox($"确定清空Pass1盘当前选择的数据吗？", "Question", icon: AlcMsgBoxIcon.Question, buttons: AlcMsgBoxButtons.YesNo) == AlcMsgBoxResult.No)
-                return;
-            var result = plcDriver.WriteTrayData(uC_Tray4.TrayID, ULoadLData, out string message);
+            //if (AlcSystem.Instance.ShowMsgBox($"确定清空Pass1盘当前选择的数据吗？", "Question", icon: AlcMsgBoxIcon.Question, buttons: AlcMsgBoxButtons.YesNo) == AlcMsgBoxResult.No)
+            //    return;
+            //var result = plcDriver.WriteTrayData(uC_Tray4.TrayID, ULoadLData, out string message);
+
+            var data = SetTrayData(uC_Tray4, false);
+
+            var result = plcDriver.WriteTrayData(uC_Tray4.TrayID, data, out string message);
             if (!result)
             {
                 AlcSystem.Instance.ShowMsgBox($"{(TrayName)uC_Tray4.TrayID} Tray盘数据下发失败: \r\n\r\n{message}", "Error", icon: AlcMsgBoxIcon.Error);
@@ -90,7 +137,7 @@ namespace Poc2Auto.GUI
             else
             {
                 DragonDbHelper.ClearTrayData((int)(TrayName)uC_Tray4.TrayID);
-                TrayManager.Trays[(TrayName)uC_Tray4.TrayID].SetData(ULoadLData);
+                TrayManager.Trays[(TrayName)uC_Tray4.TrayID].SetData(data);
                 //AlcSystem.Instance.ShowMsgBox($"{(TrayName)uC_Tray3.TrayID} Tray盘数据下发成功!", "Information", icon: AlcMsgBoxIcon.Information);
             }
             uC_Tray4.EnableUpdate = true;
@@ -108,7 +155,7 @@ namespace Poc2Auto.GUI
         {
             if (plcDriver == null) return;
             uC_Tray3.Selectable = false;
-            var data = SetTrayData(uC_Tray3);
+            var data = SetTrayData(uC_Tray3,true);
 
             var result = plcDriver.WriteTrayData(uC_Tray3.TrayID, data, out string message);
             if (!result)
@@ -136,7 +183,7 @@ namespace Poc2Auto.GUI
         {
             if (plcDriver == null) return;
             uC_Tray2.Selectable = false;
-            var data = SetTrayData(uC_Tray2);
+            var data = SetTrayData(uC_Tray2, true);
 
             var result = plcDriver.WriteTrayData(uC_Tray2.TrayID, data, out string message);
             if (!result)
@@ -164,7 +211,7 @@ namespace Poc2Auto.GUI
         {
             if (plcDriver == null) return;
             uC_Tray1.Selectable = false;
-            var data = SetTrayData(uC_Tray1);
+            var data = SetTrayData(uC_Tray1, true);
             var result = plcDriver.WriteTrayData(uC_Tray1.TrayID, data, out string message);
             if (!result)
             {
@@ -191,9 +238,21 @@ namespace Poc2Auto.GUI
         {
             get
             {
+                int row;
+                int col;
                 int[,] data = new int[Tray.ROW, Tray.COL];
-                for (int i = 0; i < Tray.ROW; i++)
-                    for (int j = 0; j < Tray.COL; j++)
+                if (!RunModeMgr.IsLoadBigTray)
+                {
+                    row = Tray.S_ROW;
+                    col = Tray.S_Col;
+                }
+                else
+                {
+                    row = Tray.ROW;
+                    col = Tray.COL;
+                }
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < col; j++)
                     {
                         if (uC_Tray1.GetCell(i, j).Style.BackColor != Color.White)
                             data[i, j] = 1;
@@ -234,8 +293,21 @@ namespace Poc2Auto.GUI
             get
             {
                 int num = 0;
-                for (int i = 0; i < Tray.ROW; i++)
-                    for (int j = 0; j < Tray.COL; j++)
+                int row;
+                int col;
+                if (!RunModeMgr.IsLoadBigTray)
+                {
+                    row = Tray.S_ROW;
+                    col = Tray.S_Col;
+                }
+                else
+                {
+                    row = Tray.ROW;
+                    col = Tray.COL;
+                }
+                
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < col; j++)
                         if (uC_Tray1.GetCell(i, j).Style.BackColor != Color.White)
                             num++;
                 return num;
@@ -280,37 +352,7 @@ namespace Poc2Auto.GUI
                 return data;
             }
         }
-
-        void loadBinRegion(int TrayID)
-        {
-            var binregion = DragonDbHelper.GetBinRegion(TrayID);
-            foreach (var bin in binregion)
-            {
-                var bincolor = DragonDbHelper.GetBinColor(bin.Bin);
-                for (int i = bin.StartRow; i <= bin.EndRow; i++)
-                {
-                    for (int j = bin.StartColumn; j <= bin.EndColumn; j++)
-                    {
-                        switch (TrayID)
-                        {
-                            case (int)TrayName.LoadL:
-                                uC_Tray1.GetCell(i, j).Style.BackColor = bincolor; break;
-                            case (int)TrayName.LoadR:
-                                uC_Tray2.GetCell(i, j).Style.BackColor = bincolor; break;
-                            case (int)TrayName.NG:
-                                uC_Tray3.GetCell(i, j).Style.BackColor = bincolor; break;
-                            case (int)TrayName.UnloadL:
-                                uC_Tray4.GetCell(i, j).Style.BackColor = bincolor; break;
-                            case (int)TrayName.UnloadR:
-                                uC_Tray5.GetCell(i, j).Style.BackColor = bincolor; break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-        }
-
+ 
         private const int _minSpace = 10, _maxSpace = 30;
 
         private void UCTrays_SizeChanged(object sender, EventArgs e)
@@ -335,7 +377,7 @@ namespace Poc2Auto.GUI
             uC_Tray5.Location = new Point(x4, y);
         }
 
-        private int[,] SetTrayData(UC_Tray tray)
+        private int[,] SetTrayData(UC_Tray tray ,bool loadTray)
         {
             int[,] result = new int[Tray.ROW, Tray.COL];
             var data = DragonDbHelper.GetTrayData(tray.TrayID);
@@ -344,20 +386,46 @@ namespace Poc2Auto.GUI
                 || tray.SelectedRegion.Bottom == -1 || tray.SelectedRegion.Right == -1)
                 return result;
 
+            // data[,] startRow,startCol, endRow, EndCol, Bin
+
+            int row = 0;
+            int col = 0;
+
+            if (loadTray)
+            {
+                if (RunModeMgr.IsLoadBigTray)
+                {
+                    row = Tray.ROW;
+                    col = Tray.COL;
+                }
+                else
+                {
+                    row = Tray.S_ROW;
+                    col = Tray.S_Col;
+                }
+            }
+            else
+            {
+                row = Tray.ROW;
+                col = Tray.COL;
+            }
+
             foreach (var _ in data)
-                result[_.Row, _.Column] = 1;
+            {
+                result[_.Row, _.Column] = 1; 
+            }
             if (result[tray.SelectedRegion.Y, tray.SelectedRegion.X] == 1 &&
                 result[tray.SelectedRegion.Bottom, tray.SelectedRegion.Right] == 1)
             {
-                for (int i = 0; i < Tray.ROW; i++)
-                    for (int j = 0; j < Tray.COL; j++)
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < col; j++)
                         if (result[i, j] == 1 && tray.GetCell(i, j).Selected)
                             result[i, j] = 0;
             }
             else
             {
-                for (int i = 0; i < Tray.ROW; i++)
-                    for (int j = 0; j < Tray.COL; j++)
+                for (int i = 0; i < row; i++)
+                    for (int j = 0; j < col; j++)
                         if (tray.GetCell(i, j).Selected)
                             result[i, j] = 1;
             }
@@ -449,81 +517,47 @@ namespace Poc2Auto.GUI
             }
         }
 
-        private void ckbxDisplay_CheckedChanged_1(object sender, EventArgs e)
-        {
-            //if (!ckbxDisplay.Checked)
-            //{
-            //    uC_Tray1.Selectable = true;
-            //    uC_Tray2.Selectable = true;
-            //    uC_Tray3.Selectable = true;
-            //
-            //    uC_Tray1.EnableUpdate = false;
-            //    uC_Tray2.EnableUpdate = false;
-            //    uC_Tray3.EnableUpdate = false;
-            //    uC_Tray4.EnableUpdate = false;
-            //    uC_Tray5.EnableUpdate = false;
-            //
-            //    uC_Tray1.ClearColor();
-            //    uC_Tray1.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //    uC_Tray2.ClearColor();
-            //    uC_Tray1.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //    uC_Tray3.ClearColor();
-            //    uC_Tray3.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //    uC_Tray4.ClearColor();
-            //    uC_Tray4.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //    uC_Tray5.ClearColor();
-            //    uC_Tray5.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //
-            //    btnLoadTray1Set.Enabled = true;
-            //    btnLoadTray2Set.Enabled = true;
-            //    btnNGTraySet.Enabled = true;
-            //    btnPassTray1Set.Enabled = true;
-            //    btnPassTray2Set.Enabled = true;
-            //}
-            //else
-            //{
-            //    btnLoadTray1Set.Enabled = false;
-            //    btnLoadTray2Set.Enabled = false;
-            //    btnNGTraySet.Enabled = false;
-            //    btnPassTray1Set.Enabled = false;
-            //    btnPassTray2Set.Enabled = false;
-            //
-            //    uC_Tray1.ClearColor();
-            //    uC_Tray1.Selectable = false;
-            //    uC_Tray1.EnableUpdate = true;
-            //    uC_Tray1.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //
-            //    uC_Tray2.ClearColor();
-            //    uC_Tray2.Selectable = false;
-            //    uC_Tray2.EnableUpdate = true;
-            //    uC_Tray2.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //
-            //    uC_Tray3.ClearColor();
-            //    uC_Tray3.Selectable = false;
-            //    uC_Tray3.EnableUpdate = true;
-            //    uC_Tray3.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //
-            //    uC_Tray4.ClearColor();
-            //    uC_Tray4.Selectable = false;
-            //    uC_Tray4.EnableUpdate = true;
-            //    uC_Tray4.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //
-            //    uC_Tray5.ClearColor();
-            //    uC_Tray5.Selectable = false;
-            //    uC_Tray5.EnableUpdate = true;
-            //    uC_Tray5.SelectedRegion = new Rectangle(-1, -1, -1, -1);
-            //}
-        }
-
         private void TraysStatusJuageMent()
         {
             if (plcDriver == null)
                 return;
-            List<TrayName> Load = new List<TrayName>() { TrayName.LoadL,TrayName.LoadR};
-            List<TrayName> Unload = new List<TrayName>() { TrayName.NG,TrayName.UnloadL,TrayName.UnloadR};
+
+            if (RunModeMgr.IsLoadBigTray)
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(1), false);
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(2), false);
+            }
+            else
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(1), true);
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(2), true);
+            }
+
+            if (RunModeMgr.IsNGBigTray)
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(3), false);
+            }
+            else
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(3), true);
+            }
+
+            if (RunModeMgr.IsUnloadBigTray)
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(4), false);
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(5), false);
+            }
+            else
+            {
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(4), true);
+                plcDriver?.WriteObject(RunModeMgr.TraySwitch(5), true);
+            }
+
+            List<TrayName> Load = new List<TrayName>() { TrayName.Load1,TrayName.Load2};
+            List<TrayName> Unload = new List<TrayName>() { TrayName.NG,TrayName.Pass1,TrayName.Pass2};
             Task.Run(() =>
             {
-                while (true)
+                while (false)
                 {
                     if (RunModeMgr.RunMode == RunMode.AutoNormal && AlcSystem.Instance.GetSystemStatus() == SYSTEM_STATUS.Running)
                     {
@@ -550,6 +584,132 @@ namespace Poc2Auto.GUI
             });
         }
 
+        private void SetBinRegionTextAndColor(int trayID, GridView tray)
+        {
+            using (var context = new DragonContext())
+            {
+                //tray.SelectedRegion = new Rectangle(-1, -1, -1, -1);
+                tray.ClearColor();
+                tray.ClearDisplayText();
+ 
+                var regions = DragonDbHelper.GetBinRegion(trayID);
+                //展示到网格
+                foreach (var region in regions)
+                {
+                    var binText = region.Bin.ToString();
+                    //if (binText == "4") binText = "F";
+                    //else if (binText == "5") binText = "99";
+                    tray.SetText(binText, region.StartRow, region.StartColumn, region.EndRow, region.EndColumn);
+                }
+            }
+        }
+
+        private void LoadTraySizeChanged()
+        {
+            if (RunModeMgr.IsLoadBigTray)
+            {
+                this.uC_Tray1.Row = this.uC_Tray2.Row = Tray.ROW;
+                this.uC_Tray1.Col = this.uC_Tray2.Col = Tray.COL;
+                if (plcDriver.IsInitOk)
+                {
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(1), false);
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(2), false);
+                }
+            }
+            else
+            {
+                this.uC_Tray1.Row = this.uC_Tray2.Row = Tray.S_ROW;
+                this.uC_Tray1.Col = this.uC_Tray2.Col  = Tray.S_Col;
+
+                if (plcDriver.IsInitOk)
+                {
+                    ClearTrayData(uC_Tray1);
+                    ClearTrayData(uC_Tray2);
+
+
+                    var res = plcDriver?.WriteObject(RunModeMgr.TraySwitch(1), true);
+                    res = plcDriver?.WriteObject(RunModeMgr.TraySwitch(2), true);
+                }
+            }
+
+        }
+
+        private void ClearTrayData(UC_Tray tray)
+        {
+            bool result = plcDriver.WriteTrayData(tray.TrayID, new int[Tray.ROW, Tray.COL], out string message);
+            if (!result)
+            {
+                AlcSystem.Instance.ShowMsgBox($"{(TrayName)tray.TrayID} Tray盘数据清空失败: \r\n\r\n{message}", "Error", icon: AlcMsgBoxIcon.Error);
+            }
+            else
+            {
+                DragonDbHelper.ClearTrayData((int)(TrayName)tray.TrayID);
+            }
+
+            tray.EnableUpdate = true;
+            tray.SelectedRegion = new Rectangle(x: -1, -1, -1, -1);
+        }
+
+        private void NGTraySizeChanged()
+        {
+            if (RunModeMgr.IsNGBigTray)
+            {
+                this.uC_Tray3.Row = Tray.ROW;
+                this.uC_Tray3.Col = Tray.COL;
+                if (plcDriver.IsInitOk)
+                {
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(3), false);
+                    uC_Tray3.ClearDisplayText();
+                }
+                
+            }
+            else
+            {
+                this.uC_Tray3.Row = Tray.S_ROW;
+                this.uC_Tray3.Col = Tray.S_Col;
+                if (plcDriver.IsInitOk)
+                {
+                    ClearTrayData(uC_Tray3);
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(3), true);
+                    uC_Tray3.ClearDisplayText();
+                }
+
+            }
+        }
+
+        private void UnloadTraySizeChanged()
+        {
+            if (RunModeMgr.IsUnloadBigTray)
+            {
+                this.uC_Tray4.Row = this.uC_Tray5.Row = Tray.ROW;
+                this.uC_Tray4.Col = this.uC_Tray5.Col = Tray.COL;
+
+                if (plcDriver.IsInitOk)
+                {
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(4), false);
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(5), false);
+                    uC_Tray4.ClearDisplayText();
+                    uC_Tray5.ClearDisplayText();
+                }
+                
+            }
+            else
+            {
+                this.uC_Tray4.Row = this.uC_Tray5.Row = Tray.S_ROW;
+                this.uC_Tray4.Col = this.uC_Tray5.Col = Tray.S_Col;
+
+                if (plcDriver.IsInitOk)
+                {
+                    ClearTrayData(uC_Tray4);
+                    ClearTrayData(uC_Tray5);
+
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(4), true);
+                    plcDriver?.WriteObject(RunModeMgr.TraySwitch(5), true);
+                    uC_Tray4.ClearDisplayText();
+                    uC_Tray5.ClearDisplayText();
+                }
+        }
+        }
     }
 
 }

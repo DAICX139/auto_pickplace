@@ -8,6 +8,10 @@ using Poc2Auto.Database;
 using AlcUtility;
 using System.Timers;
 using Poc2Auto.MTCP;
+using System.Threading;
+using Newtonsoft.Json;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Poc2Auto.Model
 {
@@ -40,17 +44,17 @@ namespace Poc2Auto.Model
             TestStations = new List<StationName>
             {
                 StationName.Test1_LIVW,
-                StationName.Test2_DTGT,
-                StationName.Test3_Backup,
+                StationName.Test2_NFBP,
+                StationName.Test3_KYRL,
                 StationName.Test4_BMPF,
             };
 
             RotationStations = new List<StationName>
             {
-                StationName.Default,
+                StationName.PNP,
                 StationName.Test1_LIVW,
-                StationName.Test2_DTGT,
-                StationName.Test3_Backup,
+                StationName.Test2_NFBP,
+                StationName.Test3_KYRL,
                 StationName.Test4_BMPF,
             };
 
@@ -64,7 +68,7 @@ namespace Poc2Auto.Model
 
             if (CYGKit.GUI.Common.IsDesignMode())
                 return;
-            var enable = ConfigMgr.Instance.WithTM;
+
             foreach (var station in TestStations)
             {
                 Stations[station].Enable = DragonDbHelper.GetStationEnable(station.ToString());
@@ -76,6 +80,11 @@ namespace Poc2Auto.Model
             LoadOnlineDut();
             LoadStationStat();
             LoadSocketStat();
+            //加载各个工站数据
+            foreach (StationName name in Enum.GetValues(typeof(StationName)))
+            {
+                Stations[name].Load();
+            }
         }
 
         private static void LoadOnlineDut()
@@ -84,16 +93,16 @@ namespace Poc2Auto.Model
             var onlineDuts = context.OnlineDuts.ToList();
             foreach (var onlineDut in onlineDuts)
             {
-                var socket = GetSocketByLocationId(onlineDut.SocketID, out var stationName, out var row, out var col);
+                var socket = GetSocketByLocationId(onlineDut.StationID, out var stationName, out var row, out var col);
                 if (socket == null) return;
-                onlineDut.StationID = (int)stationName;
+                //onlineDut.StationID = (int)stationName;
                 onlineDut.Row = row;
                 onlineDut.Column = col;
                 var barCode = onlineDut.Barcode;
                 var dut = new Dut { Barcode = onlineDut.Barcode.Split(' ', '—', ' ')[0] };
                 onlineDut.Barcode = barCode;
                 dut.SetTestResultByString(onlineDut.TestResult);
-                socket.Dut = dut;
+                //socket.Dut = dut;
             }
             context.SaveChanges();
         }
@@ -144,7 +153,7 @@ namespace Poc2Auto.Model
                 }
             }
 
-            stationName = StationName.Default;
+            stationName = StationName.PNP;
             return null;
         }
 
@@ -162,13 +171,17 @@ namespace Poc2Auto.Model
                 }
 
                 //所有工位都没有产品，上下料工位也处于Idle状态，也不应该旋转
-                if (allEmpty && Stations[StationName.Default].Status == StationStatus.Idle) return;
+                if (allEmpty && Stations[StationName.PNP].Status == StationStatus.Idle) return;
+
+                if (RunModeMgr.IsRotate)
+                    return;
 
                 //开始旋转
                 foreach (var name in RotationStations)
                 {
                     Stations[name].Status = StationStatus.Rotating;
                 }
+
             }
 
             //旋转动作
@@ -184,14 +197,18 @@ namespace Poc2Auto.Model
 
             //更新数据库
             DragonDbHelper.RotateDut();
-            EventCenter.ProcessInfo?.Invoke($"数据库更新完成", ErrorLevel.Debug);
+            EventCenter.ProcessInfo?.Invoke($"数据库更新完成", ErrorLevel.INFO);
 
             //旋转完成
             foreach (var name in RotationStations)
             {
                 Stations[name].Status = StationStatus.RotateDone;
             }
-
+            //保存各个工站的数据至文件
+            foreach (StationName name in Enum.GetValues(typeof(StationName)))
+            {
+                Stations[name].Save();
+            }
             if (EventRotateDone != null)
                 Parallel.ForEach(EventRotateDone.GetInvocationList(), act => ((Action)act).Invoke());
         }
@@ -199,10 +216,18 @@ namespace Poc2Auto.Model
 
     public class Station : StationBase
     {
+        private readonly string path = $"{Application.StartupPath}\\StationData\\";
+        [JsonProperty("Name")]
         public new StationName Name { get; private set; }
+        [JsonProperty("SocketGroup")]
         public SocketGroup SocketGroup { get; set; }
-
-        public Timer TestTimer;
+        [JsonIgnore]
+        public System.Timers.Timer TestTimer;
+        /// <summary>
+        /// 工站连续测试失败次数
+        /// </summary>
+        [JsonProperty("StationTestFailTimes")]
+        public int TestFailTimes { get; set; }
         public new string IP
         {
             get => base.IP;
@@ -220,11 +245,12 @@ namespace Poc2Auto.Model
                 }
             }
         }
-
         private StationStatus _status;
         public event Action ReadyToRotate;
+        [JsonIgnore]
         public bool IsReadyToRotate => _status == StationStatus.Idle || _status == StationStatus.Disabled ||
             _status == StationStatus.StartFailed || _status == StationStatus.Done || _status == StationStatus.SocketDisabled;
+        [JsonIgnore]
         public new StationStatus Status
         {
             get => _status;
@@ -234,16 +260,27 @@ namespace Poc2Auto.Model
                 base.Status = value.ToString();
                 if (IsReadyToRotate)
                 {
-                    ReadyToRotate?.BeginInvoke(null, null);
-                    WorkTime = (DateTime.Now - _workStartTime).TotalSeconds;
+                    if (RunModeMgr.RunMode != RunMode.HandlerSemiAuto && RunModeMgr.RunMode != RunMode.TesterSemiAuto)
+                    {
+                        ReadyToRotate?.BeginInvoke(null, null);
+                        WorkTime = (DateTime.Now - _workStartTime).TotalSeconds;
+                    }
                 }
                 else if (_status == StationStatus.RotateDone)
                     _workStartTime = DateTime.Now;
             }
         }
+        [JsonIgnore]
         public int TestTimesForGRR { get; set; }
-        //工站超时时间计数
+        /// <summary>
+        /// 工站超时时间计数
+        /// </summary>
+        [JsonIgnore]
         public int TimeOutTotal { get; set; }
+        /// <summary>
+        /// 工站是否检测超时
+        /// </summary>
+        public bool IsTestTimeOut { get; set; }
 
         private DateTime _workStartTime = DateTime.Now;
 
@@ -255,23 +292,24 @@ namespace Poc2Auto.Model
             Stat.BindDataBase<DragonContext>();
             IP = "";
             Status = Enable ? StationStatus.Idle : StationStatus.Disabled;
-            TestTimer = new Timer { Interval = 1000, };
+            TestTimer = new System.Timers.Timer { Interval = 1000, };
             TestTimer.Elapsed += (o, e) => Tick(o, e);
         }
 
-        private void Tick(object o, ElapsedEventArgs e)
+        private void Tick(object o, ElapsedEventArgs e) 
         {
             if (++TimeOutTotal > RunModeMgr.TMTestTimeOut)
             {
                 TimeOutTotal = 0;
+                IsTestTimeOut = true;
                 TestTimer.Enabled = false;
                 if (Status == StationStatus.Testing)
                 {
                     var btnResult = AlcSystem.Instance.ShowMsgBox($"检测到{Name}工站没有回复测试完成，请检查该工站，问题解决后可做以下选择：\r\n\r\n" +
-                        $"中止：中止整个流程\r\n" +
+                        $"停止：停止整个流程\r\n" +
                         $"重试：重新给该工站发送测试命令\r\n" +
                         $"继续：屏蔽该工站，继续走向下一个流程测试", "TM Error",
-                        buttons: AlcMsgBoxButtons.AbortRetryContinue,
+                        buttons: AlcMsgBoxButtons.StopRetryContinue,
                         defaultButton: AlcMsgBoxDefaultButton.Button2,
                         icon: AlcMsgBoxIcon.Error);
                     if (btnResult == AlcMsgBoxResult.Retry)
@@ -288,7 +326,7 @@ namespace Poc2Auto.Model
         }
 
         #region Get Data
-
+        [JsonIgnore]
         public bool Empty
         {
             get
@@ -300,9 +338,8 @@ namespace Poc2Auto.Model
                 return true;
             }
         }
-
         public Dut DutAt(int row, int col) => SocketGroup.Sockets[row, col].Dut;
-
+        [JsonIgnore]
         public string[,] Barcodes
         {
             get
@@ -334,6 +371,14 @@ namespace Poc2Auto.Model
             socket.Dut = null;
             if (Name == StationName.Unload)
                 DragonDbHelper.UnloadDut(socket.Index);
+            return dut;
+        }
+        public Dut TakeDutFromLoad(int row, int col)
+        {
+            var socket = SocketGroup.Sockets[row, col];
+            var dut = socket.Dut;
+            socket.Dut = null;
+            DragonDbHelper.LoadPutDutToTray(socket.Index);
             return dut;
         }
 
@@ -372,27 +417,36 @@ namespace Poc2Auto.Model
             MoveDut(stationSource, this);
         }
 
+        public void RemoveDut(int row, int col)
+        {
+            var socket = SocketGroup.Sockets[row, col];
+            socket.Dut = null;
+            DragonDbHelper.RemoveDut(socket.Index);
+        }
+
         public void SetTestResult(int[,] results)
         {
             for (int i = 0; i < SocketGroup.ROW; i++)
                 for (int j = 0; j < SocketGroup.COL; j++)
                 {
                     var result = results[i, j];
-                    if (result == Dut.SkipBin) continue;
+                    //if (result == Dut.SkipBin) continue;
                     var socket = SocketGroup.Sockets[i, j];
                     var dut = socket.Dut;
                     if (dut == null) continue;
                     dut.TestResult[Name] = result;
-                    //var changeResult = dut.ChangeDutTestResult(result);
-                    //if (changeResult < 0)
-                    //{
-                    //    //RunModeMgr.FailDut++;
-                    //    dut.TestResult[Name] = Dut.Fail_All;
-                    //    //AlcSystem.Instance.ShowMsgBox($"TM{Name}工站测试出错！", "Error", icon: AlcMsgBoxIcon.Error);
-                    //    Status = StationStatus.TestError;
-                    //}
-                    //else
-                    //    dut.TestResult[Name] = changeResult;
+                    if (!ConfigMgr.Instance.EnableClientMTCP)
+                    {
+                        var changeResult = dut.ChangeDutTestResult(result);
+                        if (changeResult < 0)
+                        {
+                            dut.TestResult[Name] = Dut.Fail_All;
+                            //AlcSystem.Instance.ShowMsgBox($"TM{Name}工站测试出错！", "Error", icon: AlcMsgBoxIcon.Error);
+                            Status = StationStatus.TestError;
+                        }
+                        else
+                            dut.TestResult[Name] = changeResult;
+                    }
 
                     //工站统计
                     if (result == Dut.PassBin) Stat.Passed++;
@@ -411,41 +465,13 @@ namespace Poc2Auto.Model
                     //工站bin统计
                     DragonDbHelper.AddOrUpdateBin(Name.ToString(), Overall.LotInfo?.LotID, result);
 
+                    DragonDbHelper.SetDutTotal(Overall.LotInfo?.LotID, dut.Barcode, result, Name);
                     //获取bin并入库
                     if (Name == StationName.Test4_BMPF)
                     {
                         Task.Run(() =>
                         {
-                            RunModeMgr.UnloadTotal++;
-                            //给MTCP发送unload数据，返回该DUT测试的总结果
-                            if (MTCPHelper.SendMTCPLotUnload(socket.Dut.Barcode, SocketGroup.Enable ? 1 : 0, out int eCode, out string eString, out string bin))
-                            {
-                                EventCenter.ProcessInfo?.Invoke($"MTCP Unload 发送成功，Socket SN:{socket.Dut.Barcode}", ErrorLevel.Debug);
-                                AlcSystem.Instance.Log($"从MTCP获取到的总结果为{bin}", "MTCP");
-                                EventCenter.ProcessInfo?.Invoke($"从MTCP获取到的总结果为 {bin}", ErrorLevel.Debug);
-                            }
-                            else
-                            {
-                                EventCenter.ProcessInfo?.Invoke($"MTCP Unload 发送失败，Socket SN:{socket.Dut.Barcode}", ErrorLevel.Fatal);
-                                AlcSystem.Instance.Error($"MTCP Unload send failed, error code:{eCode}, error message:{eString}.", 0, AlcErrorLevel.WARN, "MTCP");
-                            }
-                            //dut.GetBin();
-                            var getBin = bin;
-                            bin = null;
-                            if (string.IsNullOrEmpty(getBin) || getBin == "999")
-                                dut.Result = Dut.Fail_All;
-                            else if (getBin == "F")
-                                dut.Result = Dut.Fail_All;
-                            else
-                                dut.Result = int.Parse(getBin);
-
-                            if (dut.Result == Dut.PassBin)
-                                RunModeMgr.YieldDut++;
-                            else
-                                RunModeMgr.FailDut++;
-                            DragonDbHelper.SetTotalBin(dut.Result);
-                            DragonDbHelper.AddOrUpdateBin(Overall.LotInfo?.LotID, dut.Result);
-                            DragonDbHelper.SetBin(socket.Index, dut.Barcode, dut.Result);
+                            
                         });
                     }
                 }
@@ -484,6 +510,49 @@ namespace Poc2Auto.Model
             else Stat.Failed++;
         }
 
+        public override string ToString()
+        {
+            var jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+            return JsonConvert.SerializeObject(this, Formatting.Indented, jsonSetting);
+        }
+
         #endregion Set Data
+
+        #region Save & Load Data
+        public void Save()
+        {
+            try
+            {
+                string data = ToString();
+                string fileName = Name + ".json";
+                System.IO.File.WriteAllText(path + fileName, data, Encoding.Unicode);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void Load()
+        {
+            try
+            {
+                string fileName = Name + ".json";
+                if (!System.IO.File.Exists(path + fileName))
+                {
+                    AlcSystem.Instance.Log($"数据加载失败, {fileName} 文件不存在！", "数据上载");
+                    return;
+                }
+                string stringdata = System.IO.File.ReadAllText(path + fileName, Encoding.Unicode);
+                var data = JsonConvert.DeserializeObject<Station>(stringdata);
+                this.SocketGroup = data.SocketGroup;
+            }
+            catch (Exception ex)
+            {
+
+                 
+            }
+        }
+        #endregion Save & Load Data
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>for Index := 0 to |ImageFiles|-1 by 1</l>
+<l>    read_image (Image, ImageFiles[Index])</l>
+<l>    mean_image (Image, ImageMean,600, 600)</l>
+<l>    dyn_threshold (Image, ImageMean, RegionDynThresh, 10, 'dark')</l>
+<l>    fill_up_shape (RegionDynThresh, RegionFillUp, 'area', 1000, 1000000)</l>
+<l>    connection (RegionFillUp, ConnectedRegions)</l>
+<l>    select_shape (ConnectedRegions, SelectedRegions, ['area','convexity'], 'and', [2168630,0.83953], [3668630,2])</l>
+<l>    gen_empty_obj (EmptyObject)</l>
+<l>    test_equal_obj (EmptyObject, SelectedRegions, IsEqual)</l>
+<l>    if(IsEqual#0)</l>
+<c>        *定位失败</c>
+<l>        continue</l>
+<l>    endif</l>
+<l>    opening_rectangle1 (SelectedRegions, RegionOpening, 130, 130)</l>
+<l>    shape_trans (RegionOpening, RegionTrans, 'convex')</l>
+<l>    erosion_circle (RegionTrans, RegionErosion, 50)</l>
+<l>    smallest_rectangle2 (RegionErosion, Row, Column, Phi, Length1, Length2)</l>
+<l>    gen_rectangle2 (Rectangle, Row, Column, Phi, Length1, Length2)</l>
+<l>    dev_display (Image)</l>
+<l>    dev_display (Rectangle)</l>
+<l>    stop ()</l>
+<l>endfor</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

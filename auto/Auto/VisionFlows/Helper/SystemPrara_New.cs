@@ -10,9 +10,9 @@ namespace VisionFlows
     /// 使用新标定方法的系统参数参数
     /// </summary>
     [Serializable]
-    public class SystemPrara_New
+    public class SystemPrara
     {
-        public static SystemPrara_New Instance = new SystemPrara_New();
+        public static SystemPrara Instance = new SystemPrara();
         public bool UseNewCalib;
 
         //吸嘴1去槽放料
@@ -63,7 +63,7 @@ namespace VisionFlows
         public double Nozzle2_Socket_Put_DUT_CompensateY;
         public double Nozzle2_Socket_Put_DUT_CompensateR;
 
-        public SystemPrara_New()
+        public SystemPrara()
         {
             UseNewCalib = false;
             //吸嘴1去槽放料

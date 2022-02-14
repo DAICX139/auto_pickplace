@@ -26,14 +26,15 @@ namespace Poc2Auto.GUI.FormMode
             Task.Run(new Action(
              () =>
              {
-                 if (UCMain.Instance.Stop())
+                 if (UCMain.Instance.Stop(CtrlType.Handler))
                  {
                      if (RunModeMgr.SlipTest(_client, ucModeParams_DoeSlipTest1.SlipParam, out string message))
                      {
                          RunModeMgr.RunMode = RunMode.DoeSlip;
                          RunModeMgr.Running = false;
+                         RunModeMgr.OriginValue = false;
                          AlcSystem.Instance.ShowMsgBox("OK", "Information");
-                         UCMain.Instance.Reset();
+                         //UCMain.Instance.Reset();
                      }
                      else
                      {

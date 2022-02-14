@@ -30,8 +30,8 @@ namespace Poc2Auto.GUI.FormMode
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnOK = new System.Windows.Forms.Button();
             this.ucModeParams_SocketTest1 = new Poc2Auto.GUI.RunModeConfig.UCModeParams_SocketTest();
+            this.btnOK = new System.Windows.Forms.Button();
             this.btnContinueTest = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,17 @@ namespace Poc2Auto.GUI.FormMode
             this.tableLayoutPanel1.Size = new System.Drawing.Size(467, 181);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // ucModeParams_SocketTest1
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.ucModeParams_SocketTest1, 3);
+            this.ucModeParams_SocketTest1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucModeParams_SocketTest1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ucModeParams_SocketTest1.Location = new System.Drawing.Point(0, 0);
+            this.ucModeParams_SocketTest1.Margin = new System.Windows.Forms.Padding(0);
+            this.ucModeParams_SocketTest1.Name = "ucModeParams_SocketTest1";
+            this.ucModeParams_SocketTest1.Size = new System.Drawing.Size(467, 143);
+            this.ucModeParams_SocketTest1.TabIndex = 0;
+            // 
             // btnOK
             // 
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -66,17 +77,6 @@ namespace Poc2Auto.GUI.FormMode
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // ucModeParams_SocketTest1
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.ucModeParams_SocketTest1, 3);
-            this.ucModeParams_SocketTest1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucModeParams_SocketTest1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ucModeParams_SocketTest1.Location = new System.Drawing.Point(0, 0);
-            this.ucModeParams_SocketTest1.Margin = new System.Windows.Forms.Padding(0);
-            this.ucModeParams_SocketTest1.Name = "ucModeParams_SocketTest1";
-            this.ucModeParams_SocketTest1.Size = new System.Drawing.Size(467, 143);
-            this.ucModeParams_SocketTest1.TabIndex = 0;
             // 
             // btnContinueTest
             // 
@@ -92,7 +92,7 @@ namespace Poc2Auto.GUI.FormMode
             // 
             // FMSocketTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(467, 181);
             this.Controls.Add(this.tableLayoutPanel1);

@@ -7,8 +7,8 @@ namespace Poc2Auto.GUI.RunModeConfig
 {
     public partial class UCModeParams_AutoMark : UserControl
     {
-        List<TrayName> loadVisionTray = new List<TrayName> { TrayName.LoadL, TrayName.LoadR, TrayName.NG };
-        List<TrayName> unLoadVisionTray = new List<TrayName> { TrayName.NG, TrayName.UnloadL, TrayName.UnloadR };
+        List<TrayName> loadVisionTray = new List<TrayName> { TrayName.Load1, TrayName.Load2, TrayName.NG };
+        List<TrayName> unLoadVisionTray = new List<TrayName> { TrayName.NG, TrayName.Pass1, TrayName.Pass2 };
 
         public UCModeParams_AutoMark()
         {

@@ -792,6 +792,11 @@
             按钮图标
             </summary>
         </member>
+        <member name="P:AlcUtility.Plugin.ButtonPlus.Font">
+            <summary>
+            按钮字体大小
+            </summary>
+        </member>
         <member name="T:AlcUtility.Plugin.UC_StateOfPlcModule">
             <summary>
             PLC单模块状态
@@ -917,6 +922,16 @@
         <member name="P:AlcUtility.AlcSystem.EnableDefaultLog">
             <summary>
             是否启用默认日志打印
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcSystem.LanguageChanged">
+            <summary>
+            系统语言切换后触发
+            </summary>
+        </member>
+        <member name="F:AlcUtility.AlcSystem.Reset">
+            <summary>
+            系统点击复位按钮后触发
             </summary>
         </member>
         <member name="T:AlcUtility.EngineDefine.ItemStartHandler">
@@ -1689,7 +1704,7 @@
         </member>
         <member name="P:AlcUtility.PluginBase.StateEnable">
             <summary>
-            是否启用状态机
+            是否启用状态
             </summary>
         </member>
         <member name="P:AlcUtility.PluginBase.RemoteMode">
@@ -1813,7 +1828,7 @@
             </summary>
         </member>
         <member name="M:AlcUtility.PluginBase.OnState(AlcUtility.MessageHandler,AlcUtility.ReceivedData)">
-            <summary>
+            <summary> 
             状态上报
             </summary>
         </member>

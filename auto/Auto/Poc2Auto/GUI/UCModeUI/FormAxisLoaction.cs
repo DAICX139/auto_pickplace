@@ -40,7 +40,7 @@ namespace Poc2Auto.GUI.UCModeUI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            LocationNameMgr.ShowNameEditor();
+            //LocationNameMgr.ShowNameEditor();
             var posName = LocationNameMgr.Name;
             dataGridView1.Rows.Add();
             var row = dataGridView1.Rows[dataGridView1.Rows.Count - 1];

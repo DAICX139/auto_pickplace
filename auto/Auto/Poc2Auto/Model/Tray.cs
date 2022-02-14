@@ -10,6 +10,7 @@ using AlcUtility;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace Poc2Auto.Model
 {
@@ -20,11 +21,11 @@ namespace Poc2Auto.Model
 
         public static readonly List<TrayName> TrayNames = new List<TrayName>
         {
-            TrayName.LoadL,
-            TrayName.LoadR,
+            TrayName.Load1,
+            TrayName.Load2,
             TrayName.NG,
-            TrayName.UnloadL,
-            TrayName.UnloadR,
+            TrayName.Pass1,
+            TrayName.Pass2,
         };
 
         static TrayManager()
@@ -38,27 +39,45 @@ namespace Poc2Auto.Model
 
         public static void SyncTrayData(AdsDriverClient client)
         {
-            //Database<DragonContext>.Clear<TrayData>();
-            //foreach (var trayName in TrayNames)
-            //{
-            //    var result = client.ReadTrayData((int)trayName, Tray.ROW, Tray.COL, out var data, out var message);
-            //    if (!result)
-            //    {
-            //        AlcSystem.Instance.Error($"获取{trayName} Tray盘数据异常:{message}", 0, AlcErrorLevel.WARN, @"Handler");
-            //        continue;
-            //    }
-            //    Trays[trayName].SetData(data);
-            //}
-
             // 从数据库获取各个Tray盘的data值写入PLC
             foreach (var name in TrayNames)
             {
                 var result = client.WriteTrayData((int)name, DragonDbHelper.TakeTrayData((int)name), out string message);
                 if (!result)
-                    AlcSystem.Instance.Error($"写入PLC {name} Tray盘数据异常:{message}", 0, AlcErrorLevel.WARN, @"Handler");
+                    AlcSystem.Instance.Error($"写入PLC {name} Tray盘数据写入异常:{message}", 0, AlcErrorLevel.WARN, @"Handler");
+                if (name != TrayName.Load1 && name != TrayName.Load2)
+                {
+                    var binregion = DragonDbHelper.GetBinRegion((int)name);
+                    WriteRegions(binregion, client);
+                }
             }
 
         }
+
+        private static void WriteRegions(List<BinRegion> binRegions, AdsDriverClient client)
+        {
+            if (client == null) return;
+            if (!client.IsInitOk) return;
+            var regions = binRegions.Select(r => new CYGKit.AdsProtocol.Models.BinRegion
+            {
+                TrayIndex = r.TrayID,
+                StartColume = r.StartColumn,
+                StartRow = r.StartRow,
+                EndColumn = r.EndColumn,
+                EndRow = r.EndRow,
+                Value = r.Bin,
+            }).ToList();
+            var ret = client.WriteBinRegion(regions, Tray.ROW, Tray.COL, out var message);
+            if (ret)
+            {
+                //AlcSystem.Instance.ShowMsgBox("写入成功!", "Information", icon: AlcMsgBoxIcon.Information);
+            }
+            else
+            {
+                AlcSystem.Instance.ShowMsgBox("写入失败!" + message, "Error", icon: AlcMsgBoxIcon.Error);
+            }
+        }
+
         public static void ReadTrayCellsCoordination(AdsDriverClient client)
         {
             TrayCoordination = new Dictionary<TrayName, Position[,]>();
@@ -98,6 +117,9 @@ namespace Poc2Auto.Model
         public const int ROW = 32;
         public const int COL = 14;
 
+        public const int S_ROW = 20;
+        public const int S_Col = 8;
+
         public int Index { get; set; }
 
         public void SetData(int[,] data)
@@ -121,7 +143,10 @@ namespace Poc2Auto.Model
 
         public void PutDut(int row, int col, Dut dut)
         {
-            if (dut == null) return;
+            if (dut == null)
+            {
+                dut = new Dut { Barcode = "noscan", Result = 98 };
+            }
 
             var data = new TrayData
             {
@@ -133,12 +158,15 @@ namespace Poc2Auto.Model
             };
             DragonDbHelper.WriteTrayData(data);
 
-            if (dut.Result == Dut.PassBin) Overall.Stat.Passed++;
-            else if (dut.Result == Dut.NoTestBin) Overall.Stat.Untested++;
-            else Overall.Stat.Failed++;
+            if (RunModeMgr.RunMode == RunMode.AutoNormal || RunModeMgr.RunMode == RunMode.HandlerSemiAuto || RunModeMgr.RunMode == RunMode.ResetMode || RunModeMgr.GRRMode)
+            {
+                if (dut.Result == Dut.PassBin) Overall.Stat.Passed++;
+                else if (dut.Result == Dut.NoTestBin) Overall.Stat.Failed++;
+                else Overall.Stat.Failed++;
+            }
         }
 
-        public void AbnormalDut(int row, int col, int bin)
+        public void ChangeDutFlag(int row, int col, int bin)
         {
             DragonDbHelper.AbnormalDut(Index, row, col, bin);
         }

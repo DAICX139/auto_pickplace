@@ -6,3 +6,4 @@ D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.HandlerPLC\obj\Debug\Poc2Auto.
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.HandlerPLC\obj\Debug\Poc2Auto.HandlerPLC.csproj.CoreCompileInputs.cache
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.HandlerPLC\obj\Debug\Poc2Auto.HandlerPLC.dll
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.HandlerPLC\obj\Debug\Poc2Auto.HandlerPLC.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.HandlerPLC\obj\Debug\Poc2Auto.HandlerPLC.csproj.CopyComplete

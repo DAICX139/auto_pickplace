@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<PlcPara>
-    <P2PVel>5.0</P2PVel>
-    <JogVel>10.0</JogVel>
-    <HomeVel>10.0</HomeVel>
-    <Timeout>300000</Timeout>
-</PlcPara>

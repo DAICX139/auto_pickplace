@@ -1,0 +1,9 @@
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\bin\Debug\VisionSDK.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\bin\Debug\VisionSDK.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\bin\Debug\halcondotnet.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\bin\Debug\halcondotnet.xml
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\obj\Debug\VisionSDK.csproj.CoreCompileInputs.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\obj\Debug\VisionSDK.csproj.CopyComplete
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\obj\Debug\VisionSDK.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\obj\Debug\VisionSDK.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionSDK\obj\Debug\VisionSDK.csproj.AssemblyReference.cache

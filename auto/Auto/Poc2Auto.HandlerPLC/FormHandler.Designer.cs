@@ -35,17 +35,18 @@
             // 
             this.ucModeUI1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucModeUI1.Location = new System.Drawing.Point(0, 0);
-            this.ucModeUI1.Margin = new System.Windows.Forms.Padding(2);
+            this.ucModeUI1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ucModeUI1.Name = "ucModeUI1";
-            this.ucModeUI1.Size = new System.Drawing.Size(800, 450);
+            this.ucModeUI1.Size = new System.Drawing.Size(1075, 569);
             this.ucModeUI1.TabIndex = 0;
             // 
             // FormHandler
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1075, 569);
             this.Controls.Add(this.ucModeUI1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormHandler";
             this.Text = "FormHandler";
             this.ResumeLayout(false);

@@ -34,6 +34,7 @@ namespace Poc2Auto.GUI.RunModeConfig
         {
             get
             {
+                RunModeMgr.GRRTestTimes = (int)TestTimes.Value;
                 return new GRRParam
                 {
                     TestTimes = (int)TestTimes.Value,

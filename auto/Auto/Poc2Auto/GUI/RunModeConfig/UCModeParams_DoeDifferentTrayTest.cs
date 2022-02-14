@@ -28,7 +28,7 @@ namespace Poc2Auto.GUI.RunModeConfig
 
         private void init()
         {
-            var trays = new List<TrayName> { TrayName.LoadL, TrayName.LoadR, };
+            var trays = new List<TrayName> { TrayName.Load1, TrayName.Load2, };
             uC_GridviewTray1.comboxTrayName.DataSource = trays;
 
             uC_GridviewTray1.ShowCoordinate += (row, col) => { return TrayManager.ShowCoordinate(row, col, (TrayName)uC_GridviewTray1.comboxTrayName.SelectedItem); };

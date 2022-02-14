@@ -45,8 +45,6 @@ namespace Poc2Auto.GUI.RunModeConfig
                     TestNozzle = (ushort)(Nozzle)cbxTestNozzle.SelectedValue,
                     ATestPos = aPos,
                     BTestPos = bPos,
-                    TestCol = (ushort)numTestCol.Value,
-                    TestRow = (ushort)numTestRow.Value,
                     TestNumber = (ushort)numTestTimes.Value,
                 };
             }

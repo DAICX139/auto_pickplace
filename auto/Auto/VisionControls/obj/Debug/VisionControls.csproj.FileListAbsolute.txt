@@ -1,0 +1,15 @@
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.FunctionPlotUnit.resources
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.Properties.Resources.resources
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.SuperWind.resources
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.csproj.GenerateResource.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.csproj.CoreCompileInputs.cache
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.csproj.AssemblyReference.cache
+D:\project\ALC_7953\ALC\bin\VisionControls.dll
+D:\project\ALC_7953\ALC\bin\VisionControls.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.csproj.CopyComplete
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\obj\Debug\VisionControls.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\bin\Debug\VisionControls.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\bin\Debug\VisionControls.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\bin\Debug\halcondotnet.dll
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\VisionControls\bin\Debug\halcondotnet.xml

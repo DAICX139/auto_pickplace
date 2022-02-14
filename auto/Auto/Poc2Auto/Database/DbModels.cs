@@ -31,6 +31,7 @@ namespace Poc2Auto.Database
         public DbSet<LotInfo> LotInfo { get; set; }
         public DbSet<AxisLocation> AxisLocations { get; set; }
         public DbSet<TotalBinStat> TotalBinStats { get; set; }
+        public DbSet<DUTStationBinTotal> DUTTotal { get; set; }
     }
 
     /// <summary>
@@ -103,13 +104,13 @@ namespace Poc2Auto.Database
             base.UpdateDataSrcFromDb(dataSrc);
 
             dataSrc.SiteStats[StationName.Test1_LIVW.ToString()].Passed = PassAtTest1LIV ;
-            dataSrc.SiteStats[StationName.Test2_DTGT.ToString()].Passed = PassAtTest2Dynamic;
-            dataSrc.SiteStats[StationName.Test3_Backup.ToString()].Passed = PassAtTest3Backup;
+            dataSrc.SiteStats[StationName.Test2_NFBP.ToString()].Passed = PassAtTest2Dynamic;
+            dataSrc.SiteStats[StationName.Test3_KYRL.ToString()].Passed = PassAtTest3Backup;
             dataSrc.SiteStats[StationName.Test4_BMPF.ToString()].Passed = PassAtTest4BP;
 
             dataSrc.SiteStats[StationName.Test1_LIVW.ToString()].Failed = FailAtTest1LIV;
-            dataSrc.SiteStats[StationName.Test2_DTGT.ToString()].Failed = FailAtTest2Dynamic;
-            dataSrc.SiteStats[StationName.Test3_Backup.ToString()].Failed = FailAtTest3Backup;
+            dataSrc.SiteStats[StationName.Test2_NFBP.ToString()].Failed = FailAtTest2Dynamic;
+            dataSrc.SiteStats[StationName.Test3_KYRL.ToString()].Failed = FailAtTest3Backup;
             dataSrc.SiteStats[StationName.Test4_BMPF.ToString()].Failed = FailAtTest4BP;
         }
 
@@ -118,13 +119,13 @@ namespace Poc2Auto.Database
             base.UpdateDbFromDataSrc(dataSrc);
 
             PassAtTest1LIV = dataSrc.SiteStats[StationName.Test1_LIVW.ToString()].Passed;
-            PassAtTest2Dynamic = dataSrc.SiteStats[StationName.Test2_DTGT.ToString()].Passed;
-            PassAtTest3Backup = dataSrc.SiteStats[StationName.Test3_Backup.ToString()].Passed;
+            PassAtTest2Dynamic = dataSrc.SiteStats[StationName.Test2_NFBP.ToString()].Passed;
+            PassAtTest3Backup = dataSrc.SiteStats[StationName.Test3_KYRL.ToString()].Passed;
             PassAtTest4BP = dataSrc.SiteStats[StationName.Test4_BMPF.ToString()].Passed;
 
             FailAtTest1LIV = dataSrc.SiteStats[StationName.Test1_LIVW.ToString()].Failed;
-            FailAtTest2Dynamic = dataSrc.SiteStats[StationName.Test2_DTGT.ToString()].Failed;
-            FailAtTest3Backup = dataSrc.SiteStats[StationName.Test3_Backup.ToString()].Failed;
+            FailAtTest2Dynamic = dataSrc.SiteStats[StationName.Test2_NFBP.ToString()].Failed;
+            FailAtTest3Backup = dataSrc.SiteStats[StationName.Test3_KYRL.ToString()].Failed;
             FailAtTest4BP = dataSrc.SiteStats[StationName.Test4_BMPF.ToString()].Failed;
         }
     }
@@ -155,5 +156,18 @@ namespace Poc2Auto.Database
         public int FAIL_BIN_NOTEST { get; set; }
         public int OVERALL_YIELD { get; set; }
         public int TOTAL_INPUT { get; set; }
+    }
+
+    public class DUTStationBinTotal
+    {
+        [Key]
+        public int ID { get; set; }
+        public string LotID { get; set; }
+        public string DUTSN { get; set; }
+        public int LIV_Result { get; set; }
+        public int NFBP_Result { get; set; }
+        public int KYRL_Result { get; set; }
+        public int BP_Result { get; set; }
+        public int Bin { get; set; }
     }
 }

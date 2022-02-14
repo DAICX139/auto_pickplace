@@ -4,12 +4,14 @@ using Poc2Auto.Model;
 using Poc2Auto.Database;
 using AlcUtility;
 using System.Data;
+using System.IO;
+using System;
 
 namespace Poc2Auto.MTCP
 {
     public class MTCPHelper
     {
-        public static int TimeOut = 10 * 60 * 1000;
+        public static int TimeOut = 10 * 60 * 1000; 
 
         public static int NUM_BIN_ERROR = 0;
         public static int NUM_BIN_FAIL = 0;
@@ -18,6 +20,8 @@ namespace Poc2Auto.MTCP
         public static int NUM_BIN_VA2PASS = 0;
         public static int NUM_BIN_SUPER = 0;
         public static int NUM_BIN_Yield = 0;
+
+        public static readonly string MTCPefaultPath = @"C:\data\";
 
         static MTCPHelper()
         {
@@ -46,24 +50,25 @@ namespace Poc2Auto.MTCP
         {
             if (Overall.LotInfo == null)
             {
-                errorCode = -1;
+                errorCode = -111;
                 errorString = "LotInfo 为 null.";
                 return false;
             }
             LotStart lotStartData = new LotStart
             {
-                TesterName = "ALC",
-                TesterID = "ALC_0000001",
+                TesterName = "SA2ALC",
+                TesterID = "SA2_ALC_0000001",
                 LotName = Overall.LotInfo.LotID ?? "NoLotName",
                 SubLotName = Overall.LotInfo.SubLotName ?? "NoLotSubName",
                 StressCode = Overall.LotInfo.StressCode ?? "NoStressCode",
-                LotSize = Overall.LotInfo.LotSize.ToString() ?? "0",
+                LotSize = Overall.LotInfo.LotID.Length.ToString() ?? "33",
                 TestMode = Overall.LotInfo.TestMode ?? "NoTestMode",
                 Operator = Overall.LotInfo.OperatorName ?? "A01",
-                AlcSwVer = Overall.LotInfo.ALCVersion ?? "2.0.4.2",
-                VisionSwVer = Overall.LotInfo.LoaderVersion ?? "3.1.4.1",
-                HandlerPLCSwVer = Overall.LotInfo.UnloaderVersion ?? "6.2.8.2",
-                TesterPLCSwVer = "0.0.0.1",
+                AlcSwVer = Overall.LotInfo.ALCVersion ?? "2.0.0.0",
+                VisionSwVer = Overall.LotInfo.LoaderVersion ?? "2.0.0.0",
+                HandlerPLCSwVer = Overall.LotInfo.UnloaderVersion ?? "1.1.3",
+                TesterPLCSwVer = "1.1.1",
+                HostMode = Overall.LotInfo.HostMode.ToString() ?? "PROD",
             };
             if (!SendLotStart(lotStartData, out int eCode, out string eString))
             {
@@ -113,12 +118,12 @@ namespace Poc2Auto.MTCP
             }
         }
 
-        public static bool SendMTCPLotLoad(string DutSn,  out int errorCode, out string errorString)
+        public static bool SendMTCPLotLoad(string DutSn, string socketSN , out int errorCode, out string errorString)
         {
             Load lotLoadData = new Load
             {
                 ModuleSn = DutSn,
-                SocketSn = DutSn,
+                SocketSn = socketSN,
             };
             if (!SendLoad(lotLoadData, out int eCode, out string eString))
             {
@@ -134,12 +139,12 @@ namespace Poc2Auto.MTCP
             }
         }
 
-        public static bool SendMTCPLotUnload(string DutSn, int disable, out int errorCode, out string errorString, out string bin)
+        public static bool SendMTCPLotUnload(string DutSn, string SocketSN, int disable, out int errorCode, out string errorString, out string bin)
         {
             Unload lotUnloadData = new Unload
             {
                 ModuleSn = DutSn,
-                SocketSn = DutSn,
+                SocketSn = SocketSN,
                 SocketDisable = disable,
                 Reset = 1,
             };
@@ -147,16 +152,23 @@ namespace Poc2Auto.MTCP
             {
                 errorCode = eCode;
                 errorString = eString;
-                bin = "999";
+                bin = "99";
                 return false;
             }
             else
             {
-                AlcSystem.Instance.Log(recvCsv, "MTCP_Send_Unload");
+                AlcSystem.Instance.Log(recvCsv, "MTCP_Return_ALC_Unload");
                 var dt = MtcpOperation.Csv2DataTable(recvCsv);
+                if (dt == null)
+                {
+                    bin = "100";
+                    errorCode = eCode;
+                    errorString = eString;
+                    return false;
+                }
                 DataColumn[] pk = new DataColumn[] { dt.Columns["TID"] };
                 dt.PrimaryKey = pk;
-                bin = dt?.Rows.Find("#TEST_BIN")["PARAM1"].ToString();
+                bin = dt?.Rows.Find("#TEST_BIN")["PARAM2"].ToString();
                 errorCode = 0;
                 errorString = "NoMessage";
                 return true;
@@ -166,33 +178,106 @@ namespace Poc2Auto.MTCP
         public static bool SendLotStart(LotStart data, out int errorCode, out string errorString)
         {
             var csvStr = MtcpOperation.GenCSV(data);
-            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Lot_Start");
-            return MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
+            
+            var res = MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
                 out _, out errorCode, out errorString);
+            string path;
+            if (!Directory.Exists(ConfigMgr.Instance.MTCPDataPath))
+            {
+                AlcSystem.Instance.Log($"配置路径不存在, LotStart文件已存入默认文件夹{MTCPefaultPath}下", "MTCP");
+                path = MTCPefaultPath;
+            }
+            else
+            {
+                path = ConfigMgr.Instance.MTCPDataPath;
+            }
+            var time = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff");
+            string file = $"{path}{time}_{Overall.LotInfo.LotID}_LotStart.csv";
+            File.WriteAllText(file, csvStr);
+            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Lot_Start");
+            AlcSystem.Instance.Log("LotStartErrorCode:" + errorCode, "MTCP");
+            AlcSystem.Instance.Log("LotStartErrorString:" + errorString, "MTCP");
+            return res;
         }
 
         public static bool SendLotEnd(LotEnd data, out int errorCode, out string errorString)
         {
             var csvStr = MtcpOperation.GenCSV(data);
-            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Lot_End");
-            return MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
+            var res = MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
                 out _, out errorCode, out errorString);
+            string path;
+            if (!Directory.Exists(ConfigMgr.Instance.MTCPDataPath))
+            {
+                AlcSystem.Instance.Log($"配置路径不存在, LotEnd文件已存入默认文件夹{MTCPefaultPath}下", "MTCP");
+                path = MTCPefaultPath;
+            }
+            else
+            {
+                path = ConfigMgr.Instance.MTCPDataPath;
+            }
+            var time = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff");
+            string file = $"{path}{time}_{Overall.LotInfo?.LotID}_LotEnd.csv";
+            File.WriteAllText(file, csvStr);
+            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Lot_End");
+            AlcSystem.Instance.Log("LotEndErrorCode:" + errorCode, "MTCP");
+            AlcSystem.Instance.Log("Lot_EndErrorString:" + errorString, "MTCP");
+            return res;
         }
 
         public static bool SendLoad(Load data, out int errorCode, out string errorString)
         {
             var csvStr = MtcpOperation.GenCSV(data);
-            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Load");
-            return MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
+            var res = MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, true,
                 out _, out errorCode, out errorString);
+            string path;
+            if (!Directory.Exists(ConfigMgr.Instance.MTCPDataPath))
+            {
+                AlcSystem.Instance.Log($"配置路径不存在, Load文件已存入默认文件夹{MTCPefaultPath}下", "MTCP");
+                path = MTCPefaultPath;
+            }
+            else
+            {
+                path = ConfigMgr.Instance.MTCPDataPath;
+            }
+            var time = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff");
+            string file = $"{path}{time}_{data.ModuleSn}_0.csv";
+            File.WriteAllText(file, csvStr);
+            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Load");
+            AlcSystem.Instance.Log("LoadErrorCode:" + errorCode, "MTCP");
+            AlcSystem.Instance.Log("LoadErrorString:" + errorString, "MTCP");
+            return res;
         }
 
         public static bool SendUnload(Unload data, out int errorCode, out string errorString, out string recvString)
         {
+            if (data.ModuleSn == null || data.ModuleSn2 == null)
+            {
+                errorCode = -100;
+                errorString = "ModuleSn 为空";
+                recvString = "";
+                return false;
+            }
             var csvStr = MtcpOperation.GenCSV(data);
-            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Unload");
-            return MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, false,
+            var res = MtcpOperation.SendAndRecv(csvStr, 1, ConfigMgr.Instance.MtcpIP, ConfigMgr.Instance.MtcpPort, TimeOut, true,
                 out recvString, out errorCode, out errorString);
+            string path;
+            if (!Directory.Exists(ConfigMgr.Instance.MTCPDataPath))
+            {
+                AlcSystem.Instance.Log($"配置路径不存在, UnLoad文件已存入默认文件夹{MTCPefaultPath}下", "MTCP");
+                // Directory.CreateDirectory(ConfigMgr.Instance.MTCPDataPath);
+                path = MTCPefaultPath;
+            }
+            else
+            {
+                path = ConfigMgr.Instance.MTCPDataPath;
+            }
+            var time = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff");
+            string file = $"{path}{time}_{data.ModuleSn}_255.csv";
+            File.WriteAllText(file, recvString);
+            AlcSystem.Instance.Log(csvStr, "Send_MTCP_Unload");
+            AlcSystem.Instance.Log("UnloadErrorCode:" + errorCode, "MTCP");
+            AlcSystem.Instance.Log("UnloadErrorString:" + errorString, "MTCP");
+            return res;
         }
     }
 }

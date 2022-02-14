@@ -32,9 +32,9 @@ namespace Poc2Auto.Model
         /// </summary>
         public const int NoTestBin = 98;
         /// <summary>
-        /// 跳过(测试工位在设计时就设计为不测)
+        /// 获取MTCP Bin信息失败时
         /// </summary>
-        public const int SkipBin = 99;
+        public const int MTCPFail = 99;
         /// <summary>
         /// 还未从MTCP拿到测试结果
         /// </summary>
@@ -59,17 +59,17 @@ namespace Poc2Auto.Model
         {
             get
             {
-                if (TestResult.Count == 0)
+                if (TestResult.Count == 0)//产品未测试
                 {
                     return Fail_All;
                 }
-                else if (!TestResult.ContainsKey(StationName.Default))
+                else if (!TestResult.ContainsKey(StationName.PNP))//产品没有经过上下料工站
                 {
                     return Fail_All;
                 }
-                return TestResult[StationName.Default];
+                return TestResult[StationName.PNP];
             }
-            set => TestResult[StationName.Default] = value;
+            set => TestResult[StationName.PNP] = value;
         }
 
         public void SetTestResultByString(string resultStr)

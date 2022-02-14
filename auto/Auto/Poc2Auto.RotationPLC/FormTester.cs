@@ -28,16 +28,12 @@ namespace Poc2Auto.RotationPLC
             authorityManagement();
             AlcSystem.Instance.UserAuthorityChanged += (o, n) => { authorityManagement(); };
 
-            EventCenter.TesterModeChanged += ucModeManual1.UiEnable;
-            ucModeManual1.IsShowSemiAutoTab = false;
             ucModeManual1.RecipeSave += recipeSave;
             ucModeManual1.CYL_COUNT = 9;
             ucModeManual1.AXIS_COUNT = 3;
             ucModeManual1.RecipePath = $"{Application.StartupPath}\\paramFiles\\RotationConfigFile\\";
             ucModeManual1.DefaultRecipe = $"{Application.StartupPath}\\paramFiles\\RotationConfigFile\\" + ConfigMgr.Instance.TesterDefaultRecipe;
             ucModeManual1.DioPath = Application.StartupPath + @"\UiParamFiles\RotationPLC_DIOmap.xlsx";
-            ucModeManual1.IsShowDebugTab = false;
-            ucModeManual1.IsShowTesterPinControlButton = true;
             if (plcDriver != null)
             {
                 plcDriver.OnInitOk += () => { ucModeManual1.BindData(plcDriver); };

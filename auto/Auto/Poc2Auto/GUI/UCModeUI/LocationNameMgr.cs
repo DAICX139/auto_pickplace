@@ -6,9 +6,9 @@ namespace Poc2Auto.GUI.UCModeUI
     {
         public static string Name { get; set; }
 
-        public static void ShowNameEditor(FormStartPosition position = FormStartPosition.CenterParent)
-        {
-            new FormAxisPosName { StartPosition = position }.ShowDialog();
-        }
+        //public static void ShowNameEditor(FormStartPosition position = FormStartPosition.CenterParent)
+        //{
+        //    new FormAxisPosName { StartPosition = position }.ShowDialog();
+        //}
     }
 }

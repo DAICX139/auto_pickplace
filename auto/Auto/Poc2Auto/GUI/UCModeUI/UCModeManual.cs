@@ -16,6 +16,10 @@ namespace DragonFlex.GUI.Factory
             InitializeComponent();
             if (CYGKit.GUI.Common.IsDesignMode())
                 return;
+
+            //权限管理
+            authorityManagement();
+            AlcSystem.Instance.UserAuthorityChanged += (o, n) => { authorityManagement(); };
         }
 
         private IPlcDriver _plcDriver;
@@ -30,6 +34,7 @@ namespace DragonFlex.GUI.Factory
         public string RecipePath { get; set; }
         public string SemiAutoPath { get; set; }
         private string _defaultRecipe;
+        private bool _isStop = false;
         public string DefaultRecipe
         {
             get { return _defaultRecipe; }
@@ -45,52 +50,19 @@ namespace DragonFlex.GUI.Factory
         public Action<string> RecipeSave;
         //Tester PlcDriver
         private IPlcDriver TesterPlcDriver;
-
-        /// <summary>
-        /// 是否显示半自动控制Tab页
-        /// </summary>
-        public bool IsShowSemiAutoTab 
-        {
-            set
-            {
-                if (!value)
-                    tabControl3.TabPages.Remove(tabPage2);
-                else
-                {
-                    if (!tabControl3.TabPages.Contains(tabPage2))
-                        tabControl3.TabPages.Add(tabPage2);
-                }    
-            }
-        }
-
-        /// <summary>
-        /// 是否显示Tester调试Tab页
-        /// </summary>
-        public bool IsShowDebugTab
-        {
-            set
-            {
-                if (!value)
-                    tabControl3.TabPages.Remove(tabPageTurntableDebug);
-                else
-                {
-                    if (!tabControl3.TabPages.Contains(tabPageTurntableDebug))
-                        tabControl3.TabPages.Add(tabPageTurntableDebug);
-                }
-            }
-        }
+        private IPlcDriver HandlerPlcDriver;
 
         /// <summary>
         /// 是否显示推拉Pin针两个按钮
         /// </summary>
-        public bool IsShowTesterPinControlButton
-        {
-            set
-            {
-                btnPullPin.Visible = value;
-                btnReleasePin.Visible = value;
-            }
-        }
+        //public bool IsShowTesterPinControlButton
+        //{
+        //    set
+        //    {
+        //        btnPullPin.Visible = value;
+        //        btnReleasePin.Visible = value;
+        //    }
+        //}
 
         void init()
         {
@@ -113,17 +85,34 @@ namespace DragonFlex.GUI.Factory
 
             ucRecipe_New1.DefaultRecipe = _defaultRecipe;
             ucRecipe_New1.FilePath = RecipePath;
-            ucRecipe_New1.RecipeSave += (name) => { RecipeSave?.Invoke(name); };
+            ucRecipe_New1.RecipeSave += (name) => 
+            { 
+                RecipeSave?.Invoke(name);
+                UpdatePos();
+            };
 
-            if (!CYGKit.GUI.Common.IsDesignMode())
-            {
-                authorityManagement();
-                AlcSystem.Instance.UserAuthorityChanged += (o, n) => { authorityManagement(); };
-            }
             tabControl3.SelectedIndexChanged += (e, sender) => { TabChanged(tabControl3.SelectedIndex); };
         }
 
-        
+
+        private void authorityManagement()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(authorityManagement));
+                return;
+            }
+
+            if (AlcSystem.Instance.GetUserAuthority() != UserAuthority.OPERATOR.ToString() && AlcSystem.Instance.GetSystemStatus() == SYSTEM_STATUS.Idle)
+            {
+                ucRecipe_New1.AuthorityCtrl = true;
+            }
+            else
+            {
+                ucRecipe_New1.AuthorityCtrl = false;
+            }
+        }
+
         public void BindData(IPlcDriver plcDriver)
         {
             //气缸的plcDriver
@@ -161,14 +150,13 @@ namespace DragonFlex.GUI.Factory
 
             uC_DIOs1.BindData(plcDriver, typeof(PLCDIO), DioPath, "EL2889s", "EL1889s");
             
-            //根据系统状态来开放控制权限
-            plcDriver.OnInitOk += () => { authorityCtrl((int)plcDriver.GetSysInfoCtrl.Status.CurrentState); };
-            plcDriver.OnStateChanged += (p) => { authorityCtrl(p); };
 
             ucRecipe_New1.PlcDriver = plcDriver;
             _plcDriver = plcDriver;
             if (_plcDriver.Name == ModuleTypes.Tester.ToString())
                 TesterPlcDriver = _plcDriver;
+            else if (_plcDriver.Name == ModuleTypes.Handler.ToString())
+                HandlerPlcDriver = _plcDriver;
 
             Thread thread = new Thread(ReadPLCData);
             thread.IsBackground = true;
@@ -181,67 +169,19 @@ namespace DragonFlex.GUI.Factory
             foreach (var axis in singleAxises)
                 axis.IsInnerUpdatingOpen = index == 1 ? true : false;
             uC_Cylinders1.IsInnerUpdatingOpen = index == 2 ? true : false;
-            if (index == 4)
-            {
-                TesterPlcDriver.GetSysInfoCtrl.ModeCtrl(RunModeMgr.Doe);
-                TesterPlcDriver.GetSysInfoCtrl.SubModeCtrl(RunModeMgr.Doe, RunModeMgr.Doe_TesterDebug);
-            }
-        }
-
-        private void authorityManagement()
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(authorityManagement));
-                return;
-            }
-            uiEnable(!(AlcSystem.Instance.GetUserAuthority() == UserAuthority.OPERATOR.ToString()));
-        }
-        private void authorityCtrl(int state)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<int>(authorityCtrl), state);
-                return;
-            }
-            uiEnable(!(AlcSystem.Instance.GetUserAuthority() == UserAuthority.OPERATOR.ToString()));
-        }
-
-        //权限改变时使能相应控制界面按钮
-        private void uiEnable(bool enable)
-        {
-            uC_DIOs1.AuthorityCtrl = enable;
-            cylinders.AuthorityCtrl = enable;
-            foreach (var axis in singleAxises)
-                axis.AuthorityCtrl = enable;
-            ucRecipe_New1.AuthorityCtrl = enable;
-            uC_ModeSemiAuto1.AuthorityCtrl = enable;
         }
 
         //PLC模式改变时使能相应控制界面按钮
-        public void UiEnable(PlcMode mode)
+        public void UiEnable(bool enable)
         {
             if (_plcDriver == null)
                 return;
-            if (mode == PlcMode.ManualMode && 
-                AlcSystem.Instance.GetUserAuthority() == UserAuthority.ENGINEER.ToString() )
-            {
-                cylinders.AuthorityCtrl = true;
 
-                foreach (var axis in singleAxises)
-                    axis.AuthorityCtrl = true;
-                saveLocationToolStripMenuItem.Enabled = true;
-                axisOperateToolStrip.Enabled = true;
-            }
-            else
-            {
-                cylinders.AuthorityCtrl = false;
-
-                foreach (var axis in singleAxises)
-                    axis.AuthorityCtrl = false;
-                saveLocationToolStripMenuItem.Enabled = false;
-                axisOperateToolStrip.Enabled = false;
-            }
+            uC_DIOs1.AuthorityCtrl = enable;
+            foreach (var axis in singleAxises)
+                axis.AuthorityCtrl = enable;
+            
+            uC_Cylinders1.AuthorityCtrl = enable;
         }
 
         private void UCModeManual_Load(object sender, EventArgs e)
@@ -250,43 +190,6 @@ namespace DragonFlex.GUI.Factory
         }
 
         #region Tester相关控制
-
-        private void btnOpenSocket_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugOpenSocket, true);
-        }
-
-        private void btnSocketClose_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugCloseSocket, true);
-        }
-
-        private void btnZAxisUp_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugZAxisUp, true);
-        }
-
-        private void btnZAxisDown_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugZAxisDown, true);
-        }
-
-        private void btnRotate_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver.WriteObject(RunModeMgr.Name_DryRunChoose, true);
-            TesterPlcDriver.WriteObject(RunModeMgr.Name_DryRunTesterRotation, true);
-        }
-
-        private void btnPushPutter_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugPushPutter, true);
-        }
-
-        private void btnPullPutter_Click(object sender, EventArgs e)
-        {
-            TesterPlcDriver?.WriteObject(RunModeMgr.Name_DebugPullPutter, true);
-        }
-
         private void btnPullPin_Click(object sender, EventArgs e)
         {
             TesterPlcDriver?.WriteObject(RunModeMgr.Name_TesterScoketPullCylider, true);
@@ -299,18 +202,140 @@ namespace DragonFlex.GUI.Factory
 
         #endregion Tester相关控制
 
-        //读取PLC当前Socket ID
+        //读取PLC变量
         private void ReadPLCData()
         {
-            while (true)
+            try
             {
-                if (TesterPlcDriver != null && TesterPlcDriver.IsInitOk && TesterPlcDriver.IsConnected)
+                while (true)
                 {
-                    RunModeMgr.SocketID = (ushort)TesterPlcDriver?.ReadObject(RunModeMgr.Name_SocketID, typeof(ushort));
-                    lbSocketID.Text = RunModeMgr.SocketID.ToString();
-                }
+                    if (TesterPlcDriver != null && TesterPlcDriver.IsInitOk && TesterPlcDriver.IsConnected)
+                    {
+                        var Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_SocketID, typeof(ushort));
+                        if (null != Result)
+                        {
+                            RunModeMgr.SocketID = (ushort)Result;
+                        }
 
-                Thread.Sleep(500);
+                        Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_AxisAllHomed, typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.TesterAllAxisHomed = (bool)Result;
+                        }
+
+                        Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_CurrentState, typeof(uint));
+                        if (null != Result)
+                        {
+                            RunModeMgr.TesterCurrentState = (uint)Result;
+                        }
+
+                        //RunModeMgr.SocketSafetySignal = (bool)TesterPlcDriver?.ReadObject(RunModeMgr.Name_SocketSafetySignal, typeof(bool));
+                        Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_ActiveEventClass, typeof(uint));
+                        if (null != Result)
+                        {
+                            RunModeMgr.EventClass = (uint)Result;
+                        }
+
+                        Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_nMode, typeof(uint));
+
+                        if (null != Result)
+                        {
+                            RunModeMgr.TesterMode = (uint)Result;
+                        }
+
+                        Result = TesterPlcDriver?.ReadObject(RunModeMgr.Name_nAutoSubMode, typeof(uint));
+
+                        if (null != Result)
+                        {
+                            RunModeMgr.TesterSubMode = (uint)Result;
+                        }
+                    }
+
+                    if (HandlerPlcDriver != null && HandlerPlcDriver.IsInitOk && HandlerPlcDriver.IsConnected)
+                    {
+                        var Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_CompleteFlag, typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.CompleteFlag = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_AxisAllHomed, typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.HandlerAllAxisHomed = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_CurrentState, typeof(uint));
+                        if (null != Result)
+                        {
+                            RunModeMgr.HandlerCurrentState = (uint)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.MachineLight(1), typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.LightControl = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.MachineLight(2), typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.MaintenanceLamp = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_IonFanContrl, typeof(bool));
+
+                        if (null != Result)
+                        {
+                            RunModeMgr.IonFanContrl = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.EL1889Struct(3, 11), typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.LoadVacuum = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.EL1889Struct(3, 12), typeof(bool));
+                        if (null != Result)
+                        {
+                            RunModeMgr.UnloadVacuum = (bool)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_ActiveEventClass, typeof(uint));
+
+                        if (null != Result)
+                        {
+                            RunModeMgr.EventClass = (uint)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_nMode, typeof(uint));
+                        if (null != Result)
+                        {
+                            RunModeMgr.HandlerMode = (uint)Result;
+                        }
+                        Result = HandlerPlcDriver?.ReadObject(RunModeMgr.Name_nAutoSubMode, typeof(uint));
+                        if (null != Result)
+                        {
+                            RunModeMgr.HandlerSubMode = (uint)Result;
+                        }
+                    }
+                    UiEnable(AlcSystem.Instance.GetUserAuthority() == UserAuthority.ENGINEER.ToString() && AlcSystem.Instance.GetSystemStatus() ==  SYSTEM_STATUS.Idle);
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void UpdatePos()
+        {
+            string file = string.Empty;
+            if (this._plcDriver.Name == ModuleTypes.Handler.ToString())
+            {
+                file =$"{Application.StartupPath}\\paramFiles\\HandlerConfigFile\\" + ConfigMgr.Instance.HandlerDefaultRecipe;
+            }
+            else if (this._plcDriver.Name == ModuleTypes.Tester.ToString())
+            {
+                file = $"{Application.StartupPath}\\paramFiles\\RotationConfigFile\\" + ConfigMgr.Instance.TesterDefaultRecipe;
+            }
+            config = ParamsConfig.Upload(file);
+            for (int i = 0; i < _axisCount; i++)
+            {
+                singleAxises[i].Config = config;
             }
         }
     }

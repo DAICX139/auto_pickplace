@@ -43,7 +43,7 @@ namespace VisionFlows
         {
             try
             {
-                var temp = new double[6] { plcRecv.XPos, plcRecv.YPos, plcRecv.ZPos, plcRecv.RPos, plcRecv.Result, plcRecv.BinValue };
+                var temp = new double[7] { plcRecv.XPos, plcRecv.YPos, plcRecv.ZPos, plcRecv.RPos, plcRecv.Result, plcRecv.BinValue , plcRecv.RecvSocketID};
                 handler.CmdParam.KeyValues[PLCParamNames.PLCRecv].Value = temp;
                 return handler.SendMessage(new ReceivedData()
                 {
@@ -179,12 +179,23 @@ namespace VisionFlows
         {
             try
             {
-                DoCtrl io = PlcDriver.GetDoCtrl(id);
-                io?.Write(value);
+                PlcDriver.WriteObject(RunModeMgr.GetIOVarName(id), value);
             }
             catch (Exception ex)
             {
                 Flow.Log(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+        }
+
+        public static bool ReadIO(int id)
+        {
+            try
+            {
+                return (bool)PlcDriver.ReadObject(RunModeMgr.GetIOVarName(id), typeof(bool));
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

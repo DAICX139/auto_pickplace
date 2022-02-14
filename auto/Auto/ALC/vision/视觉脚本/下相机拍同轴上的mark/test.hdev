@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="19.11.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>list_image_files ('.', 'default', [], ImageFiles)</l>
+<l>gen_circle_contour_xld (ContCircle, 1379.77, 2570.15, 578.899, 0, 6.28318, 'positive', 1)</l>
+<l>create_shape_model_xld (ContCircle, 'auto', -0.39, 0.79, 'auto', 'auto', 'ignore_local_polarity', 2, ModelID)</l>
+<l>for Index := 0 to |ImageFiles|-1 by 1</l>
+<l>    read_image (Image, ImageFiles[Index])</l>
+<l>    find_shape_model (Image, ModelID, -0.39, 0.79, 0.5, 1, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score)</l>
+<l>    dev_display_shape_matching_results (ModelID, 'red', Row, Column, Angle, 1, 1, 0)</l>
+<l>endfor</l>
+<c></c>
+<c></c>
+<c> </c>
+<c>    </c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="FindSocketMark">
+<interface>
+<io>
+<par name="Image_white" base_type="iconic" dimension="0"/>
+</io>
+<oc>
+<par name="Row1" base_type="ctrl" dimension="0"/>
+<par name="Column1" base_type="ctrl" dimension="0"/>
+<par name="Phi" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>threshold (Image_white, Region, 180, 255)</l>
+<l>fill_up (Region, RegionFillUp)</l>
+<l>opening_circle (RegionFillUp, RegionOpening, 100)</l>
+<l>connection (RegionOpening, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, ['area','circularity'], 'and', [30000,0.7], [50000,1])</l>
+<l>select_shape (SelectedRegions, SelectedRegions1, 'row', 'and', 900, 1800)</l>
+<l>count_obj (SelectedRegions1, Number)</l>
+<l>if(Number==2)</l>
+<l>    smallest_circle (SelectedRegions1, Row, Column, Radius)</l>
+<l>    gen_circle (Circle, Row, Column, Radius)</l>
+<l>    union1 (Circle, RegionUnion)</l>
+<l>    smallest_rectangle2 (RegionUnion, Row1, Column1, Phi, Length1, Length2)</l>
+<l>    dev_get_window (WindowHandle)</l>
+<l>    disp_cross (WindowHandle, Row1, Column1, 196, Phi) </l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="FindSocketMark">
+<parameters>
+<parameter id="Column1"/>
+<parameter id="Image_white"/>
+<parameter id="Phi"/>
+<parameter id="Row1"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

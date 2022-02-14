@@ -44,9 +44,11 @@ namespace Poc2Auto.GUI
                 if (null == value)
                     return;
                 _plcDriver = value;
-                value.OnInitOk += () => { InitData(); };
                 if (value.IsInitOk)
                     InitData();
+                else
+                    value.OnInitOk += () => { InitData(); };
+                
             }
         }
         /// <summary>
@@ -222,7 +224,7 @@ namespace Poc2Auto.GUI
                 if (!File.Exists(_filePath + cbxRecipeName.Text))
                     return;
                 //保存到项目专门的配方文件夹下
-                Config.Save();
+                Config.Save(_filePath + cbxRecipeName.Text);
                 var path = _uploadData.FilePath;
                 //保存到项目启动后加载的配方目录去
                 Config.Save(path);
@@ -281,7 +283,7 @@ namespace Poc2Auto.GUI
                 return;
             if (!_isOverride)   //如果没有点击覆盖按钮
             {
-                _isOverride = true;
+                //_isOverride = true;
                 var filePath = _uploadData.FilePath;
                 _uploadData = Config;
                 _uploadData.FilePath = filePath;
@@ -408,7 +410,7 @@ namespace Poc2Auto.GUI
             else if (ret < 0)
             {
                 var text = "The underlying data is inconsistent with the upper computer data. Do you want to cover the upper computer data?";
-                if (AlcSystem.Instance.ShowMsgBox(text, $"{ _plcDriver.Name}", AlcMsgBoxButtons.YesNo, AlcMsgBoxIcon.Question) == AlcMsgBoxResult.Yes)
+                if (AlcSystem.Instance.ShowMsgBox(text, $"{ _plcDriver.Name}", AlcMsgBoxButtons.YesNo, AlcMsgBoxIcon.Question, AlcMsgBoxDefaultButton.Button2) == AlcMsgBoxResult.Yes)
                 {
                     _isOverride = true;
                     Config = uploadData;
@@ -442,7 +444,17 @@ namespace Poc2Auto.GUI
                 var data = dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[ColKey.Index].Value.ToString();
                 foreach (var name in AxisNames)
                 {
-                    if (data.Contains(name.Key))
+                    if ((data.Contains("Z") || data.Contains("z")) && name.Key == "S")
+                    {
+                        var pos = _plcDriver?.GetSingleAxisCtrl(name.Value)?.Info.ActPos.ToString("N4");
+                        dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[ColValue.Index].Value = pos;
+                    }
+                    else if ((data.Contains("Y") || data.Contains("y")) && name.Key == "L")
+                    {
+                        var pos = _plcDriver?.GetSingleAxisCtrl(name.Value)?.Info.ActPos.ToString("N4");
+                        dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[ColValue.Index].Value = pos;
+                    }
+                    else if (data.Contains(name.Key))
                     {
                         var pos = _plcDriver?.GetSingleAxisCtrl(name.Value)?.Info.ActPos.ToString("N4");
                         dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[ColValue.Index].Value = pos;

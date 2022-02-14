@@ -37,6 +37,21 @@
       <zh-CN>关于</zh-CN>
     </Item>
     <Item>
+      <en-US>TrayMark</en-US>
+      <zh-CHT>Tray盘标定</zh-CHT>
+      <zh-CN>Tray盘标定</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Helper</en-US>
+      <zh-CHT>帮助</zh-CHT>
+      <zh-CN>帮助</zh-CN>
+    </Item>
+    <Item>
+      <en-US>ClearAlarm</en-US>
+      <zh-CHT>清除報警</zh-CHT>
+      <zh-CN>清除报警</zh-CN>
+    </Item>
+    <Item>
       <en-US>AboutALC</en-US>
       <zh-CHT>關於ALC</zh-CHT>
       <zh-CN>关于ALC</zh-CN>
@@ -47,15 +62,30 @@
       <zh-CN>单步调试</zh-CN>
     </Item>
     <Item>
+      <en-US>Are you sure to end the current lot?</en-US>
+      <zh-CHT>確定結束當前lot？</zh-CHT>
+      <zh-CN>确定结束当前lot?</zh-CN>
+    </Item>
+    <Item>
       <en-US>Add</en-US>
       <zh-CN>添加</zh-CN>
       <zh-CHT>添加</zh-CHT>
       <vi-VN>thêm vào</vi-VN>
     </Item>
     <Item>
+      <en-US>Only Save Ng images</en-US>
+      <zh-CN>只保存NG图</zh-CN>
+      <zh-CHT>只保存NG图</zh-CHT>
+    </Item>
+    <Item>
       <en-US>AddOrUpdate</en-US>
       <zh-CN>添加或更新</zh-CN>
       <zh-CHT>添加或更新</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Can't start, please check whether all connected devices are connected to ALC</en-US>
+      <zh-CN>不能运行，请检查所有设备是否成功连接到ALC</zh-CN>
+      <zh-CHT>不能运行，请检查所有设备是否成功连接到ALC</zh-CHT>
     </Item>
     <Item>
       <en-US>The underlying data is inconsistent with the upper computer data. Do you want to cover the upper computer data?</en-US>
@@ -91,6 +121,76 @@
       <en-US>Select all</en-US>
       <zh-CHT>全選</zh-CHT>
       <zh-CN>全选</zh-CN>
+    </Item>
+    <Item>
+      <en-US>LogIn</en-US>
+      <zh-CHT>登录</zh-CHT>
+      <zh-CN>登录</zh-CN>
+    </Item>
+    <Item>
+      <en-US>SmallTray</en-US>
+      <zh-CHT>小Tray</zh-CHT>
+      <zh-CN>小Tray</zh-CN>
+    </Item>
+    <Item>
+      <en-US>BigTray</en-US>
+      <zh-CHT>大Tray</zh-CHT>
+      <zh-CN>大Tray</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Door lock detection</en-US>
+      <zh-CHT>门锁检测</zh-CHT>
+      <zh-CN>门锁检测</zh-CN>
+    </Item>
+    <Item>
+      <en-US>NG Imgs</en-US>
+      <zh-CHT>异常图片</zh-CHT>
+      <zh-CN>异常图片</zh-CN>
+    </Item>
+    <Item>
+      <en-US>All Imgs</en-US>
+      <zh-CHT>所有图片</zh-CHT>
+      <zh-CN>所有图片</zh-CN>
+    </Item>
+    <Item>
+      <en-US>HandBook</en-US>
+      <zh-CHT>手册</zh-CHT>
+      <zh-CN>手册</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Clear current socket status</en-US>
+      <zh-CHT>清除当前Socket状态</zh-CHT>
+      <zh-CN>清除当前Socket状态</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Clear Handler process data</en-US>
+      <zh-CHT>清除Handler过程数据</zh-CHT>
+      <zh-CN>清除Handler过程数据</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Clear Tester process data</en-US>
+      <zh-CHT>清除Tester过程数据</zh-CHT>
+      <zh-CN>清除Tester过程数据</zh-CN>
+    </Item>
+    <Item>
+      <en-US>View underlying version</en-US>
+      <zh-CHT>查看底层版本号</zh-CHT>
+      <zh-CN>查看底层版本号</zh-CN>
+    </Item>
+    <Item>
+      <en-US>LoadNozzle</en-US>
+      <zh-CHT>上料吸嘴</zh-CHT>
+      <zh-CN>上料吸嘴</zh-CN>
+    </Item>
+    <Item>
+      <en-US>UnloadNozzle</en-US>
+      <zh-CHT>下料吸嘴</zh-CHT>
+      <zh-CN>下料吸嘴</zh-CN>
+    </Item>
+    <Item>
+      <en-US>Retest</en-US>
+      <zh-CHT>重測</zh-CHT>
+      <zh-CN>重测</zh-CN>
     </Item>
     <Item>
       <en-US>Create recipe file successfully!</en-US>
@@ -227,6 +327,12 @@
       <en-US>Change password</en-US>
       <zh-CN>修改密码</zh-CN>
       <zh-CHT>修改密碼</zh-CHT>
+      <vi-VN>Thay đổi mật khẩu</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Password: </en-US>
+      <zh-CN>密码</zh-CN>
+      <zh-CHT>密碼</zh-CHT>
       <vi-VN>Thay đổi mật khẩu</vi-VN>
     </Item>
     <Item>
@@ -935,15 +1041,9 @@
     </Item>
     <Item>
       <en-US>Yield</en-US>
-      <zh-CN>良</zh-CN>
-      <zh-CHT>良</zh-CHT>
+      <zh-CN>良率</zh-CN>
+      <zh-CHT>良率</zh-CHT>
       <vi-VN>tốt</vi-VN>
-    </Item>
-    <Item>
-      <en-US>Yield:</en-US>
-      <zh-CN>良率:</zh-CN>
-      <zh-CHT>良率:</zh-CHT>
-      <vi-VN>Thua:</vi-VN>
     </Item>
     <Item>
       <en-US>Fail:</en-US>
@@ -1216,16 +1316,16 @@
       <vi-VN>Thử khay khác nhau</vi-VN>
     </Item>
     <Item>
-      <en-US>Enable Scan SN</en-US>
-      <zh-CN>启用扫码</zh-CN>
-      <zh-CHT>啟用掃碼</zh-CHT>
+      <en-US>Scan SN</en-US>
+      <zh-CN>扫码</zh-CN>
+      <zh-CHT>掃碼</zh-CHT>
       <vi-VN>Bật mã quét</vi-VN>
     </Item>
     <Item>
       <en-US>All bin ok</en-US>
-      <zh-CN>不分Bin测试</zh-CN>
-      <zh-CHT>不分Bin測試</zh-CHT>
-      <vi-VN>Kiểm tra thùng rác</vi-VN>
+      <zh-CN>不分Bin</zh-CN>
+      <zh-CHT>不分Bin</zh-CHT>
+      <vi-VN>Kiểm tra</vi-VN>
     </Item>
     <Item>
       <en-US>Enable MTCP</en-US>
@@ -1234,10 +1334,14 @@
       <vi-VN>Bật MTV</vi-VN>
     </Item>
     <Item>
-      <en-US>Turn off the buzzer</en-US>
-      <zh-CN>关闭报警提示音</zh-CN>
-      <zh-CHT>關閉報警提示音</zh-CHT>
-      <vi-VN>Tắt báo động đi.</vi-VN>
+      <en-US>Buzzer</en-US>
+      <zh-CN>报警提示音</zh-CN>
+      <zh-CHT>报警提示音</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Clear Online dut</en-US>
+      <zh-CN>清空线上DUT</zh-CN>
+      <zh-CHT>清空线上DUT</zh-CHT>
     </Item>
     <Item>
       <en-US>Enable TM</en-US>
@@ -1342,6 +1446,12 @@
       <zh-CN>暂停</zh-CN>
       <zh-CHT>暫停</zh-CHT>
       <vi-VN>đình</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Pause...</en-US>
+      <zh-CN>暂停...</zh-CN>
+      <zh-CHT>暫停...</zh-CHT>
+      <vi-VN>đình...</vi-VN>
     </Item>
     <Item>
       <en-US>Pause Failed</en-US>
@@ -1629,26 +1739,26 @@
     </Item>
     <Item>
       <en-US>Start</en-US>
-      <zh-CN>开始</zh-CN>
-      <zh-CHT>開始</zh-CHT>
+      <zh-CN>运行</zh-CN>
+      <zh-CHT>運行</zh-CHT>
       <vi-VN>Bắt đầu</vi-VN>
     </Item>
     <Item>
       <en-US>Start Failed</en-US>
-      <zh-CN>开始失败</zh-CN>
-      <zh-CHT>開始失敗</zh-CHT>
+      <zh-CN>运行失败</zh-CN>
+      <zh-CHT>運行失敗</zh-CHT>
       <vi-VN>Khởi động Thất bại</vi-VN>
     </Item>
     <Item>
       <en-US>StartAll</en-US>
-      <zh-CN>开始所有</zh-CN>
-      <zh-CHT>開始所有</zh-CHT>
+      <zh-CN>运行所有</zh-CN>
+      <zh-CHT>運行所有</zh-CHT>
       <vi-VN>Bắt đầuTất cả</vi-VN>
     </Item>
     <Item>
       <en-US>Starting...</en-US>
-      <zh-CN>开始...</zh-CN>
-      <zh-CHT>開始...</zh-CHT>
+      <zh-CN>运行...</zh-CN>
+      <zh-CHT>運行...</zh-CHT>
       <vi-VN>Bắt đầu...</vi-VN>
     </Item>
     <Item>
@@ -1680,6 +1790,12 @@
       <zh-CN>停止</zh-CN>
       <zh-CHT>停止</zh-CHT>
       <vi-VN>Dừng</vi-VN>
+    </Item>
+    <Item>
+      <en-US>Stopping...</en-US>
+      <zh-CN>停止...</zh-CN>
+      <zh-CHT>停止...</zh-CHT>
+      <vi-VN>Dừng...</vi-VN>
     </Item>
     <Item>
       <en-US>Stop Failed</en-US>
@@ -1824,12 +1940,6 @@
       <vi-VN>Khay cắt</vi-VN>
     </Item>
     <Item>
-      <en-US>UPH</en-US>
-      <zh-CN>每小时产出</zh-CN>
-      <zh-CHT>每小時產出</zh-CHT>
-      <vi-VN>Xuất mỗi giờ</vi-VN>
-    </Item>
-    <Item>
       <en-US>UploadFromPLC</en-US>
       <zh-CN>加载自PLC</zh-CN>
       <zh-CHT>加載自PLC</zh-CHT>
@@ -1919,6 +2029,26 @@
       <en-US>Yes</en-US>
       <zh-CN>是的</zh-CN>
       <zh-CHT>是的</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Camera</en-US>
+      <zh-CN>相机</zh-CN>
+      <zh-CHT>相机</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Calib</en-US>
+      <zh-CN>标定</zh-CN>
+      <zh-CHT>标定</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Calib</en-US>
+      <zh-CN>标定</zh-CN>
+      <zh-CHT>标定</zh-CHT>
+    </Item>
+    <Item>
+      <en-US>Switch Recipe</en-US>
+      <zh-CN>切换配方</zh-CN>
+      <zh-CHT>切换配方</zh-CHT>
     </Item>
   </Items>
 </Language>

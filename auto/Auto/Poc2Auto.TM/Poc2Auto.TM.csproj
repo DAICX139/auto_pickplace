@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\ALC\plugins\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SOCKETSAFETYSIGNAL_OFF</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -41,6 +41,10 @@
     <Reference Include="CYGKit.Factory">
       <HintPath>..\ALC\bin\CYGKit.Factory.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="NetAndEvent, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\NetAndEvent.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <SpecificVersion>False</SpecificVersion>

@@ -40,6 +40,9 @@
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlcUtility">
       <HintPath>..\ALC\bin\AlcUtility.dll</HintPath>
@@ -50,7 +53,6 @@
     <Reference Include="CYGKit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ALC\bin\CYGKit.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="CYGKit.AdsProtocol">
       <HintPath>..\ALC\bin\CYGKit.AdsProtocol.dll</HintPath>
@@ -102,6 +104,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="VisionControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\plugins\VisionControls.dll</HintPath>
+    </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
       <HintPath>..\ALC\bin\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
       <Private>False</Private>
@@ -114,8 +120,21 @@
     <Compile Include="Common\MTCP.cs" />
     <Compile Include="Common\Protocols.cs" />
     <Compile Include="Common\RunMode.cs" />
+    <Compile Include="Common\TricolorLamp.cs" />
     <Compile Include="Database\DbModels.cs" />
     <Compile Include="Database\DragonDbHelper.cs" />
+    <Compile Include="GUI\FMDutStatList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FMDutStatList.Designer.cs">
+      <DependentUpon>FMDutStatList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FMInputBinValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FMInputBinValue.Designer.cs">
+      <DependentUpon>FMInputBinValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\FormMode\FMAutoMark.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,23 +243,11 @@
     <Compile Include="GUI\RunModeConfig\UCModeParams_SocketTest.Designer.cs">
       <DependentUpon>UCModeParams_SocketTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UCErrorList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\UCErrorList.Designer.cs">
-      <DependentUpon>UCErrorList.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\UCGeneralConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\UCGeneralConfig.Designer.cs">
       <DependentUpon>UCGeneralConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\UCHandlerConfig.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\UCHandlerConfig.Designer.cs">
-      <DependentUpon>UCHandlerConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\UCHandlerConfig_New.cs">
       <SubType>UserControl</SubType>
@@ -265,12 +272,6 @@
     </Compile>
     <Compile Include="GUI\UCModeUI\FormAxisLoaction.Designer.cs">
       <DependentUpon>FormAxisLoaction.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\UCModeUI\FormAxisPosName.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\UCModeUI\FormAxisPosName.Designer.cs">
-      <DependentUpon>FormAxisPosName.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\UCModeUI\FormOperationAxis.cs">
       <SubType>Form</SubType>
@@ -309,11 +310,11 @@
     <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxisOperation.designer.cs">
       <DependentUpon>UC_SingleAxisOperation.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UCModeUI\UCIndex.cs">
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis_New.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\UCModeUI\UCIndex.Designer.cs">
-      <DependentUpon>UCIndex.cs</DependentUpon>
+    <Compile Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis_New.Designer.cs">
+      <DependentUpon>UC_SingleAxis_New.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\UCModeUI\UCModeDoe.cs">
       <SubType>UserControl</SubType>
@@ -369,11 +370,11 @@
     <Compile Include="GUI\UCRunLog.Designer.cs">
       <DependentUpon>UCRunLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UCRunMode.cs">
+    <Compile Include="GUI\UCSemiAutoControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\UCRunMode.designer.cs">
-      <DependentUpon>UCRunMode.cs</DependentUpon>
+    <Compile Include="GUI\UCSemiAutoControl.Designer.cs">
+      <DependentUpon>UCSemiAutoControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\UCSocket.cs">
       <SubType>UserControl</SubType>
@@ -435,6 +436,12 @@
     <Compile Include="GUI\UCTraySetting_New.Designer.cs">
       <DependentUpon>UCTraySetting_New.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\UCBinRegionSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\UCBinRegionSet.designer.cs">
+      <DependentUpon>UCBinRegionSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Dut.cs" />
     <Compile Include="Model\DutStatistics.cs" />
     <Compile Include="Model\LotInfo.cs" />
@@ -445,6 +452,12 @@
     <Compile Include="MTCP\Models.cs" />
     <Compile Include="MTCP\MTCPHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\FMDutStatList.resx">
+      <DependentUpon>FMDutStatList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FMInputBinValue.resx">
+      <DependentUpon>FMInputBinValue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\FormMode\FMAutoMark.resx">
       <DependentUpon>FMAutoMark.cs</DependentUpon>
     </EmbeddedResource>
@@ -507,14 +520,8 @@
     <EmbeddedResource Include="GUI\RunModeConfig\UCModeParams_SocketTest.resx">
       <DependentUpon>UCModeParams_SocketTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCErrorList.resx">
-      <DependentUpon>UCErrorList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCGeneralConfig.resx">
       <DependentUpon>UCGeneralConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCHandlerConfig.resx">
-      <DependentUpon>UCHandlerConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCHandlerConfig_New.resx">
       <DependentUpon>UCHandlerConfig_New.cs</DependentUpon>
@@ -529,10 +536,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCModeUI\FormAxisLoaction.resx">
       <DependentUpon>FormAxisLoaction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCModeUI\FormAxisPosName.resx">
-      <DependentUpon>FormAxisPosName.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCModeUI\FormOperationAxis.resx">
       <DependentUpon>FormOperationAxis.cs</DependentUpon>
@@ -552,9 +555,8 @@
     <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxisOperation.resx">
       <DependentUpon>UC_SingleAxisOperation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCModeUI\UCIndex.resx">
-      <DependentUpon>UCIndex.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="GUI\UCModeUI\UCAxisesCylinders\UC_SingleAxis_New.resx">
+      <DependentUpon>UC_SingleAxis_New.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCModeUI\UCModeDOE.resx">
       <DependentUpon>UCModeDoe.cs</DependentUpon>
@@ -575,8 +577,8 @@
     <EmbeddedResource Include="GUI\UCRunLog.resx">
       <DependentUpon>UCRunLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UCRunMode.resx">
-      <DependentUpon>UCRunMode.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\UCSemiAutoControl.resx">
+      <DependentUpon>UCSemiAutoControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCSocket.resx">
       <DependentUpon>UCSocket.cs</DependentUpon>
@@ -609,6 +611,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UCTraySetting_New.resx">
       <DependentUpon>UCTraySetting_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UCBinRegionSet.resx">
+      <DependentUpon>UCBinRegionSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

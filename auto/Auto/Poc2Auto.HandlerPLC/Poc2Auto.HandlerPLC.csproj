@@ -38,6 +38,10 @@
       <HintPath>..\ALC\bin\CYGKit.Factory.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ALC\bin\Log.dll</HintPath>
+    </Reference>
     <Reference Include="NetAndEvent">
       <HintPath>..\ALC\bin\NetAndEvent.dll</HintPath>
       <Private>False</Private>

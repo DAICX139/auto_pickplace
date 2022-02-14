@@ -49,7 +49,7 @@ namespace Poc2Auto.GUI.FormMode
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 61.36364F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.63636F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 88);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(262, 103);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // ucModeParams_GRR1
@@ -60,17 +60,17 @@ namespace Poc2Auto.GUI.FormMode
             this.ucModeParams_GRR1.Location = new System.Drawing.Point(3, 4);
             this.ucModeParams_GRR1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ucModeParams_GRR1.Name = "ucModeParams_GRR1";
-            this.ucModeParams_GRR1.Size = new System.Drawing.Size(256, 45);
+            this.ucModeParams_GRR1.Size = new System.Drawing.Size(256, 55);
             this.ucModeParams_GRR1.TabIndex = 0;
             // 
             // btnOk
             // 
             this.btnOk.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOk.Location = new System.Drawing.Point(167, 53);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(0);
+            this.btnOk.Location = new System.Drawing.Point(169, 65);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(95, 35);
+            this.btnOk.Size = new System.Drawing.Size(91, 36);
             this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -80,12 +80,14 @@ namespace Poc2Auto.GUI.FormMode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 88);
+            this.ClientSize = new System.Drawing.Size(262, 103);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(280, 150);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(280, 150);
             this.Name = "FMGRR";
             this.Text = "设置GRR测试次数";
             this.Shown += new System.EventHandler(this.FMGRR_Shown);

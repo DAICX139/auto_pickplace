@@ -114,7 +114,7 @@
           <Key>Results</Key>
           <DataType>System.UInt16[1]</DataType>
           <PlcVarName>GVL_MachineCom.Data34_DutResult</PlcVarName>
-          <CtrlType>1</CtrlType>
+          <CtrlType>2</CtrlType>
           <Value xsi:type="xsd:string" />
         </ParamsValue>
       </ArrayOfParamsValue>
@@ -165,6 +165,17 @@
     <ParamsModule Name="37" Description="CompelteFinish">
       <ArrayOfParamsValue />
     </ParamsModule>
+	 <ParamsModule Name="38" Description="Data38_BinValue">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Data38_BinValue</Key>
+          <DataType>System.UInt16[1]</DataType>
+          <PlcVarName>GVL_MachineCom.Data38_BinValue</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string" />
+        </ParamsValue>
+      </ArrayOfParamsValue>
+	</ParamsModule>
     <ParamsModule Name="40" Description="GRRStart">
       <ArrayOfParamsValue />
     </ParamsModule>
@@ -175,7 +186,7 @@
       <ArrayOfParamsValue>
         <ParamsValue>
           <Key>PLCRecv</Key>
-          <DataType>System.Double[6]</DataType>
+          <DataType>System.Double[7]</DataType>
           <PlcVarName>GVL_MachineCom.Data60_PLCRecv.Data</PlcVarName>
           <CtrlType>1</CtrlType>
           <Value xsi:type="xsd:string" />
@@ -193,7 +204,7 @@
       <ArrayOfParamsValue>
         <ParamsValue>
           <Key>PLCRecv</Key>
-          <DataType>System.Double[6]</DataType>
+          <DataType>System.Double[7]</DataType>
           <PlcVarName>GVL_MachineCom.Data61_PLCRecv.Data</PlcVarName>
           <CtrlType>1</CtrlType>
           <Value xsi:type="xsd:string" />

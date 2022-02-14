@@ -4,6 +4,6 @@ D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.FormTester.resources
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.csproj.GenerateResource.cache
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.csproj.CoreCompileInputs.cache
-D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.csproj.CopyComplete
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.dll
 D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.pdb
+D:\project\ALC_7953\Auto\CYG7953Poc2Auto\Poc2Auto.RotationPLC\obj\Debug\Poc2Auto.RotationPLC.csproj.CopyComplete

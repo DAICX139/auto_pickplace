@@ -34,10 +34,7 @@ namespace DragonFlex.GUI.Factory
             ucModeManual1.DioPath = Application.StartupPath + @"\UiParamFiles\DIOmap.xlsx";
             ucModeManual1.CYL_COUNT = 10;
             ucModeManual1.AXIS_COUNT = 6;
-            EventCenter.HandlerModeChanged += ucModeManual1.UiEnable;
-            ucModeManual1.IsShowSemiAutoTab = false;
-            ucModeManual1.IsShowDebugTab = false;
-            ucModeManual1.IsShowTesterPinControlButton = false;
+
             if (plcDriver != null)
                 plcDriver.OnInitOk += () => { ucModeManual1.BindData(plcDriver); };
 

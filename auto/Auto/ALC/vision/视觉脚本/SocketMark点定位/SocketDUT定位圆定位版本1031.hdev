@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image_white, 'C:/Users/Administrator.DESKTOP-KDKC337/Desktop/error 3#.bmp')</l>
+<l>dev_display (Image_white)</l>
+<l>FindSocketMark (Image_white, Row_mode, Column_mode, Phi_mode)</l>
+<c></c>
+<c> </c>
+<c>    </c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="FindSocketMark">
+<interface>
+<io>
+<par name="Image_white" base_type="iconic" dimension="0"/>
+</io>
+<oc>
+<par name="Row1" base_type="ctrl" dimension="0"/>
+<par name="Column1" base_type="ctrl" dimension="0"/>
+<par name="Phi" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>threshold (Image_white, Region, 180, 255)</l>
+<l>connection (Region, ConnectedRegions)</l>
+<l>opening_circle (ConnectedRegions, RegionOpening, 3)</l>
+<l>select_shape (RegionOpening, SelectedRegions, ['area','circularity'], 'and', [30000,0.6], [100000,1])</l>
+<l>closing_circle (SelectedRegions, RegionClosing, 3.5)</l>
+<l>fill_up (RegionClosing, RegionFillUp)</l>
+<l>count_obj (RegionFillUp, Number)</l>
+<l>if(Number==2)</l>
+<l>    sort_region (RegionFillUp, SortedRegions, 'character', 'true', 'row')</l>
+<l>    select_obj (SortedRegions, Sorted1, 1)</l>
+<l>    select_obj (SortedRegions, Sorted2, 2)</l>
+<l>    smallest_circle (Sorted1, Row1, Column1, Radius1)</l>
+<l>    smallest_circle (Sorted2, Row2, Column2, Radius2)</l>
+<l>    row_center:=(Row1+Row2)/2</l>
+<l>    col_center:=(Column1+Column2)/2   </l>
+<l>    angle_lx (Row1, Column1, Row2, Column2, phi)</l>
+<l>    angle:=deg(phi)</l>
+<l>    dev_get_window (WindowHandle)</l>
+<l>    gen_cross_contour_xld (Cross, row_center, col_center, 196, Phi)</l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="FindSocketMark">
+<parameters>
+<parameter id="Column1"/>
+<parameter id="Image_white"/>
+<parameter id="Phi"/>
+<parameter id="Row1"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

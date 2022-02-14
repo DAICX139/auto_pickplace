@@ -10,7 +10,12 @@ namespace Poc2Auto.Common
         public static void GetBin(this Dut dut)
         {
             GetBinByRule(dut, out var bin);
-            dut.Result = bin;
+            if (bin == 0)
+            {
+                dut.Result = Dut.Fail_All;
+            }
+            else
+                 dut.Result = bin;
         }
 
         public static void GetBinByRule(Dut dut, out int bin)
@@ -27,7 +32,15 @@ namespace Poc2Auto.Common
             var results = new int[stations.Count];
             for (var i = 0; i < stations.Count; i++)
             {
-                results[i] = dut.TestResult[stations[i]];
+                if (dut.TestResult.ContainsKey(stations[i]))
+                {
+                    results[i] = dut.TestResult[stations[i]];
+
+                }
+                else
+                {
+                    results[i] = Dut.Fail_All;
+                }
             }
             return results;
         }

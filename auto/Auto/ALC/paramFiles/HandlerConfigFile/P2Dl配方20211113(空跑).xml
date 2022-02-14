@@ -1,0 +1,1193 @@
+<?xml version="1.0"?>
+<ParamsConfig ModuleType="Test1" ModulelId="1">
+  <ArrayOfParamsModule xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ParamsModule Id="1" Name="LoadX_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray1Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">18.668</Value>
+          <Remark>LoadToTray1Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray1Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">82.9755</Value>
+          <Remark>LoadToTray1Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray2Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">211.5595</Value>
+          <Remark>LoadToTray2Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray2Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">275.988</Value>
+          <Remark>LoadToTray2Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray3Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">377.023</Value>
+          <Remark>LoadToTray3Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray3Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">496.58</Value>
+          <Remark>LoadToTray3Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray4Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">553.173</Value>
+          <Remark>LoadToTray4Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray4Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">659.2695</Value>
+          <Remark>LoadToTray4Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>InitialPosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>X轴初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadUpTakePhotosPosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">250.907</Value>
+          <Remark>X轴Load吸嘴在Up相机拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[14]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SafePosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[13]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">312</Value>
+          <Remark>X轴安全位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved3</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[15]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved4</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[16]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved5</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[17]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved6</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[18]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos1X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[19]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">436.0205</Value>
+          <Remark>X轴在1号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos2X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[20]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">436.0205</Value>
+          <Remark>X轴在2号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos3X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[21]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">436.0205</Value>
+          <Remark>X轴在3号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos4X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[22]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">435.3395</Value>
+          <Remark>X轴在4号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos5X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipePos[23]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">435.7195</Value>
+          <Remark>X轴在5号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="2" Name="LoadX_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>TrayMarkVelX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">100</Value>
+          <Remark>TrayMarkX速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadVelX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadX_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">1000</Value>
+          <Remark>X轴Load的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="3" Name="LoadY_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray1Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">305.175</Value>
+          <Remark>LoadToTray1Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray1Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">137.8275</Value>
+          <Remark>LoadToTray1Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray2Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">305.216</Value>
+          <Remark>LoadToTray2Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray2Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">137.9455</Value>
+          <Remark>LoadToTray2Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray3Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">357.6925</Value>
+          <Remark>LoadToTray3Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray3Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">84.3425</Value>
+          <Remark>LoadToTray3Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray4Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">356.2545</Value>
+          <Remark>LoadToTray4Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadToTray4Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">91.822</Value>
+          <Remark>LoadToTray4Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>InitialPosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Y轴初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[12]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SecondUpTakePhotosPosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">450.8415</Value>
+          <Remark>Y轴Load吸嘴在Up相机拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SafePosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[13]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">667</Value>
+          <Remark>Y轴安全位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[14]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved3</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[15]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved4</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[16]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved5</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[17]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved6</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[18]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos1Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[19]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">679.085</Value>
+          <Remark>Y轴在1号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos2Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[20]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">679.085</Value>
+          <Remark>Y轴在2号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos3Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[21]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">679.085</Value>
+          <Remark>Y轴在3号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos4Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[22]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">679.861</Value>
+          <Remark>Y轴在4号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadVisionPos5Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipePos[23]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">679.0850</Value>
+          <Remark>Y轴在5号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="4" Name="LoadY_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>Tray1MarkVelY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">100</Value>
+          <Remark>TrayMarkY速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadVelY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadY_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">850</Value>
+          <Remark>Y轴Load的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="5" Name="LoadZ1_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>InitialPosZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z1轴初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayDnPosZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z1轴Tray取放料下降位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SecondUpTakePhotosPosZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">14.0515</Value>
+          <Remark>Z1轴UP相机拍照的位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketDnPosZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z1轴Socket放料下降的位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayLoadPhotoPosZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">-0.1949</Value>
+          <Remark>Z1轴Tray拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadPhotoPos1Z1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.1473</Value>
+          <Remark>Z1轴在1号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadPhotoPos2Z1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.437</Value>
+          <Remark>Z1轴在2号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadPhotoPos3Z1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.437</Value>
+          <Remark>Z1轴在3号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadPhotoPos4Z1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.4281</Value>
+          <Remark>Z1轴在4号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketLoadPhotoPos5Z1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.1897</Value>
+          <Remark>Z1轴在5号LoadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="6" Name="LoadZ1_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>LoadVelZ1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadZ1_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">490</Value>
+          <Remark>Z1轴Load的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="7" Name="LoadR1_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>InitialPosR1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadR1_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-90</Value>
+          <Remark>R1轴初始位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="8" Name="LoadR1_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>LoadVelR1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.LoadR1_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">500</Value>
+          <Remark>R1轴Load的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="9" Name="UloadX_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray2Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-36.747</Value>
+          <Remark>UloadToTray2Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray2Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">28.1705</Value>
+          <Remark>UloadToTray2Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray3Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">126.1015</Value>
+          <Remark>UloadToTray3Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray3Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">245.6925</Value>
+          <Remark>UloadToTray3Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray4Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">318.7475</Value>
+          <Remark>UloadToTray4Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray4Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">438.4105</Value>
+          <Remark>UloadToTray4Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray5Mark1PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">511.6825</Value>
+          <Remark>UloadToTray5Mark1X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray5Mark2PosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">631.362</Value>
+          <Remark>UloadToTray5Mark2X坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SecondUloadUpTakePhotosPosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-2.482</Value>
+          <Remark>X轴Unlaod吸嘴在Up相机拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved3</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[12]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved4</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[13]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved5</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[14]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved6</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[15]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos1X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[16]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">185.16</Value>
+          <Remark>X轴在1号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos2X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[17]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">185.16</Value>
+          <Remark>X轴在2号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos3X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[18]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">185.16</Value>
+          <Remark>X轴在3号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos4X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[19]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">184.463</Value>
+          <Remark>X轴在4号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos5X</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipePos[20]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">184.883</Value>
+          <Remark>X轴在5号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="10" Name="UloadX_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadVelX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadX_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">1000</Value>
+          <Remark>X轴Uload的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="11" Name="UloadY_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray2Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">357.6545</Value>
+          <Remark>UloadToTray2Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray2Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">93.4185</Value>
+          <Remark>UloadToTray2Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray3Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">359.2815</Value>
+          <Remark>UloadToTray3Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray3Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">85.753</Value>
+          <Remark>UloadToTray3Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray4Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">359.926</Value>
+          <Remark>UloadToTray4Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray4Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">86.8175</Value>
+          <Remark>UloadToTray4Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray5Mark1PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">360.1985</Value>
+          <Remark>UloadToTray5Mark1Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadToTray5Mark2PosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">87.0095</Value>
+          <Remark>UloadToTray5Mark2Y坐标</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SecondUloadUpTakePhotosPosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">450.972</Value>
+          <Remark>Y轴Unlaod吸嘴在Up相机拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved3</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[12]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved4</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[13]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved5</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[14]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved6</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[15]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos1Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[16]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">680.9325</Value>
+          <Remark>Y轴在1号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos2Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[17]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">680.454</Value>
+          <Remark>Y轴在2号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos3Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[18]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">680.9325</Value>
+          <Remark>Y轴在3号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos4Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[19]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">680.996</Value>
+          <Remark>Y轴在4号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadVisionPos5Y</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipePos[20]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">680.4335</Value>
+          <Remark>Y轴在5号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="12" Name="UloadY_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadVelY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadY_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">850</Value>
+          <Remark>Y轴Uload的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="13" Name="UloadZ2_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>InitialPosZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z2轴初始位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayDnPosZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z2轴Tray取放料下降位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SecondUpTakePhotosPosZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">16.0556</Value>
+          <Remark>Z2轴UP相机拍照的位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>Reserved1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>预留参数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketDnPosZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z2轴Socket取料下降的位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayUloadPhotoPosZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">0</Value>
+          <Remark>Z2轴Tray拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadPhotoPos1Z2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.5316</Value>
+          <Remark>Z2轴在1号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadPhotoPos2Z2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.3651</Value>
+          <Remark>Z2轴在2号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadPhotoPos3Z2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.5316</Value>
+          <Remark>Z2轴在3号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadPhotoPos4Z2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.126</Value>
+          <Remark>Z2轴在4号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SocketUloadPhotoPos5Z2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipePos[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:string">4.6068</Value>
+          <Remark>Z2轴在5号UloadSocket拍照位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="14" Name="UloadZ2_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadVelZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">490</Value>
+          <Remark>Z2轴Load的速度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadSocketVelZ2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadZ2_RecipeVel[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">20</Value>
+          <Remark>Z2轴SokcetLoad速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="15" Name="UloadR2_RecipePos" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>InitialPosR2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadR2_RecipePos[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-90</Value>
+          <Remark>R2轴初始位置</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="16" Name="UloadR2_RecipeVel" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>UloadVelR2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.UloadR2_RecipeVel[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">500</Value>
+          <Remark>R2轴Load的速度</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+    <ParamsModule Id="17" Name="Module_Recipe" Description="" PlcMsgType="0">
+      <ArrayOfParamsValue>
+        <ParamsValue>
+          <Key>TraySpaceX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[1]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">9.2</Value>
+          <Remark>TrayX间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TraySpaceY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[2]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">8.8</Value>
+          <Remark>TrayY间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayRow</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[3]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">32</Value>
+          <Remark>Tray行数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayCol</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[4]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">14</Value>
+          <Remark>Tray列数</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>TrayHypotenuse</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[5]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">298</Value>
+          <Remark>Tray斜边长度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadNozzleToVisionX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[6]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">1.25485</Value>
+          <Remark>Load吸嘴与相机X方向间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadNozzleToVisionY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[7]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-81.59431</Value>
+          <Remark>Load吸嘴与相机Y方向间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadNozzleToVisionX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[8]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-0.728958943706505</Value>
+          <Remark>Uload吸嘴与相机X方向间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>UloadNozzleToVisionY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[9]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-80.0158281727958</Value>
+          <Remark>Uload吸嘴与相机Y方向间距</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtPotPosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[10]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">660</Value>
+          <Remark>X轴正向限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtNotPosX</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[11]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-40</Value>
+          <Remark>X轴负限限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtPotPosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[12]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">688</Value>
+          <Remark>Y轴正向限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtNotPosY</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[13]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-19</Value>
+          <Remark>Y轴负限限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtPotPosR1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[14]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">100</Value>
+          <Remark>R1轴正向限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtNotPosR1</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[15]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-100</Value>
+          <Remark>R1轴负限限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtPotPosR2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[16]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">100</Value>
+          <Remark>R2轴正向限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LimtNotPosR2</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[17]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">-100</Value>
+          <Remark>R2轴负限限位</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>SmallTrayHypotenuse</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[18]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">179.1737</Value>
+          <Remark>小Tray斜边长度</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>LoadDutBin</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[19]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">2</Value>
+          <Remark>上料Bin ，用于GRR/Audit询盘取料Bin</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>ClearDutBin</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[20]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">4</Value>
+          <Remark>清料Bin，用于不知来源的Bin和清除Socket内的Bin</Remark>
+        </ParamsValue>
+        <ParamsValue>
+          <Key>AuditSetReTest</Key>
+          <DataType>System.Double</DataType>
+          <PlcVarName>GVL_MachineParam.Module_Recipe[21]</PlcVarName>
+          <CtrlType>2</CtrlType>
+          <Value xsi:type="xsd:double">2</Value>
+          <Remark>Audit重测次数设定</Remark>
+        </ParamsValue>
+      </ArrayOfParamsValue>
+    </ParamsModule>
+  </ArrayOfParamsModule>
+</ParamsConfig>

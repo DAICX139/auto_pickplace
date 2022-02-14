@@ -59,8 +59,8 @@ namespace Poc2Auto.GUI.RunModeConfig
             this.uC_GridviewTray1.Size = new System.Drawing.Size(365, 640);
             this.uC_GridviewTray1.TabIndex = 0;
             this.uC_GridviewTray1.Title = "Load Tray";
-            this.uC_GridviewTray1.TrayCol = 14;
-            this.uC_GridviewTray1.TrayRow = 32;
+            this.uC_GridviewTray1.TrayCol = 8;
+            this.uC_GridviewTray1.TrayRow = 20;
             // 
             // UCModeParams_DoeDifferentTrayTest
             // 

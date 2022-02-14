@@ -1,15 +1,13 @@
 ﻿using NetAndEvent.PlcDriver;
 using Poc2Auto.Common;
 using Poc2Auto.Database;
-using CYGKit.Factory.TableView;
 using System;
 using System.Windows.Forms;
 using Poc2Auto.GUI.FormMode;
 using AlcUtility;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Poc2Auto.GUI
 {
@@ -22,12 +20,13 @@ namespace Poc2Auto.GUI
                 return;
             _client = client;
             init(client);
-            RunModeMgr.RunModeChanged += modeChanged;
 
             //权限管理
             authorityManagement();
             AlcSystem.Instance.UserAuthorityChanged += (o, n) => { authorityManagement(); };
             RunModeMgr.CurrentSocketIDChanged += SocketIDChanged;
+
+            ReadConfig();
         }
         private AdsDriverClient _client;
         private static AdsDriverClient HandlerClient = PlcDriverClientManager.GetInstance().GetPlcDriver(ModuleTypes.Handler.ToString()) as AdsDriverClient;
@@ -60,13 +59,58 @@ namespace Poc2Auto.GUI
             }
         }
 
+        public int StationTestFailTimes
+        {
+            get => (int)numericUpDown1.Value;
+            set
+            {
+                if (value == (int)numericUpDown1.Value) return;
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => StationTestFailTimes = value));
+                    return;
+                }
+                numericUpDown1.Value = value;
+            }
+        }
+
+        public int SocketTestFailTimes
+        {
+            get => (int)numericUpDown2.Value;
+            set
+            {
+                if (value == (int)numericUpDown2.Value) return;
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => SocketTestFailTimes = value));
+                    return;
+                }
+                numericUpDown2.Value = value;
+            }
+        }
+
+        public bool DoorLockControl
+        {
+            get => checkBoxDoorLockControl.Checked;
+            set
+            {
+                if (value == checkBoxDoorLockControl.Checked) return;
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => DoorLockControl = value));
+                    return;
+                }
+                checkBoxDoorLockControl.Checked = value;
+            }
+        }
+
         private void init(AdsDriverClient client)
         {
-            uC_BinRegionSet1.Client = client;
-            uC_BinRegionSet1.NGTrayID = (int)TrayName.NG;
-            uC_BinRegionSet1.OK1TrayID = (int)TrayName.UnloadL;
-            uC_BinRegionSet1.OK2TrayID = (int)TrayName.UnloadR;
-            uC_BinRegionSet1.BindDataBase<DragonContext>();
+            ucBinRegionSet1.Client = client;
+            ucBinRegionSet1.NGTrayID = (int)TrayName.NG;
+            ucBinRegionSet1.OK1TrayID = (int)TrayName.Pass1;
+            ucBinRegionSet1.OK2TrayID = (int)TrayName.Pass2;
+            ucBinRegionSet1.BindDataBase<DragonContext>();
 
             fMAutoMark = new FMAutoMark(client) { StartPosition = FormStartPosition.CenterScreen }; 
             fMGRR = new FMGRR(client) { StartPosition = FormStartPosition.CenterScreen };
@@ -77,29 +121,19 @@ namespace Poc2Auto.GUI
             fMSocketTest = new FMSocketTest(client) { StartPosition = FormStartPosition.CenterScreen };
         }
 
+        private void ReadConfig()
+        {
+            TurnOffBuzzer = ConfigMgr.Instance.TurnOffBuzzer;
+            StationTestFailTimes = ConfigMgr.Instance.StationTestFailTimes;
+            SocketTestFailTimes = ConfigMgr.Instance.SocketTestFailTimes;
+            DoorLockControl = ConfigMgr.Instance.DoorLockControl;
+        }
+
         private void UCHandlerConfig_New_Load(object sender, EventArgs e)
         {
-            modeChanged();
             timer1.Enabled = true;
         }
 
-        private void btnAutoMark_Click(object sender, EventArgs e)
-        {
-            if (fMAutoMark == null || fMAutoMark.IsDisposed)
-            {
-                fMAutoMark = new FMAutoMark(HandlerClient) { StartPosition = FormStartPosition.CenterScreen };
-            }
-            fMAutoMark.ShowDialog(); 
-        }
-
-        private void btnAudit_Click(object sender, EventArgs e)
-        {
-            if (fMGRR == null || fMGRR.IsDisposed)
-            {
-                fMGRR = new FMGRR(HandlerClient) { StartPosition = FormStartPosition.CenterScreen };
-            }
-            fMGRR.ShowDialog(); 
-        }
 
         private void btnSameTray_Click(object sender, EventArgs e)
         {
@@ -121,52 +155,28 @@ namespace Poc2Auto.GUI
 
         private void btnDryRun_Click(object sender, EventArgs e)
         {
+            if (HandlerClient == null || TesterClient == null)
+                return;
 
-        }
-
-        private void modeChanged()
-        {
-            var mode = RunModeMgr.RunMode;
-            switch (mode)
-            {
-                case RunMode.Manual: 
-                    grpModeSetArea.Text = "Manual"; 
-                    break;
-                case RunMode.AutoNormal: 
-                    grpModeSetArea.Text = "AutoNormal"; 
-                    break;
-                case RunMode.AutoSelectSn: 
-                    grpModeSetArea.Text = "Select SN"; 
-                    break;
-                case RunMode.AutoSelectBin: 
-                    grpModeSetArea.Text = "Select Bin"; 
-                    break;
-                case RunMode.AutoGRR: 
-                    grpModeSetArea.Text = "GRR"; 
-                    break;
-                case RunMode.AutoAudit: 
-                    grpModeSetArea.Text = "Audit"; 
-                    break;
-                case RunMode.AutoMark: 
-                    grpModeSetArea.Text = "AutoMark"; 
-                    break;
-                case RunMode.DryRun: 
-                    grpModeSetArea.Text = "DryRun"; 
-                    break;
-                case RunMode.DoeSlip:
-                    grpModeSetArea.Text = "SlipTest";
-                    break;
-                case RunMode.DoeSameTray: 
-                    grpModeSetArea.Text = "SameTray"; 
-                    break;
-                case RunMode.DoeDifferentTray:
-                    break;
-                case RunMode.DoeTakeOff: 
-                    grpModeSetArea.Text = "TakeOff"; 
-                    break;
-                default:
-                    break;
-            }
+            Task.Run(new Action(
+             () =>
+             {
+                 if (UCMain.Instance.Stop(CtrlType.Both))
+                 {
+                     if (RunModeMgr.DryRun1(HandlerClient, out string message) && RunModeMgr.DryRun1(TesterClient, out string message1))
+                     {
+                         RunModeMgr.RunMode = RunMode.DryRun;
+                         RunModeMgr.Running = false;
+                         RunModeMgr.OriginValue = true;
+                         //AlcSystem.Instance.ShowMsgBox("OK", "Information");
+                         //UCMain.Instance.Reset();
+                     }
+                     else
+                     {
+                         AlcSystem.Instance.ShowMsgBox($"Fail, {message}", "Error", icon: AlcMsgBoxIcon.Error);
+                     }
+                 } 
+             }));
         }
 
         private void btnDoeSlip_Click(object sender, EventArgs e)
@@ -190,15 +200,11 @@ namespace Poc2Auto.GUI
                 fMSocketTest.Show();
             }
         }
-        private void btnSocketOpen_Click(object sender, EventArgs e)
-        {
-            EventCenter.LoadOrUnload?.Invoke();
-        }
 
         private void ckbxCloseBuzzer_CheckedChanged(object sender, EventArgs e)
         {
             ConfigMgr.Instance.TurnOffBuzzer = ckbxCloseBuzzer.Checked;
-            EventCenter.EnableBuzzer?.Invoke(ckbxCloseBuzzer.Checked);
+            EventCenter.EnableBuzzer?.Invoke(!ckbxCloseBuzzer.Checked);
         }
 
         private void authorityManagement()
@@ -211,109 +217,26 @@ namespace Poc2Auto.GUI
 
             if (AlcSystem.Instance.GetUserAuthority() == UserAuthority.OPERATOR.ToString())
             {
-                uC_BinRegionSet1.Enabled = false;
-                grpModeSetArea.Visible = false;
-                groupBox1.Visible = false;
+                ucBinRegionSet1.Enabled = false;
+                groupBox3.Enabled = false;
+                groupBox2.Enabled = false;
+                groupBox4.Visible = false;
             }
             else
             {
-                uC_BinRegionSet1.Enabled = true;
-                grpModeSetArea.Visible = true;
-                groupBox1.Visible = true;
+                ucBinRegionSet1.Enabled = true;
+                groupBox3.Enabled = true;
+                groupBox2.Enabled = true;
+                groupBox4.Visible = true;
             }
-        }
-
-        private void btnNozzle1Load_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle1TrayLoad, true);
-        }
-
-        private void btnNozzle1Scan_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle1Scan, true);
-        }
-
-        private void btnRotateOneStation_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DryRunTesterRotation, true);
-        }
-
-        private void btnSocketZAxisUp_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugZAxisUp, true);
-        }
-
-        private void btnNozzle1SocketPutDut_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle1SocketPut, true);
-        }
-
-        private void btnPullPutter_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugPullPutter, true);
-        }
-
-        private void btnSocketClose_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugCloseSocket, true);
-        }
-
-        private void btnZAxisDown_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugZAxisDown, true);
-        }
-
-        private void Nozzle2SocketPickDut_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle2SocketPick, true);
-        }
-
-        private void btnNozzle1TrayUload_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle1TrayUload, true);
-        }
-
-        private void btnNozzle2TrayUload_Click(object sender, EventArgs e)
-        {
-            HandlerClient?.WriteObject(RunModeMgr.Name_DebugNozzle2TrayUload, true);
-        }
-
-        private void btnSocketOpenCap_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugOpenSocket, true);
-        }
-
-        private void btnPushPutter_Click(object sender, EventArgs e)
-        {
-            TesterClient?.WriteObject(RunModeMgr.Name_DebugPushPutter, true);
         }
 
         private void SocketIDChanged()
         {
             lbSocketID.BeginInvoke(new Action(() =>
             {
-                lbSocketID.Text = RunModeMgr.SocketID.ToString();
+                lbSocketID.Text =  $"当前Socket: {RunModeMgr.SocketID}";
             }));
-        }
-
-        private void btnSingleStepDebug_Click(object sender, EventArgs e)
-        {
-            Task.Run(new Action(
-            () =>
-            {
-                if (UCMain.Instance.Stop())
-                {
-                    HandlerClient?.GetSysInfoCtrl.ModeCtrl(RunModeMgr.Doe);
-                    HandlerClient.GetSysInfoCtrl.SubModeCtrl(RunModeMgr.Doe, RunModeMgr.Doe_TesterDebug);
-
-                    TesterClient?.GetSysInfoCtrl.ModeCtrl(RunModeMgr.Doe);
-                    TesterClient.GetSysInfoCtrl.SubModeCtrl(RunModeMgr.Doe, RunModeMgr.Doe_TesterDebug);
-
-                    RunModeMgr.RunMode = RunMode.DoeSingleDebug;
-                    UCMain.Instance.Reset();
-                }
-            }));
-            
         }
 
         private void btnDifferentTray_Click(object sender, EventArgs e)
@@ -336,52 +259,60 @@ namespace Poc2Auto.GUI
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (HandlerClient == null || TesterClient == null)
-                return;
-            handlerMode = (PlcMode)(uint)HandlerClient?.ReadObject("GVL_MachineInterface.MachineCmd.nMode", typeof(uint));
-            testerMode = (PlcMode)(uint)TesterClient?.ReadObject("GVL_MachineInterface.MachineCmd.nMode", typeof(uint));
-            UpdateSubMode();
+            try
+            {
+                if (HandlerClient == null || TesterClient == null)
+                    return;
+                if (!HandlerClient.IsInitOk || !TesterClient.IsInitOk)
+                    return;
+                handlerMode = (PlcMode)RunModeMgr.HandlerMode;
+                testerMode = (PlcMode)RunModeMgr.TesterMode;
+                UpdateSubMode();
+            }
+            catch (Exception)
+            {
+
+
+            }
         }
 
         private void UpdateSubMode()
         {
-            if (handlerMode == PlcMode.DoeMode && testerMode == PlcMode.DoeMode)
+            if (handlerMode == PlcMode.AutoMode && testerMode == PlcMode.AutoMode)
             {
-                var handlerSubMode = (uint)HandlerClient.ReadObject("GVL_MachineInterface.MachineCmd.nDOESubMode", typeof(uint));
-                var testerSubMode = (uint)TesterClient?.ReadObject("GVL_MachineInterface.MachineCmd.nDOESubMode", typeof(uint));
+                //var testerSubMode = (uint)TesterClient?.ReadObject("GVL_MachineInterface.MachineCmd.nAutoSubMode", typeof(uint));
+                //var handlerSubMode = (uint)HandlerClient.ReadObject("GVL_MachineInterface.MachineCmd.nAutoSubMode", typeof(uint));
+                var testerSubMode = RunModeMgr.TesterSubMode;
+                var handlerSubMode = RunModeMgr.HandlerSubMode;
 
-                if (handlerSubMode == RunModeMgr.Doe_TakeoffTest && testerSubMode == RunModeMgr.Doe_TakeoffTest)
+                if (testerSubMode == RunModeMgr.Func_DryRun && handlerSubMode == RunModeMgr.Func_DryRun)
                 {
-                    SetButtonColor(btnTakeOff);
+                    SetButtonColor(btnDryRun);
                 }
-                else if (handlerSubMode == RunModeMgr.Doe_SameTrayTest)
-                {
-                    SetButtonColor(btnSameTray);
-                }
-                else if (handlerSubMode == RunModeMgr.Doe_SlipTest)
-                {
-                    SetButtonColor(btnDoeSlip);
-                }
-                else if (handlerSubMode == RunModeMgr.Doe_TesterDebug && testerSubMode == RunModeMgr.Doe_TesterDebug)
-                {
-                    SetButtonColor(btnSingleStepDebug);
-                }
-                else if (handlerSubMode == RunModeMgr.Doe_SocketUniformityTest && testerSubMode == RunModeMgr.Doe_SocketUniformityTest)
-                {
-                    SetButtonColor(btnSocketTest);
-                }
-                else
-                {
-                    SetButtonColor();
-                }
-            }
-            else if (handlerMode == PlcMode.AutoMode)
-            {
-                var handlerSubMode = (uint)HandlerClient.ReadObject("GVL_MachineInterface.MachineCmd.nAutoSubMode", typeof(uint));
-                if (handlerSubMode == RunModeMgr.Auto_Mark)
+                else if (handlerSubMode == RunModeMgr.Func_AutoMark)
                 {
                     SetButtonColor(btnAutoMark);
                 }
+                else if (handlerSubMode == RunModeMgr.Func_DoeSameTrayTest)
+                {
+                    SetButtonColor(btnSameTray);
+                }
+                else if (handlerSubMode == RunModeMgr.Func_DoeSlipTest)
+                {
+                    SetButtonColor(btnDoeSlip);
+                }
+                else if (handlerSubMode == RunModeMgr.Func_DoeDifferentTrayTest)
+                {
+                    SetButtonColor(btnDifferentTray);
+                }
+                else if(handlerSubMode == RunModeMgr.Func_DoeTakeoffTest && testerSubMode == RunModeMgr.Func_DoeTakeoffTest)
+                {
+                    SetButtonColor(btnTakeOff);
+                }
+                //else if (handlerSubMode == RunModeMgr.Func_Script)
+                //{
+                //    SetButtonColor(btnScript);
+                //}
                 else
                 {
                     SetButtonColor();
@@ -397,14 +328,11 @@ namespace Poc2Auto.GUI
         {
             List<Button> buttons = new List<Button>()
             {
-                btnAudit,
                 btnAutoMark,
                 btnDifferentTray,
                 btnDifferentTray,
                 btnDoeSlip,
                 btnSameTray,
-                btnSocketTest,
-                btnSingleStepDebug,
                 btnDryRun,
             };
             button.BackColor = Color.Green;
@@ -419,14 +347,11 @@ namespace Poc2Auto.GUI
         {
             List<Button> buttons = new List<Button>()
             {
-                btnAudit,
                 btnAutoMark,
                 btnDifferentTray,
                 btnDifferentTray,
                 btnDoeSlip,
                 btnSameTray,
-                btnSocketTest,
-                btnSingleStepDebug,
                 btnDryRun,
             };
             foreach (var btn in buttons)
@@ -434,6 +359,128 @@ namespace Poc2Auto.GUI
                 btn.UseVisualStyleBackColor = true;
             }
         }
+ 
+        private void btnScript_Click(object sender, EventArgs e)
+        {
+            if (HandlerClient == null )
+                return;
 
+            Task.Run(new Action(
+             () =>
+             {
+                 if (UCMain.Instance.Stop(CtrlType.Handler))
+                 {
+                     if (RunModeMgr.Script(HandlerClient, out string message))
+                     {
+                         RunModeMgr.RunMode = RunMode.Script;
+                         RunModeMgr.Running = false;
+                         //AlcSystem.Instance.ShowMsgBox("OK", "Information");
+                         //UCMain.Instance.Reset();
+                     }
+                     else
+                     {
+                         AlcSystem.Instance.ShowMsgBox($"Fail, {message}", "Error", icon: AlcMsgBoxIcon.Error);
+                     }
+                 }
+             }));
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            ConfigMgr.Instance.StationTestFailTimes = (int)numericUpDown1.Value;
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            ConfigMgr.Instance.SocketTestFailTimes = (int)numericUpDown2.Value;
+        }
+
+        private void btnAutoMark_Click(object sender, EventArgs e)
+        {
+            if (fMAutoMark == null || fMAutoMark.IsDisposed)
+            {
+                fMAutoMark = new FMAutoMark(HandlerClient) { StartPosition = FormStartPosition.CenterScreen };
+            }
+            fMAutoMark.ShowDialog();
+        }
+
+        private void checkBoxDoorLockControl_CheckedChanged(object sender, EventArgs e)
+        {
+            var enable = checkBoxDoorLockControl.Checked;
+            if (HandlerClient.IsInitOk)
+            {
+                HandlerClient?.WriteObject(RunModeMgr.Name_DoorLockControl, enable);
+            }
+            if (TesterClient.IsInitOk)
+            {
+                TesterClient?.WriteObject(RunModeMgr.Name_DoorLockControl, enable);
+            }
+            
+            ConfigMgr.Instance.DoorLockControl = enable;
+        }
+
+        private void btnClearOnlineDut_Click(object sender, EventArgs e)
+        {
+            var result = AlcSystem.Instance.ShowMsgBox("确定清空线上DUT？", "", AlcMsgBoxButtons.YesNo, AlcMsgBoxIcon.Question, AlcMsgBoxDefaultButton.Button2);
+ 
+            if (AlcMsgBoxResult.No == result)
+                return;
+            EventCenter.ClearOnlineDut?.Invoke();
+        }
+
+        private void btnClearSocketStatus_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (HandlerClient.IsInitOk)
+                {
+                    HandlerClient.WriteObject(RunModeMgr.Name_ClearSokcetStatus, true);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+ 
+            }
+        }
+
+        private void btnClearHandlerProessData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (HandlerClient.IsInitOk)
+                {
+                    HandlerClient.WriteObject(RunModeMgr.Name_ClearData, true);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+ 
+            }
+            
+        }
+
+        private void btnVersion_Click(object sender, EventArgs e)
+        {
+        //    var ver1 =  (string)HandlerClient.ReadObject(RunModeMgr.Name_PlcProgramVer, typeof(string));
+        //    var ver2 =  (string)TesterClient.ReadObject(RunModeMgr.Name_PlcProgramVer, typeof(string));
+        }
+
+        private void btnClearTesterProessData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TesterClient.IsInitOk)
+                {
+                    TesterClient.WriteObject(RunModeMgr.Name_ClearData, true);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+ 
+            }
+        }
     }
 }

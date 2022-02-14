@@ -36,8 +36,8 @@ namespace Poc2Auto.GUI.RunModeConfig
                 return new AutoSelectBinParam
                 {
                     LoadNum = UCMain.Instance.IsLoadLTray ? UCMain.Instance.ucTrays1.LoadLRegionNumber : UCMain.Instance.ucTrays1.LoadRRegionNumber,
-                    LoadTaryID = UCMain.Instance.IsLoadLTray ? (int)TrayName.LoadL : (int)TrayName.LoadR,
-                    LoadRegion = UCMain.Instance.IsLoadLTray ? UCMain.Instance.ucTrays1.LoadLTrayData :  UCMain.Instance.ucTrays1.LoadRTrayData,
+                    LoadTaryID = UCMain.Instance.IsLoadLTray ? (int)TrayName.Load1 : (int)TrayName.Load2,
+                    LoadRegion = UCMain.Instance.IsLoadLTray ? UCMain.Instance.ucTrays1.LoadLTrayData : UCMain.Instance.ucTrays1.LoadRTrayData,
                     UnloadNum = ucTraySetting_New1.SelectionCount,
                     UnloadTrayID = ucTraySetting_New1.TrayID - RunModeMgr.SelectTrayOffsetID,
                     UnloadRegion = ucTraySetting_New1.Region2D

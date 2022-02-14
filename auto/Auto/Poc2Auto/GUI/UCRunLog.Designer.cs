@@ -31,29 +31,22 @@ namespace Poc2Auto.GUI
         {
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuClear = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ColTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColLogMsg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.richboxLog = new System.Windows.Forms.RichTextBox();
+            this.SelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyText = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuClear});
+            this.SelectAll,
+            this.CopyText});
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(107, 26);
-            // 
-            // menuClear
-            // 
-            this.menuClear.Name = "menuClear";
-            this.menuClear.Size = new System.Drawing.Size(106, 22);
-            this.menuClear.Text = "Clear";
-            this.menuClear.Click += new System.EventHandler(this.menuClear_Click);
+            this.menuStrip.Size = new System.Drawing.Size(109, 52);
             // 
             // clearToolStripMenuItem
             // 
@@ -65,48 +58,42 @@ namespace Poc2Auto.GUI
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
-            // dataGridView1
+            // richboxLog
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColTime,
-            this.ColLogMsg});
-            this.dataGridView1.ContextMenuStrip = this.menuStrip;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(261, 159);
-            this.dataGridView1.TabIndex = 1;
+            this.richboxLog.ContextMenuStrip = this.menuStrip;
+            this.richboxLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richboxLog.Location = new System.Drawing.Point(0, 0);
+            this.richboxLog.Name = "richboxLog";
+            this.richboxLog.Size = new System.Drawing.Size(372, 170);
+            this.richboxLog.TabIndex = 2;
+            this.richboxLog.Text = "";
+            this.richboxLog.TextChanged += new System.EventHandler(this.richboxLog_TextChanged);
             // 
-            // ColTime
+            // SelectAll
             // 
-            this.ColTime.HeaderText = "Time";
-            this.ColTime.Name = "ColTime";
-            this.ColTime.ReadOnly = true;
+            this.SelectAll.Name = "SelectAll";
+            this.SelectAll.Size = new System.Drawing.Size(210, 24);
+            this.SelectAll.Text = "全选";
+            this.SelectAll.Click += new System.EventHandler(this.SelectAll_Click);
             // 
-            // ColLogMsg
+            // CopyText
             // 
-            this.ColLogMsg.HeaderText = "Run Log";
-            this.ColLogMsg.Name = "ColLogMsg";
-            this.ColLogMsg.ReadOnly = true;
+            this.CopyText.Name = "CopyText";
+            this.CopyText.Size = new System.Drawing.Size(210, 24);
+            this.CopyText.Text = "复制";
+            this.CopyText.Click += new System.EventHandler(this.CopyText_Click);
             // 
             // UCRunLog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.richboxLog);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UCRunLog";
-            this.Size = new System.Drawing.Size(261, 159);
+            this.Size = new System.Drawing.Size(372, 170);
             this.menuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -115,9 +102,8 @@ namespace Poc2Auto.GUI
         private System.Windows.Forms.ContextMenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ToolStripMenuItem menuClear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColLogMsg;
+        private System.Windows.Forms.RichTextBox richboxLog;
+        private System.Windows.Forms.ToolStripMenuItem SelectAll;
+        private System.Windows.Forms.ToolStripMenuItem CopyText;
     }
 }

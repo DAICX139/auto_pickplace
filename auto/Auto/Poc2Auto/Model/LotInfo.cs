@@ -25,5 +25,14 @@ namespace Poc2Auto.Model
         public string ALCVersion { set; get; }
         public string LoaderVersion { set; get; }
         public string UnloaderVersion { set; get; }
+        [LotItem("HostMode")]
+        public HostMode HostMode { set; get; }
+    }
+
+    public enum HostMode
+    {
+        PROD,
+        OQC,
+        REL
     }
 }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AlcUtility;
+﻿using AlcUtility;
 using Newtonsoft.Json;
 using Poc2Auto.Common;
 using Poc2Auto.GUI;
 using Poc2Auto.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Poc2Auto.TM
 {
@@ -16,12 +14,12 @@ namespace Poc2Auto.TM
     {
         public TMPlugin() : base(ModuleTypes.TM.ToString())
         {
-            RunModeMgr.RunModeChanged += RunModeChanged;
+
         }
 
         #region Fields
 
-        private readonly List<string> _tmNames = new List<string> { "Test1_LIVW", "Test2_DTGT", "Test3_Backup", "Test4_BMPF" };
+        private readonly List<string> _tmNames = new List<string> { "TM_LIVW", "TM_NFBP", "TM_KYRL", "TM_BMPF" };
 
         #endregion Fields
 
@@ -31,6 +29,10 @@ namespace Poc2Auto.TM
         {
             ExpectedModuleIds = new List<string>(_tmNames);
             AutoSendCmds.Add(CommonCommands.Reset, ConfigMgr.Instance.TMResetTimeout);
+
+            StateEnable = false;
+            UpdateModuleStatus(true);
+            DisableStateMachine = true;
 
             if (ConfigMgr.Instance.CanMoveDuringTest)
             {
@@ -45,31 +47,32 @@ namespace Poc2Auto.TM
 
             EventCenter.Retest += Retest;
             EventCenter.TMReset += TMReset;
-            EventCenter.EnableTM += e => { UpdateModuleStatus(!e); };
-            UpdateModuleStatus(!ConfigMgr.Instance.WithTM);
+
+            //UpdateModuleStatus(!ConfigMgr.Instance.WithTM);
+
             GetMessageHandler(MessageNames.CMD_TestDone).DataReceived += TestDone;
             base.Load();
 
-            foreach (var stationName in StationManager.TestStations)
-            {
-                var station = StationManager.Stations[stationName];
-                var id = _tmNames[stationName - StationName.Test1_LIVW];
-                station.EnableChanged += enable =>
-                {
-                    if (enable)
-                        AddExpectedModuleId(id);
-                    else
-                        RemoveExpectedModuleId(id);
-                };
-                if (!station.Enable) RemoveExpectedModuleId(id);
-            }
+            //foreach (var stationName in StationManager.TestStations)
+            //{
+            //    var station = StationManager.Stations[stationName];
+            //    var id = _tmNames[stationName - StationName.Test1_LIVW];
+            //    station.EnableChanged += enable =>
+            //    {
+            //        if (enable)
+            //            AddExpectedModuleId(id);
+            //        else
+            //            RemoveExpectedModuleId(id);
+            //    };
+            //    if (!station.Enable) RemoveExpectedModuleId(id);
+            //}
             return true;
         }
 
-        public override Form GetForm()
-        {
-            return new Form1(this);
-        }
+        //public override Form GetForm()
+        //{
+        //    return new Form1(this);
+        //}
 
         public override UserControl GetConfigView()
         {
@@ -79,23 +82,10 @@ namespace Poc2Auto.TM
         #endregion override
 
         #region Events
-
-        private void RunModeChanged()
-        {
-            if (RunModeMgr.RunMode == RunMode.AutoSelectBin || RunModeMgr.RunMode == RunMode.AutoSelectSn)
-            {
-                StateEnable = false;
-            }
-            else
-            {
-                StateEnable = true;
-            }
-        }
-
         protected override void OnRegister(MessageHandler handler, ReceivedData data)
         {
-            if (!ConfigMgr.Instance.WithTM)
-                return;
+            //if (!ConfigMgr.Instance.WithTM)
+            //    return;
             base.OnRegister(handler, data);
 
             var tmIndex = _tmNames.IndexOf(data.ModuleId);
@@ -105,8 +95,6 @@ namespace Poc2Auto.TM
 
         protected override void OnDisconnected(MessageHandler handler, ReceivedData data)
         {
-            if (!ConfigMgr.Instance.WithTM)
-                return;
             base.OnDisconnected(handler, data);
 
             var tmIndex = _tmNames.IndexOf(data.ModuleId);
@@ -118,16 +106,25 @@ namespace Poc2Auto.TM
         {
             var errMsg = data.Data.Message;
             var errCode = data.Data.Result;
+            //var level = data.Data.
             handler.Reply(new ReceivedData
             {
+                ModuleId = data.ModuleId,
                 Data = new MessageData
                 {
                      Message = errMsg,
                      Result = errCode,
                 },
             } );
-
-            Error($"{data.ModuleId} Error\r\nError Code: {errCode}\r\nError Message: {errMsg}", 0, AlcErrorLevel.WARN);
+            if (-1 == errCode || 0 == errCode)
+            {
+                Error($"{data.ModuleId} Error\r\nError Code: {errCode}\r\nError Message: {errMsg}", 0, AlcErrorLevel.WARN);
+            }
+            else
+            {
+                //ButtonClickRequire(SYSTEM_EVENT.Stop);
+                Error($"{data.ModuleId} Error\r\nError Code: {errCode}\r\nError Message: {errMsg}", 0, AlcErrorLevel.FATAL);
+            }
         }
 
         #endregion Events
@@ -143,7 +140,8 @@ namespace Poc2Auto.TM
         {
             var station = StationManager.Stations[stationName];
 
-            if (!ConfigMgr.Instance.WithTM || !station.Enable)
+            //if (!ConfigMgr.Instance.WithTM || !station.Enable)
+            if (!station.Enable)
             {
                 //Thread.Sleep(8000);
                 station.Status = StationStatus.Disabled;
@@ -164,19 +162,6 @@ namespace Poc2Auto.TM
 
             if (station.Status == StationStatus.Idle) return;
 
-            if (station.Status != StationStatus.RotateDone)
-            {
-                if (RunModeMgr.GRRMode && station.Status == StationStatus.Testing)
-                {
-                    //多次测试
-                }
-                else
-                {
-                    Error($"TestStart：函数被触发，但工站{stationName}状态{station.Status}不正确(状态应为{StationStatus.RotateDone})，不会通知TM测试！", 0, AlcErrorLevel.WARN);
-                    return;
-                }
-            }
-
             foreach (var socket in station.SocketGroup.Sockets)
             {
                 if (socket.Dut.Barcode == "扫码未启用" || socket.Dut.Barcode == "sample" || string.IsNullOrEmpty(socket.Dut.Barcode))
@@ -187,6 +172,134 @@ namespace Poc2Auto.TM
                 }
             }
 
+            if (station.Status != StationStatus.RotateDone)
+            {
+                if (RunModeMgr.GRRMode && station.Status == StationStatus.Testing)
+                {
+                    //多次测试
+                }
+                else //非GRR和Audit模式下
+                {                         
+                    if (station.Status == StationStatus.Testing)
+                    {
+                        //当前工站测试无反应，超时过后重新发送测试命令
+                        Dictionary<StationName, int> testResult = default;
+                        string barcode = default;
+                        for (int i = 0; i < SocketGroup.ROW; i++)
+                        {
+                            for (int j = 0; j < SocketGroup.COL; j++)
+                            {
+                                testResult = station.SocketGroup.Sockets[i, j].Dut.TestResult;
+                                barcode = station.SocketGroup.Sockets[i, j].Dut.Barcode;
+                            }
+                        }
+                        if (RunModeMgr.TMRetest)//可以进行重测操作
+                        {
+                            //直接通知TM测试
+                        }
+                        else
+                        {
+                            if (!testResult.ContainsKey(station.Name))//Dut没有在这个工位测试过
+                            {
+                                //重新发送测试命令
+                            }
+                            else
+                            {
+                                //Error($"TestStart：函数被触发，但工站{stationName}状态{station.Status}不正确(状态应为{StationStatus.RotateDone})，不会通知TM测试！", 0, AlcErrorLevel.WARN);
+                                Error($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", 0, AlcErrorLevel.WARN);
+                                EventCenter.ProcessInfo?.Invoke($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", ErrorLevel.WARNING);
+                                station.Status = StationStatus.Done;
+                                return;
+                            }
+                        }
+                    }
+                    else if (RunModeMgr.IsRotate) //如果已经达到了旋转条件（说明所有工站已经有了测试结果） 就不能给TM发送测试命令
+                    {
+                        Dictionary<StationName, int> testResult = default;
+                        string barcode = default;
+                        for (int i = 0; i < SocketGroup.ROW; i++)
+                        {
+                            for (int j = 0; j < SocketGroup.COL; j++)
+                            {
+                                testResult = station.SocketGroup.Sockets[i, j].Dut.TestResult;
+                                barcode = station.SocketGroup.Sockets[i, j].Dut.Barcode;
+                            }
+                        }
+
+                        Error($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", 0, AlcErrorLevel.WARN);
+                        EventCenter.ProcessInfo?.Invoke($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", ErrorLevel.WARNING);
+                        station.Status = StationStatus.Done;
+                        return;
+                    }
+                    
+                }
+            }
+            else
+            {
+                if (RunModeMgr.TMRetest)//可以进行重测操作
+                {
+                    //直接通知TM测试
+                }
+                else
+                {
+                    Dictionary<StationName, int> testResult = default;
+                    string barcode = default;
+                    for (int i = 0; i < SocketGroup.ROW; i++)
+                    {
+                        for (int j = 0; j < SocketGroup.COL; j++)
+                        {
+                            testResult = station.SocketGroup.Sockets[i, j].Dut.TestResult;
+                            barcode = station.SocketGroup.Sockets[i, j].Dut.Barcode;
+                        }
+                    }
+
+                    if (!testResult.ContainsKey(station.Name))//Dut没有在这个工位测试过
+                    {
+                        //给TM发送开始测试命令
+                    }
+                    else
+                    {
+                        //Error($"TestStart：函数被触发，但工站{stationName}状态{station.Status}不正确(状态应为{StationStatus.RotateDone})，不会通知TM测试！", 0, AlcErrorLevel.WARN);
+                        Error($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", 0, AlcErrorLevel.WARN);
+                        EventCenter.ProcessInfo?.Invoke($"产品:{barcode}已经在{station.Name}有测试结果，测试结果为{testResult[station.Name]},因此不会通知TM重复测试!", ErrorLevel.WARNING);
+                        station.Status = StationStatus.Done;
+                        return;
+                    }
+                }
+            }
+
+#if SOCKETSAFETYSIGNAL_ON
+
+            Retry:
+            //0.1, Socket安全检测信号断电
+            RunModeMgr.SetSocketSignal = false;
+            //0.2, 二次确认：读取Socket安全检测信号是否设置成功
+            if (RunModeMgr.SocketSafetySignal) //没有设置成功,重复写入20次
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    RunModeMgr.SetSocketSignal = false;
+                }
+                if (RunModeMgr.SocketSafetySignal)
+                {
+                    var boxResult = AlcSystem.Instance.ShowMsgBox("Socket安全信号设置掉电失败," +
+                     "请人为确认", "TM", AlcMsgBoxButtons.StopRetryContinue, 
+                     AlcMsgBoxIcon.Error, AlcMsgBoxDefaultButton.Button1);
+                    switch (boxResult)
+                    {
+                        case AlcMsgBoxResult.Retry:
+                            goto Retry;
+                        case AlcMsgBoxResult.Stop:
+                            ButtonClickRequire(SYSTEM_EVENT.Stop);
+                            return;
+                        case AlcMsgBoxResult.Continue:
+                        default:
+                            break;
+                    }
+                }
+            }
+#endif
+
             station.Status = StationStatus.Starting;
             var result = GetMessageHandler(MessageNames.CMD_TestStart).SendMessage(new ReceivedData
             {
@@ -196,9 +309,11 @@ namespace Poc2Auto.TM
                     Param = new StartTestParam
                     {
                         DutSnArray = station.Barcodes,
-                        SocketSn = (station.SocketGroup.Index - 1).ToString(),
+                        SocketSn = "S"+RunModeMgr.GetActualSocketID(station.SocketGroup.Index).ToString(),
                         StressCode = Overall.LotInfo?.StressCode,
-                        LotId = Overall.LotInfo?.LotID
+                        LotId = Overall.LotInfo?.LotID,
+                        Mode = RunModeMgr.RunMode == RunMode.AutoAudit ? "audit":"normal",
+                        MTCP = ConfigMgr.Instance.EnableClientMTCP,
                     }
                 }
             }, ConfigMgr.Instance.TMStartTestTimeout);
@@ -208,7 +323,7 @@ namespace Poc2Auto.TM
                 station.Status = StationStatus.StartFailed;
                 return;
             }
-
+            EventCenter.ProcessInfo?.Invoke($"通知{station.Name}开始测试", ErrorLevel.DEBUG);
             station.Status = StationStatus.Testing;
 
             station.TestTimer.Enabled = true;
@@ -216,8 +331,9 @@ namespace Poc2Auto.TM
 
         private void TestDone(MessageHandler handler, ReceivedData data)
         {
-            if (!ConfigMgr.Instance.WithTM)
-                return;
+            AlcSystem.Instance.Log($"input TestDone()", "TM相关");
+            //if (!ConfigMgr.Instance.WithTM)
+            //    return;
             handler.Reply(new ReceivedData
             {
                 ModuleId = data.ModuleId,
@@ -242,14 +358,80 @@ namespace Poc2Auto.TM
 #endif
             }
             TestResult tr = JsonConvert.DeserializeObject<TestResult>(data.Data.Param.ToString());
-            if (RunModeMgr.RunMode == RunMode.AutoAudit && !tr.AllOK && ++station.TestTimesForGRR < RunModeMgr.TestTimes)
-            { 
-                TestStart(station.Name);
-                return;
+            EventCenter.ProcessInfo?.Invoke($"{station.Name}测试完成，测试结果为 {tr.Result[0]}", ErrorLevel.INFO);
+            //++station.TestTimesForGRR < RunModeMgr.TestTimes
+            if (RunModeMgr.RunMode == RunMode.AutoAudit && !tr.AllOK && ConfigMgr.Instance.Retest)
+            {
+                //EventCenter.ProcessInfo?.Invoke($"{station.Name}测试失败，通知{station.Name}重测", ErrorLevel.Fatal);
+                //var result =  AlcSystem.Instance.ShowMsgBox($"产品:{station.SocketGroup.Sockets[0,0].Dut.Barcode}" +
+                //    $"在{station.Name}测试失败, 是否重测?", "Audit", AlcMsgBoxButtons.YesNo, 
+                //    AlcMsgBoxIcon.Question, AlcMsgBoxDefaultButton.Button1);
+                //if (AlcMsgBoxResult.No == result)
+                //{
+                //    //啥也不做
+                //}
+                //else
+                //{
+                //    TestStart(station.Name);
+                //}
             }
             station.TestTimesForGRR = 0;
             station.SetTestResult(tr.ResultArray);
+            EventCenter.StationTestDone?.Invoke(station, station.SocketGroup.Duts[0, 0]?.Barcode, tr.ResultArray[0, 0]);
+
+            if (RunModeMgr.RunMode == RunMode.AutoNormal)
+            {
+                if (tr.Result[0] != Dut.PassBin)
+                {
+                    station.TestFailTimes++;
+                }
+                else
+                {
+                    station.TestFailTimes = 0;
+                }
+            }
+
+            //当工站连续测试失败次数大于设定次数次,弹框提醒
+            if (station.TestFailTimes > ConfigMgr.Instance.StationTestFailTimes)
+            {
+                station.TestFailTimes = 0;
+                Error($"{data.ModuleId} Error\r\n检测到{station.Name}工站连续测试失败超过{ConfigMgr.Instance.StationTestFailTimes}次！请检查该工站！", 0, AlcErrorLevel.FATAL);
+            }
+
+#if SOCKETSAFETYSIGNAL_ON
+            Retry:
+            //0.1, Socket安全检测信号上电
+            RunModeMgr.SetSocketSignal = true;
+            //0.2, 二次确认：读取Socket安全检测信号是否设置成功
+            if (!RunModeMgr.SocketSafetySignal) //没有设置成功,重复写入20次
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    RunModeMgr.SetSocketSignal = true;
+                }
+                if (!RunModeMgr.SocketSafetySignal)
+                {
+                    var boxResult = AlcSystem.Instance.ShowMsgBox("Socket安全信号设置上电失败," +
+                     "请人为确认", "TM", AlcMsgBoxButtons.StopRetryContinue,
+                     AlcMsgBoxIcon.Error, AlcMsgBoxDefaultButton.Button1);
+                    switch (boxResult)
+                    {
+                        case AlcMsgBoxResult.Retry:
+                            goto Retry;
+                        case AlcMsgBoxResult.Stop:
+                            ButtonClickRequire(SYSTEM_EVENT.Stop);
+                            return;
+                        case AlcMsgBoxResult.Continue:
+                        default:
+                            break;
+                    }
+                }
+            }
+#endif
+
             station.Status = StationStatus.Done;
+
+            AlcSystem.Instance.Log($"output TestDone()", "TM相关");
         }
 
         private void Retest(StationName stationName)
@@ -257,79 +439,25 @@ namespace Poc2Auto.TM
             TestStart(stationName);
         }
 
-        public override bool Reset(string moduleId)
-        {
-            return base.Reset(moduleId);
-        }
-
-        public override bool Stop(string moduleId)
-        {
-            return base.Stop(moduleId);
-        }
-
-        private bool Reset(StationName stationName)
-        {
-            if (ModuleStates.Keys.Count == 0)
-                return false;
-            var state = ModuleStates[_tmNames[stationName - StationName.Test1_LIVW]].StateMachine.CurrentState;
-            if (state == SYSTEM_STATUS.Idle)
-            {
-                Reset(_tmNames[stationName - StationName.Test1_LIVW]);
-                DateTime now = DateTime.Now;
-                while (true)
-                {
-                    bool delay = (DateTime.Now - now).TotalSeconds == 10;
-                    if (state == SYSTEM_STATUS.Ready)
-                        return true;
-                    else if (delay)
-                    {
-                        AlcSystem.Instance.Error($"TM {_tmNames[stationName - StationName.Test1_LIVW]}工站复位失败，请手动复位并开始！", 0, AlcErrorLevel.ERROR1, ModuleTypes.TM.ToString());
-                        return false;
-                    }
-                    Thread.Sleep(500);
-                }
-            }
-            return false;
-        }
-
-        private bool Stop(StationName stationName)
-        {
-            if (ModuleStates.Keys.Count == 0)
-                return false;
-            var state = ModuleStates[_tmNames[stationName - StationName.Test1_LIVW]].StateMachine.CurrentState;
-            if (state == SYSTEM_STATUS.Idle)
-                return true;
-            if (state >= SYSTEM_STATUS.Ready)
-            {
-                Stop(_tmNames[stationName - StationName.Test1_LIVW]);
-                DateTime now = DateTime.Now;
-                while (true)
-                {
-                    bool delay = (DateTime.Now - now).TotalSeconds == 10;
-                    if (state == SYSTEM_STATUS.Idle)
-                        return true;
-                    else if (delay)
-                    {
-                        AlcSystem.Instance.Error($"TM {_tmNames[stationName - StationName.Test1_LIVW]}工站停止失败，请手动停止并复位！", 0, AlcErrorLevel.ERROR1, ModuleTypes.TM.ToString());
-                        return false;
-                    }
-                    Thread.Sleep(500);
-                }
-            }
-            return false;
-        }
-
         private void TMReset()
         {
-            var stations = StationManager.TestStations.Where(s => StationManager.Stations[s].Enable).ToList();
-
-            foreach (var name in stations)
+            Task.Run(() => 
             {
-                Stop(name);
-                Reset(name);
-            }
+                var stations = StationManager.TestStations.Where(s => StationManager.Stations[s].ConnectState).ToList();
+
+                foreach (var stationName in stations)
+                {
+                    var result = GetMessageHandler(MessageNames.CMD_Reset).SendMessage(new ReceivedData
+                    {
+                        ModuleId = _tmNames[stationName - StationName.Test1_LIVW],
+
+                    }, ConfigMgr.Instance.TMResetTimeout);
+                    //Thread.Sleep(2);
+                }
+            });
         }
-        #endregion 运行流程函数
+      
+#endregion 运行流程函数
 
     }
 }
