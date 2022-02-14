@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="19.11.0.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image, '12.bmp')</l>
+<l>gen_rectangle1 (ROI_0, 417.924, 582.789, 2365.72, 3401.81)</l>
+<l>reduce_domain (Image, ROI_0, ImageReduced)</l>
+<l>binary_threshold (ImageReduced, Region, 'max_separability', 'dark', UsedThreshold)</l>
+<l>connection (Region, ConnectedRegions)</l>
+<l>select_shape_std (ConnectedRegions, SelectedRegions, 'max_area', 70)</l>
+<l>smallest_rectangle2 (SelectedRegions, Row, Column, Phi, Length1, Length2)</l>
+<l>gen_rectangle2 (Rectangle, Row, Column, Phi, Length1, Length2)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
